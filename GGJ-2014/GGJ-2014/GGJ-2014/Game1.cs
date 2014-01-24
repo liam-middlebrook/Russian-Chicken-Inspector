@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using GGJ_2014.Graphics;
 
 namespace GGJ_2014
 {
@@ -48,6 +49,7 @@ namespace GGJ_2014
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
         }
 
         /// <summary>
@@ -84,6 +86,9 @@ namespace GGJ_2014
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
