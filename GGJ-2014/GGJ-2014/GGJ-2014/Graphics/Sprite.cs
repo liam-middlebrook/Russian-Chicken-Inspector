@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GGJ_2014
+namespace GGJ_2014.Graphics
 {
     class Sprite
     {
