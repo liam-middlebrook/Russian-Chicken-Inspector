@@ -7,5 +7,6 @@ namespace GGJ_2014.Level
 {
     class Level
     {
+        private Tile[,]
     }
 }
