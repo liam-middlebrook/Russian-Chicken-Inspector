@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GGJ_2014.Graphics
 {
-    class Sprite
+    public class Sprite
     {
         #region Fields
 

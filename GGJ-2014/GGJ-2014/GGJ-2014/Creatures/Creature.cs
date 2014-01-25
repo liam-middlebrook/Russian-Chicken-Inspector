@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GGJ_2014.Physics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GGJ_2014
 {
@@ -14,11 +15,18 @@ namespace GGJ_2014
         SOUTH,
         WEST
     }
-    class Creature
+
+    public abstract class Creature
         : PhysicsBody
     {
-        private string identifier;
-        private Direction directionFacing;
+        private string identifier = "FILL THIS OUT";
+        private Direction directionFacing = Direction.NORTH;
+
+        public Creature(Texture2D texture, Vector2 position)
+            : base(texture, position)
+        {
+
+        }
 
         public override void Update(GameTime gameTime)
         {
