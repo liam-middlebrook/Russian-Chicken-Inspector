@@ -31,7 +31,7 @@ namespace GGJ_2014.MenuSystemNS
 
             this.buttonRect = new Rectangle((int)position.X, (int)position.Y, (int)textSize.X + 20, (int)textSize.Y + 20);
 
-            this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.DEFAULT);
+            this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, buttonRect.Width, buttonRect.Height);
 
             this.buttonTint = buttonTint;
         }
