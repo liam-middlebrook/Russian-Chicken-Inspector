@@ -74,6 +74,12 @@
   <ItemGroup>
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="MenuSystem\MenuButton.cs" />
+    <Compile Include="MenuSystem\MenuControl.cs" />
+    <Compile Include="MenuSystem\MenuHiddenButton.cs" />
+    <Compile Include="MenuSystem\MenuScreen.cs" />
+    <Compile Include="MenuSystem\MenuSystem.cs" />
+    <Compile Include="MenuSystem\MenuTextItem.cs" />
     <Compile Include="Level\Level.cs" />
     <Compile Include="Level\Tile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using GGJ_2014.Graphics;
+using GGJ_2014.MenuSystemNS;
 
 namespace GGJ_2014
 {
@@ -20,10 +21,24 @@ namespace GGJ_2014
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        KeyboardState keyState;
+        KeyboardState prevKeyState;
+        MouseState mouseState;
+        MouseState prevMouseState;
+
+        SpriteFont myFont;
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.ApplyChanges();
+
             Content.RootDirectory = "Content";
+
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -36,6 +51,27 @@ namespace GGJ_2014
         {
             // TODO: Add your initialization logic here
 
+            MenuSystem.GetInstance()
+               .AddMenuScreen(
+               new MenuScreen(MenuScreenType.MAIN_MENU, Color.CornflowerBlue));
+            MenuSystem.GetInstance()
+                .AddMenuScreen(
+                new MenuScreen(MenuScreenType.GAMEPLAY, Color.Red));
+            MenuSystem.GetInstance()
+                .AddMenuScreen(
+                new MenuScreen(MenuScreenType.PAUSE_MENU, Color.ForestGreen));
+            MenuSystem.GetInstance()
+                .AddMenuScreen(
+                new MenuScreen(MenuScreenType.CREDITS_MENU, Color.DarkOrchid));
+
+
+            keyState = Keyboard.GetState();
+            prevKeyState = keyState;
+            mouseState = Mouse.GetState();
+            prevMouseState = mouseState;
+
+
+
             base.Initialize();
         }
 
@@ -47,6 +83,10 @@ namespace GGJ_2014
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            myFont = Content.Load<SpriteFont>("SpriteFont1");
+
+            MenuSystem.GetInstance().Initalize(myFont, GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
 
@@ -74,6 +114,41 @@ namespace GGJ_2014
 
             // TODO: Add your update logic here
 
+            switch (MenuSystem.GetInstance().CurrentScreenType)
+            {
+                case MenuScreenType.MAIN_MENU:
+                    {
+
+                        break;
+                    }
+
+                case MenuScreenType.GAMEPLAY:
+                    {
+
+                        break;
+                    }
+
+                case MenuScreenType.PAUSE_MENU:
+                    {
+
+                        break;
+                    }
+
+                case MenuScreenType.CREDITS_MENU:
+                    {
+
+                        break;
+                    }
+            }
+
+            MenuSystem.GetInstance().Update(keyState, prevKeyState, mouseState, prevMouseState, gameTime);
+
+            prevKeyState = keyState;
+            keyState = Keyboard.GetState();
+            prevMouseState = mouseState;
+            mouseState = Mouse.GetState();
+
+
             base.Update(gameTime);
         }
 
@@ -83,12 +158,22 @@ namespace GGJ_2014
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            MenuSystem.GetInstance().DrawUnderlay();
+
 
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
 
+            //Add Game Draw code Here
+
             spriteBatch.End();
+
+            spriteBatch.Begin();
+
+            MenuSystem.GetInstance().DrawOverlay(spriteBatch);
+
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
