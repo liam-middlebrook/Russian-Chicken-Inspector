@@ -81,6 +81,8 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.DIRT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT));
             TextureStorage.GetInstance().AddTexture(Textures.GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.GRASS));
             TextureStorage.GetInstance().AddTexture(Textures.COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.COBBLESTONE));
+            TextureStorage.GetInstance().AddTexture(Textures.PAVEMENT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.PAVEMENT));
+            TextureStorage.GetInstance().AddTexture(Textures.TREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TREE_ON_GRASS));
             player = new Player(TextureStorage.GetInstance().GetTexture(Textures.NONE), new Vector2(0, 0));
             Level.GetInstance().AddCreature(player);
 
@@ -105,9 +107,9 @@ namespace GGJ_2014
                 .GetMenuScreenOfType(MenuScreenType.MAIN_MENU)
                 .AddControl(
                 new MenuBorderedTextItem(
-                    "Testing test test",
+                    "This is a demo for the global game jam 2014",
                     MenuSystem.GetInstance().MenuFont,
-                    new Vector2(100, 100),
+                    new Vector2(150, 10),
                     Color.SandyBrown
                     ));
 
