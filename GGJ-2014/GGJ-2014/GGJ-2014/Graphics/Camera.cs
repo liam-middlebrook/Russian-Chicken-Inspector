@@ -27,9 +27,12 @@ namespace GGJ_2014.Graphics
             }
         }
 
-        public static void ScreenSize
+        public static Rectangle ScreenSize
         {
-
+            set
+            {
+                screenSize = value;
+            }
         }
 
         public static Rectangle ViewBounds
