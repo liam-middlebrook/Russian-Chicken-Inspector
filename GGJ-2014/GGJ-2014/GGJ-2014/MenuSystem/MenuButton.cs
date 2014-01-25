@@ -31,22 +31,10 @@ namespace GGJ_2014.MenuSystemNS
             this.text = text;
             Vector2 textSize = spriteFont.MeasureString(text);
             this.buttonRect = new Rectangle((int)position.X, (int)position.Y, (int)textSize.X + 20, (int)textSize.Y + 20);
-            GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, color);
+            this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, buttonRect.Width, buttonRect.Height);
             this.OnTriggered += buttonDelegate;
             this.buttonTint = new Color(255, 255, 255, 128);
             keyForTrigger = triggerKey;
-        }
-
-        void GenerateTexture(GraphicsDevice graphics, Color color)
-        {
-            Texture2D tex = new Texture2D(graphics, buttonRect.Width, buttonRect.Height);
-            Color[] colorData = new Color[buttonRect.Width * buttonRect.Height];
-            for (int i = 0; i < colorData.Length; i++)
-            {
-                colorData[i] = color;
-            }
-            tex.SetData<Color>(colorData);
-            buttonTexture = tex;
         }
 
         public override void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState)
