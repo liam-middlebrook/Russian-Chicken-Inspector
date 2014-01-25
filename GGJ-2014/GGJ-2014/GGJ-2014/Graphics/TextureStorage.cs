@@ -42,9 +42,9 @@ namespace GGJ_2014.Graphics
             {
                 return textureLookup[textureId];
             }
-            catch(KeyNotFoundException e)
+            catch(KeyNotFoundException ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
             return textureLookup[Textures.NONE];
         }

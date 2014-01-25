@@ -32,6 +32,7 @@ namespace GGJ_2014
 
         Player player;
 
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -78,15 +79,14 @@ namespace GGJ_2014
 
             //NEEDS TO CHANGE 
             TextureStorage.GetInstance().LoadContent(Content);
-            TextureStorage.GetInstance().AddTexture(Textures.DIRT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT));
-            TextureStorage.GetInstance().AddTexture(Textures.GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.GRASS));
-            TextureStorage.GetInstance().AddTexture(Textures.COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.COBBLESTONE));
-            TextureStorage.GetInstance().AddTexture(Textures.PAVEMENT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.PAVEMENT));
-            TextureStorage.GetInstance().AddTexture(Textures.TREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TREE_ON_GRASS));
-            TextureStorage.GetInstance().AddTexture(Textures.PINETREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.PINETREE_ON_GRASS));
+            TextureStorage.GetInstance().AddTexture(Textures.TILE_DIRT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_DIRT, null));
+            TextureStorage.GetInstance().AddTexture(Textures.TILE_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_GRASS, null));
+            TextureStorage.GetInstance().AddTexture(Textures.TILE_COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_COBBLESTONE, null));
+            TextureStorage.GetInstance().AddTexture(Textures.TILE_PAVEMENT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_PAVEMENT, null));
+            TextureStorage.GetInstance().AddTexture(Textures.TILE_TREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_TREE_ON_GRASS, null));
+            TextureStorage.GetInstance().AddTexture(Textures.TILE_PINETREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_PINETREE_ON_GRASS, null));
+            TextureStorage.GetInstance().AddTexture(Textures.CREATURE_CHICKEN, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_CHICKEN, null));
             player = new Player(TextureStorage.GetInstance().GetTexture(Textures.NONE), new Vector2(0, 0));
-            Level.GetInstance().AddCreature(player);
-
             base.Initialize();
         }
 
@@ -103,16 +103,15 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().Initalize(myFont, GraphicsDevice);
 
+            Level.GetInstance().AddCreature(player);
+
+
             MenuSystemNS.MenuSystem.GetInstance().GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU).AddControl(new MenuSystemNS.MenuButton(Vector2.Zero, "Regen Map!", Color.White, () => { Level.GetInstance().LoadLevel(); }));
             MenuSystem.GetInstance()
                 .GetMenuScreenOfType(MenuScreenType.MAIN_MENU)
                 .AddControl(
-                new MenuBorderedTextItem(
-                    "This is a demo for the global game jam 2014",
-                    MenuSystem.GetInstance().MenuFont,
-                    new Vector2(150, 10),
-                    Color.SandyBrown
-                    ));
+                new MultipleChoiceQuiz()
+                );
 
             // TODO: use this.Content to load your game content here
         }
@@ -175,6 +174,9 @@ namespace GGJ_2014
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
 
+            Console.WriteLine("intelligence: " + Player.Intelligence);
+            Console.WriteLine("charisma: " + Player.Charisma);
+            Console.WriteLine("strength: " + Player.Strength);
 
             base.Update(gameTime);
         }

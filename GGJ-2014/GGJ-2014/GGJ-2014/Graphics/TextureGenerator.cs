@@ -10,18 +10,19 @@ namespace GGJ_2014.Graphics
     enum Textures
     {
         NONE,
-        GRASS,
-        DIRT,
-        COBBLESTONE,
-        PAVEMENT,
-        TREE_ON_GRASS,
-        PINETREE_ON_GRASS,
-        BORDERED
+        BORDERED,
+        TILE_GRASS,
+        TILE_DIRT,
+        TILE_COBBLESTONE,
+        TILE_PAVEMENT,
+        TILE_TREE_ON_GRASS,
+        TILE_PINETREE_ON_GRASS,
+        CREATURE_CHICKEN
     }
 
     class TextureGenerator
     {
-        public static Texture2D GenerateTexture(GraphicsDevice graphicsDevice, Textures textureToGenerate, int width = 0, int height = 0)
+        public static Texture2D GenerateTexture(GraphicsDevice graphicsDevice, Textures textureToGenerate, Color? color, int width = 0, int height = 0)
         {
             Texture2D texture;
 
@@ -37,9 +38,33 @@ namespace GGJ_2014.Graphics
 
             switch (textureToGenerate)
             {
+                #region BORDERED_TEXTURE_GENERATOR
+
+                case Textures.BORDERED:
+                    {
+                        Color fillColor = color ?? Color.White;
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+                                if (x == 0 || x == texture.Width - 1 || y == 0 || y == texture.Height - 1)
+                                {
+                                    textureData[y * texture.Width + x] = Color.Black;
+                                }
+                                else
+                                {
+                                    textureData[y * texture.Width + x] = fillColor;
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                #endregion
+
                 #region DIRT_GENERATOR
 
-                case Textures.DIRT:
+                case Textures.TILE_DIRT:
                     {
                         Color baseColor = Color.Sienna;
                         Color subtractiveColor;
@@ -82,7 +107,7 @@ namespace GGJ_2014.Graphics
 
                 #region GRASS_GENERATOR
 
-                case Textures.GRASS:
+                case Textures.TILE_GRASS:
                     {
                         Color baseColor = Color.MediumSeaGreen;
                         Color subtractiveColor;
@@ -129,7 +154,7 @@ namespace GGJ_2014.Graphics
 
                 #region TREE_ON_GRASS_GENERATOR
 
-                case Textures.TREE_ON_GRASS:
+                case Textures.TILE_TREE_ON_GRASS:
                     {
                         Color baseColor = Color.MediumSeaGreen;
                         Color subtractiveColor;
@@ -192,7 +217,7 @@ namespace GGJ_2014.Graphics
 
                 #region PINETREE_ON_GRASS_GENERATOR
 
-                case Textures.PINETREE_ON_GRASS:
+                case Textures.TILE_PINETREE_ON_GRASS:
                     {
                         Color baseColor = Color.MediumSeaGreen;
                         Color subtractiveColor;
@@ -233,14 +258,13 @@ namespace GGJ_2014.Graphics
                             }
                         }
 
+                        textureData = AddRectangle(
+                            textureData,
+                            new Vector2(texture.Width, texture.Height),
+                            new Rectangle(15, 8, 3, 24),
+                            Color.SaddleBrown
+                            );
 
-                        for (int x = 15; x < 18; x++)
-                        {
-                            for (int y = 8; y < texture.Height; y++)
-                            {
-                                textureData[y * texture.Width + x] = Color.SaddleBrown;
-                            }
-                        }
                         for (int i = 0; i < 5; i++)
                         {
                             int a = rand.Next(-10, 30);
@@ -262,7 +286,7 @@ namespace GGJ_2014.Graphics
 
                 #region PAVEMENT_GENERATOR
 
-                case Textures.PAVEMENT:
+                case Textures.TILE_PAVEMENT:
                     {
                         Color baseColor = Color.SlateGray;
                         Color subtractiveColor;
@@ -309,12 +333,10 @@ namespace GGJ_2014.Graphics
 
                 #region COBBLESTONE_GENERATOR
 
-                case Textures.COBBLESTONE:
+                case Textures.TILE_COBBLESTONE:
                     {
                         Color baseColor = Color.DarkSlateGray;
-                        Color subtractiveColor;
                         Random rand = new Random();
-                        double randVal;
                         for (int y = 0; y < texture.Height; y++)
                         {
                             for (int x = 0; x < texture.Width; x++)
@@ -335,66 +357,40 @@ namespace GGJ_2014.Graphics
                                 AddColor(baseColor, new Color(a, a, a, 0))
                                 );
                         }
-                        /*
-                        for (int y = 0; y < texture.Height; y++)
-                        {
-                            for (int x = 0; x < texture.Width; x++)
-                            {
-                                randVal = rand.NextDouble();
-
-                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width - 1);
-                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height - 1);
-                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width - 1);
-                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height - 1);
-
-                                if (DarkerThan(textureData[y * texture.Width + safeXMax], baseColor)
-                                    || DarkerThan(textureData[y * texture.Width + safeXMin], baseColor)
-                                    || DarkerThan(textureData[safeYMax * texture.Width + x], baseColor)
-                                    || DarkerThan(textureData[safeYMin * texture.Width + x], baseColor))
-                                {
-                                    randVal += 0.25f;
-                                }
-
-                                if (randVal > 0.5)
-                                {
-                                    subtractiveColor = new Color(25, 25, 25, 0);
-                                }
-                                else if (randVal > 0.3)
-                                {
-                                    subtractiveColor = new Color(0, 0, 0, 0);
-                                }
-                                else
-                                {
-                                    subtractiveColor = new Color(25, 25, -25, 0);
-                                }
-
-                                textureData[y * texture.Width + x] = SubtractColor(baseColor, subtractiveColor);
-                            }
-                        }
-                         //*/
                         break;
                     }
 
                 #endregion
 
-                case Textures.BORDERED:
+                #region CREATURE_CHICKEN_GENERATOR
+
+                case Textures.CREATURE_CHICKEN:
                     {
+                        Color baseColor = Color.DarkSlateGray;
+                        Random rand = new Random();
                         for (int y = 0; y < texture.Height; y++)
                         {
                             for (int x = 0; x < texture.Width; x++)
                             {
-                                if (x == 0 || x == texture.Width - 1 || y == 0 || y == texture.Height - 1)
-                                {
-                                    textureData[y * texture.Width + x] = Color.Black;
-                                }
-                                else
-                                {
-                                    textureData[y * texture.Width + x] = Color.White;
-                                }
+
+                                textureData[y * texture.Width + x] = Color.Transparent;
                             }
                         }
+                        int a = rand.Next(-10, 50);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 12, new Vector2(16, 14), SubtractColor(Color.White, new Color(a, a, a, 0)));
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 9, new Vector2(16, 10), Color.Black);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 8, new Vector2(16, 10), SubtractColor(Color.White, new Color(a, a, a, 0)));
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 1, new Vector2(14, 8), Color.Black);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 1, new Vector2(18, 8), Color.Black);
+                        textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(14, 10), new Vector2(18, 10), new Vector2(16, 16) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
+                        textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(20, 28), new Vector2(26, 28), new Vector2(19, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
+                        textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(6, 28), new Vector2(12, 28), new Vector2(13, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
                         break;
                     }
+
+                #endregion
+
+
 
                 #region DEFAULT_TEXTURE_GEN
 
@@ -411,27 +407,29 @@ namespace GGJ_2014.Graphics
                     }
 
                 #endregion
-
             }
             texture.SetData<Color>(textureData);
             return texture;
         }
 
-        public static Color SubtractColor(Color color1, Color color2)
+        private static Color SubtractColor(Color color1, Color color2)
         {
 
             return new Color(color1.R - color2.R, color1.G - color2.G, color1.B - color2.B, color1.A - color2.A);
         }
-        public static Color AddColor(Color color1, Color color2)
+
+        private static Color AddColor(Color color1, Color color2)
         {
 
             return new Color(color1.R + color2.R, color1.G + color2.G, color1.B + color2.B, color1.A + color2.A);
         }
-        public static bool LighterThan(Color color1, Color color2)
+
+        private static bool LighterThan(Color color1, Color color2)
         {
             return (color1.R + color1.G + color1.B + color1.A) / 4.0f > (color2.R + color2.G + color2.B + color2.A) / 4.0f;
         }
-        public static bool DarkerThan(Color color1, Color color2)
+
+        private static bool DarkerThan(Color color1, Color color2)
         {
             return (color1.R + color1.G + color1.B + color1.A) / 4.0f < (color2.R + color2.G + color2.B + color2.A) / 4.0f;
         }
@@ -470,6 +468,21 @@ namespace GGJ_2014.Graphics
             return textureData;
         }
 
+        private static Color[] AddRectangle(Color[] textureData, Vector2 arraySize, Rectangle rect, Color colorToAdd)
+        {
+            for (int x = 0; x < (int)arraySize.X; x++)
+            {
+                for (int y = 0; y < (int)arraySize.Y; y++)
+                {
+                    if (x > rect.Left && x < rect.Right && y > rect.Top && y < rect.Bottom)
+                    {
+                        textureData[y * (int)arraySize.X + x] = colorToAdd;
+                    }
+                }
+            }
+            return textureData;
+        }
+
         private static bool CheckIfPointInTriangle(Vector2[] verticies, Vector2 point)
         {
             Vector2 v0 = verticies[2] - verticies[0];
@@ -491,6 +504,7 @@ namespace GGJ_2014.Graphics
             return (u >= 0) && (v >= 0) && (u + v < 1);
 
         }
+
         private static Vector2 Midpoint(Vector2 vec1, Vector2 vec2)
         {
             return new Vector2((vec1.X + vec2.X) / 2.0f, (vec1.Y + vec2.Y) / 2.0f);

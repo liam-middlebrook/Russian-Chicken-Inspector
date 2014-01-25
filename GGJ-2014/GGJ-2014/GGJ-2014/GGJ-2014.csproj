@@ -88,6 +88,7 @@
     <Compile Include="MenuSystem\MenuTextItem.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\Tile.cs" />
+    <Compile Include="MenuSystem\MultipleChoiceQuiz.cs" />
     <Compile Include="Physics\PhysicsBody.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
