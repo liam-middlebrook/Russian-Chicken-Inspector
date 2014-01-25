@@ -21,11 +21,11 @@ namespace GGJ_2014.Levels
         public const int MAX_NUMBER_OF_HOUSES = 6;
         public const int VILLAGE_BUFFER_SIZE = 10;
         //FORESTS
-        public const int MIN_NUMBER_OF_FORESTS = 5;
-        public const int MAX_NUMBER_OF_FORESTS = 30;
+        public const int MIN_NUMBER_OF_FORESTS = 8;
+        public const int MAX_NUMBER_OF_FORESTS = 35;
         public const int MIN_FOREST_DENSITY = 10;
         public const int MAX_FOREST_DENSITY = 90;
-        public const int MIN_FOREST_SIZE = 3;
+        public const int MIN_FOREST_SIZE = 6;
         public const int MAX_FOREST_SIZE = 30;
         public const float FOREST_GRASS_DENSITY = 0.8f;
 
@@ -43,6 +43,8 @@ namespace GGJ_2014.Levels
 
         private Tile[,] tiles;
         private List<Creature> creatures = new List<Creature>();
+        private List<Rectangle> housesPositions = new List<Rectangle>();
+        private List<Rectangle> villagePositions = new List<Rectangle>();
 
         public Level()
         {
@@ -105,8 +107,12 @@ namespace GGJ_2014.Levels
             {
                 int width = rand.Next(MIN_FOREST_SIZE, MAX_FOREST_SIZE);
                 int height = rand.Next(MIN_FOREST_SIZE, MAX_FOREST_SIZE);
-                //FillInClumpTile();
-                FillInClumpTile(new Rectangle(rand.Next(0, Width - width), rand.Next(0, Height - height), width, height), Textures.TILE_PINETREE_ON_GRASS, true, rand.Next(MIN_FOREST_DENSITY, MAX_FOREST_DENSITY) / 100.0f);
+                int x = rand.Next(0, Width - width);
+                int y = rand.Next(0, Height - height);
+                FillInClumpTile(new Rectangle(x-width/10, y-height/10, width+width/5, height+height/5), Textures.TILE_GRASS, false, FOREST_GRASS_DENSITY);
+                FillInClumpTile(new Rectangle(x - width / 6, y - height / 6, width + width / 3, height + height / 3), Textures.TILE_GRASS, false, FOREST_GRASS_DENSITY/2);
+                FillInClumpTile(new Rectangle(x - width / 2, y - height / 2, width + width, height + height), Textures.TILE_GRASS, false, FOREST_GRASS_DENSITY / 4);
+                FillInClumpTile(new Rectangle(x, y, width, height), Textures.TILE_PINETREE_ON_GRASS, true, rand.Next(MIN_FOREST_DENSITY, MAX_FOREST_DENSITY) / 100.0f);
             }
 
 
@@ -123,8 +129,6 @@ namespace GGJ_2014.Levels
         {
             Random rand = new Random();
 
-            FillTilesIn(new Rectangle(bounds.X -1, bounds.Y - 1, bounds.Width + 2, bounds.Height + 2), Textures.TILE_PAVEMENT, false);
-
             int minX = GetTileIndexInBoundsX(bounds.X);
             int maxX = GetTileIndexInBoundsX(bounds.X + bounds.Width);
             int minY = GetTileIndexInBoundsY(bounds.Y);
@@ -132,6 +136,19 @@ namespace GGJ_2014.Levels
 
             int width = maxX - minX;
             int height = maxY - minY;
+
+            Rectangle village = new Rectangle(minX, minY, width, height);
+
+            for (int v = 0; v < villagePositions.Count; v++)
+            {
+                if (villagePositions[v].Intersects(village))
+                {
+                    return;
+                }
+            }
+            villagePositions.Add(village);
+
+            FillTilesIn(new Rectangle(bounds.X - 1, bounds.Y - 1, bounds.Width + 2, bounds.Height + 2), Textures.TILE_PAVEMENT, false);
 
             int averageHouseSize = (int)Math.Sqrt(width * height / numberOfHouses * 1.2f)/2;
             for (int t = 0; t < numberOfHouses / 2; t++)
@@ -160,6 +177,17 @@ namespace GGJ_2014.Levels
             int width = maxX - minX;
             int height = maxY - minY;
 
+            Rectangle house = new Rectangle(minX + 1, minY + 1, width - 1, height - 1);
+            for (int h = 0; h < housesPositions.Count; h++)
+            {
+                if (housesPositions[h].Intersects(house))
+                {
+                    return;
+                }
+            }
+
+            housesPositions.Add(house);
+
             FillTilesIn(new Rectangle(minX, minY, width, height), floorTexture, false);//Floor
 
             FillTilesIn(new Rectangle(minX, minY, 1, height), wallTexture, true);//Left wall
@@ -168,20 +196,11 @@ namespace GGJ_2014.Levels
             FillTilesIn(new Rectangle(minX, maxY - 1, width, 1), wallTexture, true);//Bottom Wall
 
             //Door stuff
-            int x = rand.Next(minX+2, maxX-1);
+            int x = rand.Next(minX+1, maxX-1);
             int y = minY;
             if (rand.Next(0, 2) == 0)
             {
                 y = maxY - 1;
-            }
-            tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(floorTexture), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), false);
-            if (rand.Next(0, 2) == 0)
-            {
-                x += 1;
-            }
-            else
-            {
-                x -= 1;
             }
             tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(floorTexture), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), false);
         }
