@@ -122,7 +122,7 @@ namespace GGJ_2014.Graphics
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, sourceRect, tintColor, rotation, rotationOrigin, scale, spriteEffects, 1.0f);
+            spriteBatch.Draw(texture, position, sourceRect, tintColor, rotation, rotationOrigin, scale, spriteEffects, 0.0f);
         }
 
     }
