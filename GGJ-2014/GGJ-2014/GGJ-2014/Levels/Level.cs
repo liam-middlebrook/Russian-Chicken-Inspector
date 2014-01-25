@@ -32,7 +32,7 @@ namespace GGJ_2014.Levels
 
         public void LoadLevel()
         {
-            tiles = new Tile[10, 10];
+            tiles = new Tile[100, 100];
 
             Random rand = new Random();
 
@@ -41,7 +41,7 @@ namespace GGJ_2014.Levels
                 for (int y = 0; y < Height; y++)
                 {
                     bool collide = rand.Next(0, 2) == 0;
-                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(collide?Textures.DIRT:Textures.GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(collide ? Textures.DIRT : Textures.GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                 }
             }
         }
@@ -56,9 +56,9 @@ namespace GGJ_2014.Levels
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int x = GetTileIndexInBoundsX(-Camera.ViewBounds.X/Tile.TILE_SIZE-1); x < GetTileIndexInBoundsX((-Camera.ViewBounds.X + Camera.ViewBounds.Width)/Tile.TILE_SIZE + 1); x++)
+            for (int x = GetTileIndexInBoundsX(-Camera.ViewBounds.X / Tile.TILE_SIZE - 1); x < GetTileIndexInBoundsX((-Camera.ViewBounds.X + Camera.ViewBounds.Width) / Tile.TILE_SIZE + 1); x++)
             {
-                for (int y = GetTileIndexInBoundsY(-Camera.ViewBounds.Y/Tile.TILE_SIZE-1); y < GetTileIndexInBoundsY((-Camera.ViewBounds.Y + Camera.ViewBounds.Height)/Tile.TILE_SIZE + 1); y++)
+                for (int y = GetTileIndexInBoundsY(-Camera.ViewBounds.Y / Tile.TILE_SIZE - 1); y < GetTileIndexInBoundsY((-Camera.ViewBounds.Y + Camera.ViewBounds.Height) / Tile.TILE_SIZE + 1); y++)
                 {
                     if (tiles[x, y] != null)
                     {
