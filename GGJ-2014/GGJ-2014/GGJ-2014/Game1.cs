@@ -29,7 +29,6 @@ namespace GGJ_2014
 
         SpriteFont myFont;
 
-        Texture2D testTexture;
 
         Level level;
         int x = 0;
@@ -81,6 +80,9 @@ namespace GGJ_2014
 
             //NEEDS TO CHANGE 
             TextureStorage.GetInstance().LoadContent(Content);
+            TextureStorage.GetInstance().AddTexture(Textures.DIRT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT));
+            TextureStorage.GetInstance().AddTexture(Textures.GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.GRASS));
+            TextureStorage.GetInstance().AddTexture(Textures.COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.COBBLESTONE));
             level = new Level();
 
             base.Initialize();
@@ -109,7 +111,6 @@ namespace GGJ_2014
                     Color.SandyBrown
                     ));
 
-            testTexture = TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT);
             // TODO: use this.Content to load your game content here
         }
 
@@ -190,7 +191,7 @@ namespace GGJ_2014
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
 
             //Add Game Draw code Here
-            //level.Draw(spriteBatch);
+            level.Draw(spriteBatch);
 
             spriteBatch.End();
 
@@ -198,7 +199,6 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().DrawOverlay(spriteBatch);
 
-            spriteBatch.Draw(testTexture, Vector2.Zero, Color.White);
             spriteBatch.End();
 
 

@@ -11,12 +11,29 @@ namespace GGJ_2014.Graphics
     {
         #region SINGLETON_ATTRIBUTES AND METHODS
 
+        static TextureStorage instance;
+
+        public static TextureStorage GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new TextureStorage();
+            }
+            return instance;
+        }
+
+        #endregion
+        
         private Dictionary<Textures, Texture2D> textureLookup = new Dictionary<Textures, Texture2D>();
 
         public void LoadContent(ContentManager content)
         {
-            Console.WriteLine("LOADED");
             textureLookup.Add(Textures.NONE, content.Load<Texture2D>("noTexture"));
+        }
+
+        public void AddTexture(Textures textureID, Texture2D texture)
+        {
+            textureLookup.Add(textureID, texture);
         }
 
         public Texture2D GetTexture(Textures textureId)
@@ -32,17 +49,6 @@ namespace GGJ_2014.Graphics
             return textureLookup[Textures.NONE];
         }
 
-        static TextureStorage instance;
-
-        public static TextureStorage GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new TextureStorage();
-            }
-            return instance;
-        }
-
-        #endregion
+        
     }
 }

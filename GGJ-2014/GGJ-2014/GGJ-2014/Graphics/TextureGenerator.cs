@@ -34,9 +34,11 @@ namespace GGJ_2014.Graphics
 
             switch (textureToGenerate)
             {
+                #region DIRT_GENERATOR
+
                 case Textures.DIRT:
                     {
-                        Color baseColor = Color.Brown;
+                        Color baseColor = Color.Sienna;
                         Color subtractiveColor;
                         Random rand = new Random();
                         double randVal;
@@ -46,32 +48,144 @@ namespace GGJ_2014.Graphics
                             {
                                 randVal = rand.NextDouble();
 
-                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width-1);
-                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height-1);
-                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width-1);
-                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height-1);
+                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width - 1);
+                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height - 1);
+                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width - 1);
+                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height - 1);
 
-                                if ((textureData[y * texture.Width + safeXMax] == AddColor(baseColor, new Color(25, 25, 25, 0)))
-                                    || (textureData[y * texture.Width + safeXMin] == AddColor(baseColor, new Color(25, 25, 25, 0)))
-                                    || (textureData[safeYMax * texture.Width + x] == AddColor(baseColor, new Color(25, 25, 25, 0)))
-                                    || (textureData[safeYMin * texture.Width + x] == AddColor(baseColor, new Color(25, 25, 25, 0))))
+                                if (DarkerThan(textureData[y * texture.Width + safeXMax], baseColor)
+                                    || DarkerThan(textureData[y * texture.Width + safeXMin], baseColor)
+                                    || DarkerThan(textureData[safeYMax * texture.Width + x], baseColor)
+                                    || DarkerThan(textureData[safeYMin * texture.Width + x], baseColor))
                                 {
                                     randVal = MathHelper.Clamp((float)randVal - 0.05f, 0.0f, 1.0f);
                                 }
-                                    
+
                                 if (randVal > 0.7)
                                 {
-                                    subtractiveColor = new Color(0,0,0,0);
+                                    subtractiveColor = new Color(0, 0, 0, 0);
                                 }
                                 else
                                 {
-                                    subtractiveColor = new Color(25,25,25,0);
+                                    subtractiveColor = new Color(25, 25, 25, 0);
                                 }
                                 textureData[y * texture.Width + x] = AddColor(baseColor, subtractiveColor);
                             }
                         }
                         break;
                     }
+
+                #endregion
+
+                #region GRASS_GENERATOR
+
+                case Textures.GRASS:
+                    {
+                        Color baseColor = Color.MediumSeaGreen;
+                        Color subtractiveColor;
+                        Random rand = new Random();
+                        double randVal;
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+                                randVal = rand.NextDouble();
+
+                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width - 1);
+                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height - 1);
+                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width - 1);
+                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height - 1);
+
+                                if (DarkerThan(textureData[y * texture.Width + safeXMax], baseColor)
+                                    || DarkerThan(textureData[y * texture.Width + safeXMin], baseColor)
+                                    || DarkerThan(textureData[safeYMax * texture.Width + x], baseColor)
+                                    || DarkerThan(textureData[safeYMin * texture.Width + x], baseColor))
+                                {
+                                    randVal = MathHelper.Clamp((float)randVal - 0.05f, 0.0f, 1.0f);
+                                }
+
+                                if (randVal > 0.7)
+                                {
+                                    subtractiveColor = new Color(25, 25, 25, 0);
+                                }
+                                else if (randVal > 0.5)
+                                {
+                                    subtractiveColor = new Color(0, 0, 0, 0);
+                                }
+                                else
+                                {
+                                    subtractiveColor = new Color(25, 25, -25, 0);
+                                }
+                                textureData[y * texture.Width + x] = SubtractColor(baseColor, subtractiveColor);
+                            }
+                        }
+                        break;
+                    }
+
+                #endregion
+
+                #region COBBLESTONE_GENERATOR
+
+                case Textures.COBBLESTONE:
+                    {
+                        Color baseColor = Color.DarkSlateGray;
+                        Color subtractiveColor;
+                        Random rand = new Random();
+                        double randVal;
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+
+                                textureData[y * texture.Width + x] = baseColor;
+                            }
+
+                        }
+                        for (int i = 0; i < 5; i++)
+                        {
+                            textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), rand.Next(3, 8), new Vector2(rand.Next(0, 32), rand.Next(0, 32)), AddColor(baseColor, new Color(25, 25, 25, 0)));
+                        }
+                        /*
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+                                randVal = rand.NextDouble();
+
+                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width - 1);
+                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height - 1);
+                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width - 1);
+                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height - 1);
+
+                                if (DarkerThan(textureData[y * texture.Width + safeXMax], baseColor)
+                                    || DarkerThan(textureData[y * texture.Width + safeXMin], baseColor)
+                                    || DarkerThan(textureData[safeYMax * texture.Width + x], baseColor)
+                                    || DarkerThan(textureData[safeYMin * texture.Width + x], baseColor))
+                                {
+                                    randVal += 0.25f;
+                                }
+
+                                if (randVal > 0.5)
+                                {
+                                    subtractiveColor = new Color(25, 25, 25, 0);
+                                }
+                                else if (randVal > 0.3)
+                                {
+                                    subtractiveColor = new Color(0, 0, 0, 0);
+                                }
+                                else
+                                {
+                                    subtractiveColor = new Color(25, 25, -25, 0);
+                                }
+
+                                textureData[y * texture.Width + x] = SubtractColor(baseColor, subtractiveColor);
+                            }
+                        }
+                         //*/
+                        break;
+                    }
+
+                #endregion
 
                 case Textures.BORDERED:
                     {
@@ -122,6 +236,33 @@ namespace GGJ_2014.Graphics
         {
 
             return new Color(color1.R + color2.R, color1.G + color2.G, color1.B + color2.B, color1.A + color2.A);
+        }
+        public static bool LighterThan(Color color1, Color color2)
+        {
+            return (color1.R + color1.G + color1.B + color1.A) / 4.0f > (color2.R + color2.G + color2.B + color2.A) / 4.0f;
+        }
+        public static bool DarkerThan(Color color1, Color color2)
+        {
+            return (color1.R + color1.G + color1.B + color1.A) / 4.0f < (color2.R + color2.G + color2.B + color2.A) / 4.0f;
+        }
+
+        private static Color[] AddCircle(Color[] textureData, Vector2 arraySize, int radius, Vector2 position, Color colorToAdd)
+        {
+            Random rand = new Random();
+
+            for (int x = 0; x < (int)arraySize.X; x++)
+            {
+                for (int y = 0; y < (int)arraySize.Y; y++)
+                {
+                    //y = +/- sqrt(r^2-x^2)
+                    //so fill when y <= sqrt(r^2-x^2) AND y >= -sqrt(r^2-x^2)
+                    if (y - (int)position.Y <= Math.Sqrt(radius * radius - (x - (int)position.X) * (x - (int)position.X)) && y - (int)position.Y >= -Math.Sqrt(radius * radius - (x - (int)position.X) * (x - (int)position.X)))
+                    {
+                        textureData[y * (int)arraySize.X + x] = colorToAdd;
+                    }
+                }
+            }
+            return textureData;
         }
     }
 }
