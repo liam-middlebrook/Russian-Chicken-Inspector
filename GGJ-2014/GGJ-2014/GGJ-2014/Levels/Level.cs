@@ -45,23 +45,23 @@ namespace GGJ_2014.Levels
                     //tileTex = 1; // Set Texture to test the ELSE condition
                     if (tileTex < 0.3)
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.COBBLESTONE), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_COBBLESTONE), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                     }
                     else if (tileTex < 0.5)
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.DIRT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_DIRT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                     }
                     else if (tileTex < 0.7)
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                     }
                     else if (tileTex < 0.85)
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.PAVEMENT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_PAVEMENT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                     }
                     else
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.PINETREE_ON_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(rand.NextDouble() > 0.5 ?Textures.TILE_PINETREE_ON_GRASS : Textures.TILE_TREE_ON_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                     }
                 }
             }
