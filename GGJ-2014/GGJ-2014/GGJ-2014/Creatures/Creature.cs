@@ -23,8 +23,8 @@ namespace GGJ_2014
         : PhysicsBody
     {
         private string identifier = "FILL THIS OUT";
-        private Direction directionFacing = Direction.NORTH;
-        private float walkSpeed = 0.5f;
+        protected Direction directionFacing = Direction.NORTH;
+        protected float walkSpeed = 0.5f;
         private Rectangle collisionBox;
 
         public Creature(Texture2D texture, Vector2 position, string identifier)
@@ -114,17 +114,9 @@ namespace GGJ_2014
             return tile == null || (tile != null && tile.IsSolid);
         }
 
-        public virtual void HandleInput(KeyboardState keyState)
-        {
-            Direction direction = 0;
-            direction = keyState.IsKeyDown(Keys.W) ? Direction.NORTH : direction;
-            direction = keyState.IsKeyDown(Keys.S) ? Direction.SOUTH : direction;
-            direction = keyState.IsKeyDown(Keys.A) ? Direction.WEST : direction;
-            direction = keyState.IsKeyDown(Keys.D) ? Direction.EAST : direction;
-            Walk(direction);
-        }
+        public abstract void HandleInput(KeyboardState keyState);
 
-        private void Walk(Direction walkDirection)
+        protected void Walk(Direction walkDirection)
         {
             directionFacing = walkDirection;
             switch (walkDirection)
