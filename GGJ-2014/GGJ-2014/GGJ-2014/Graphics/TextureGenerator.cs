@@ -17,6 +17,7 @@ namespace GGJ_2014.Graphics
         TILE_PAVEMENT,
         TILE_TREE_ON_GRASS,
         TILE_PINETREE_ON_GRASS,
+        TILE_PINETREE_STUMP,
         TILE_BRICK_WALL,
         TILE_WOOD_PLANK,
         CREATURE_CHICKEN,
@@ -349,10 +350,68 @@ namespace GGJ_2014.Graphics
                             textureData = AddTriangle(
                                 textureData,
                                 new Vector2(texture.Width, texture.Height),
-                                new[] { new Vector2(16, rand.Next(0, 10)), new Vector2(rand.Next(0, 8), rand.Next(14, 24)), new Vector2(rand.Next(24,32), rand.Next(14, 24)) },
+                                new[] { new Vector2(16, rand.Next(0, 10)), new Vector2(rand.Next(0, 8), rand.Next(14, 24)), new Vector2(rand.Next(24, 32), rand.Next(14, 24)) },
                                 SubtractColor(Color.ForestGreen, new Color(a, a, a, 20))
                                 );
                         }
+
+
+
+                        break;
+                    }
+
+                #endregion
+
+                #region PINETREE_STUMP_GENERATOR
+
+                case Textures.TILE_PINETREE_STUMP:
+                    {
+                        Color baseColor = Color.MediumSeaGreen;
+                        Color subtractiveColor;
+                        Random rand = new Random();
+                        double randVal;
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+                                randVal = rand.NextDouble();
+
+                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width - 1);
+                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height - 1);
+                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width - 1);
+                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height - 1);
+
+                                if (DarkerThan(textureData[y * texture.Width + safeXMax], baseColor)
+                                    || DarkerThan(textureData[y * texture.Width + safeXMin], baseColor)
+                                    || DarkerThan(textureData[safeYMax * texture.Width + x], baseColor)
+                                    || DarkerThan(textureData[safeYMin * texture.Width + x], baseColor))
+                                {
+                                    randVal = MathHelper.Clamp((float)randVal - 0.05f, 0.0f, 1.0f);
+                                }
+
+                                if (randVal > 0.7)
+                                {
+                                    subtractiveColor = new Color(25, 25, 25, 0);
+                                }
+                                else if (randVal > 0.5)
+                                {
+                                    subtractiveColor = new Color(0, 0, 0, 0);
+                                }
+                                else
+                                {
+                                    subtractiveColor = new Color(25, 25, -25, 0);
+                                }
+                                textureData[y * texture.Width + x] = SubtractColor(baseColor, subtractiveColor);
+                            }
+                        }
+
+                        textureData = AddRectangle(
+                            textureData,
+                            new Vector2(texture.Width, texture.Height),
+                            new Rectangle(15, 24, 3, 8),
+                            Color.SaddleBrown
+                            );
+
 
 
 
