@@ -19,8 +19,10 @@ namespace GGJ_2014.Graphics
 
         public static void Focus(float x, float y)
         {
-            viewBounds = new Rectangle((int)Math.Round(-x + screenSize.Width / 2.0), (int)Math.Round(-y + screenSize.Height / 2.0), screenSize.Width, screenSize.Height);
-            cameraMatrix = Matrix.CreateTranslation(viewBounds.X, viewBounds.Y, 1.0f);
+            float cameraX =- x + screenSize.Width / 2.0f;
+            float cameraY = -y + screenSize.Height / 2.0f;
+            cameraMatrix = Matrix.CreateTranslation(cameraX, cameraY, 1.0f);
+            viewBounds = new Rectangle((int)Math.Round(cameraX), (int)Math.Round(cameraY), screenSize.Width, screenSize.Height);
         }
 
         public static Matrix CameraMatrix
