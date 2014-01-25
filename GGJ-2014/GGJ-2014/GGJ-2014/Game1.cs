@@ -32,6 +32,8 @@ namespace GGJ_2014
         Texture2D testTexture;
 
         Level level;
+
+        //Test
         int x = 0;
         int y = 0;
 
