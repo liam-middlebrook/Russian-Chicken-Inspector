@@ -36,11 +36,38 @@ namespace GGJ_2014.Graphics
             {
                 case Textures.DIRT:
                     {
+                        Color baseColor = Color.Brown;
+                        Color subtractiveColor;
+                        Random rand = new Random();
+                        double randVal;
                         for (int y = 0; y < texture.Height; y++)
                         {
                             for (int x = 0; x < texture.Width; x++)
                             {
-                                textureData[y * texture.Width + x] = Color.Brown;
+                                randVal = rand.NextDouble();
+
+                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width-1);
+                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height-1);
+                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width-1);
+                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height-1);
+
+                                if ((textureData[y * texture.Width + safeXMax] == AddColor(baseColor, new Color(25, 25, 25, 0)))
+                                    || (textureData[y * texture.Width + safeXMin] == AddColor(baseColor, new Color(25, 25, 25, 0)))
+                                    || (textureData[safeYMax * texture.Width + x] == AddColor(baseColor, new Color(25, 25, 25, 0)))
+                                    || (textureData[safeYMin * texture.Width + x] == AddColor(baseColor, new Color(25, 25, 25, 0))))
+                                {
+                                    randVal = MathHelper.Clamp((float)randVal - 0.05f, 0.0f, 1.0f);
+                                }
+                                    
+                                if (randVal > 0.7)
+                                {
+                                    subtractiveColor = new Color(0,0,0,0);
+                                }
+                                else
+                                {
+                                    subtractiveColor = new Color(25,25,25,0);
+                                }
+                                textureData[y * texture.Width + x] = AddColor(baseColor, subtractiveColor);
                             }
                         }
                         break;
@@ -84,6 +111,17 @@ namespace GGJ_2014.Graphics
             }
             texture.SetData<Color>(textureData);
             return texture;
+        }
+
+        public static Color SubtractColor(Color color1, Color color2)
+        {
+
+            return new Color(color1.R - color2.R, color1.G - color2.G, color1.B - color2.B, color1.A - color2.A);
+        }
+        public static Color AddColor(Color color1, Color color2)
+        {
+
+            return new Color(color1.R + color2.R, color1.G + color2.G, color1.B + color2.B, color1.A + color2.A);
         }
     }
 }
