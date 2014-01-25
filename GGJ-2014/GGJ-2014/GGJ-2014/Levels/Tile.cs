@@ -13,11 +13,13 @@ namespace GGJ_2014.Levels
         public const int TILE_SIZE = 32;
 
         private bool isSolid = false;
+        private Textures type;
 
-        public Tile(Texture2D texture, Vector2 position, bool isSolid)
-            : base(texture, position)
+        public Tile(Textures texture, Vector2 position, bool isSolid)
+            : base(TextureStorage.GetInstance().GetTexture(texture), position)
         {
             this.isSolid = isSolid;
+            this.type = texture;
         }
 
         public Rectangle TileRectangle
@@ -37,6 +39,14 @@ namespace GGJ_2014.Levels
             set
             {
                 isSolid = value;
+            }
+        }
+
+        public Textures Type
+        {
+            get
+            {
+                return type;
             }
         }
     }

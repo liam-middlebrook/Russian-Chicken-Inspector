@@ -97,7 +97,7 @@ namespace GGJ_2014.Levels
                 int x = rand.Next(0, Width - width);
                 int y = rand.Next(0, Height - height);
                 FadeFillTexure(new Rectangle(x, y, width, height), Textures.TILE_COBBLESTONE, false, 1.0f);
-                FillInClumpTile(new Rectangle(x, y, width, height), Textures.TILE_TREE_ON_GRASS, true, rand.Next(MIN_BUSH_DENSITY, MAX_BUSH_DENSITY) / 100.0f);
+                FillInClumpTile(new Rectangle(x, y, width, height), Textures.TILE_TREE_ON_GRASS, true, BUSH_DENSITY);
             }
 
             //FORESTS
@@ -206,7 +206,7 @@ namespace GGJ_2014.Levels
             {
                 y = maxY - 1;
             }
-            tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(floorTexture), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), false);
+            tiles[x, y] = new Tile(floorTexture, new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), false);
         }
 
         private void FillTilesIn(Rectangle bounds, Textures tileTexture, bool isSolid)
