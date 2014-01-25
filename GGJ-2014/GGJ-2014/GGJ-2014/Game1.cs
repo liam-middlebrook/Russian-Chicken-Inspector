@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Media;
 using GGJ_2014.Graphics;
 using GGJ_2014.MenuSystemNS;
 using GGJ_2014.Levels;
-using GGJ_2014.Creatures;
 
 namespace GGJ_2014
 {
@@ -30,9 +29,12 @@ namespace GGJ_2014
 
         SpriteFont myFont;
 
-        Texture2D testTexture;
 
-        Player player;
+        Level level;
+
+        //Test
+        int x = 0;
+        int y = 0;
 
         public Game1()
         {
@@ -80,9 +82,10 @@ namespace GGJ_2014
 
             //NEEDS TO CHANGE 
             TextureStorage.GetInstance().LoadContent(Content);
-
-            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.NONE), new Vector2(0, 0));
-            Level.GetInstance().AddCreature(player);
+            TextureStorage.GetInstance().AddTexture(Textures.DIRT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT));
+            TextureStorage.GetInstance().AddTexture(Textures.GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.GRASS));
+            TextureStorage.GetInstance().AddTexture(Textures.COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.COBBLESTONE));
+            level = new Level();
 
             base.Initialize();
         }
@@ -110,7 +113,6 @@ namespace GGJ_2014
                     Color.SandyBrown
                     ));
 
-            testTexture = TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT);
             // TODO: use this.Content to load your game content here
         }
 
@@ -135,9 +137,11 @@ namespace GGJ_2014
                 this.Exit();
 
             // TODO: Add your update logic here
-            player.Walk(keyState.IsKeyDown(Keys.W),keyState.IsKeyDown(Keys.D), keyState.IsKeyDown(Keys.S),keyState.IsKeyDown(Keys.A));
-            Level.GetInstance().Update(gameTime);
-            Camera.Focus(player.MiddlePosition);
+            x += keyState.IsKeyDown(Keys.D) ? 3 : 0;
+            x -= keyState.IsKeyDown(Keys.A) ? 3 : 0;
+            y += keyState.IsKeyDown(Keys.S) ? 3 : 0;
+            y -= keyState.IsKeyDown(Keys.W) ? 3 : 0;
+            Camera.Focus(x, y);
             switch (MenuSystem.GetInstance().CurrentScreenType)
             {
                 case MenuScreenType.MAIN_MENU:
@@ -148,7 +152,7 @@ namespace GGJ_2014
 
                 case MenuScreenType.GAMEPLAY:
                     {
-
+                        level.Update(gameTime);
                         break;
                     }
 
@@ -189,7 +193,7 @@ namespace GGJ_2014
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
 
             //Add Game Draw code Here
-            Level.GetInstance().Draw(spriteBatch);
+            level.Draw(spriteBatch);
 
             spriteBatch.End();
 
@@ -197,7 +201,6 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().DrawOverlay(spriteBatch);
 
-            spriteBatch.Draw(testTexture, Vector2.Zero, Color.White);
             spriteBatch.End();
 
 
