@@ -5,17 +5,23 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GGJ_2014.Graphics;
+using GGJ_2014.Levels;
 
-namespace GGJ_2014.Level
+namespace GGJ_2014.Levels
 {
     class Level
     {
         private Tile[,] tiles;
         private List<Creature> creatures = new List<Creature>();
 
+        public Level()
+        {
+            LoadLevel();
+        }
+
         public void LoadLevel()
         {
-
+            tiles = new Tile[10, 10];
         }
 
         public void Update(GameTime gameTime)
@@ -32,7 +38,11 @@ namespace GGJ_2014.Level
             {
                 for (int y = GetTileIndexInBoundsY(Camera.ViewBounds.Y); GetTileIndexInBoundsY(Camera.ViewBounds.Y + Camera.ViewBounds.Height) < Height; y++)
                 {
-                    tiles[x, y].Draw(spriteBatch);
+                    Console.WriteLine(x + " "  + y + "  " + ( y < Width));
+                    if (tiles[x, y] != null)
+                    {
+                        tiles[x, y].Draw(spriteBatch);
+                    }
                 }
             }
 
@@ -41,6 +51,16 @@ namespace GGJ_2014.Level
             {
                 creatures[c].Draw(spriteBatch);
             }
+        }
+
+        public void AddCreature(Creature creature)
+        {
+            creatures.Add(creature);
+        }
+
+        public void RemoveCreature(Creature creature)
+        {
+            creatures.Remove(creature);
         }
 
         public Tile GetTile(int x, int y)
@@ -64,6 +84,7 @@ namespace GGJ_2014.Level
 
         public int GetTileIndexInBoundsY(int y)
         {
+            Console.WriteLine("Height " + Height);
             return (int)MathHelper.Clamp(y, 0, Height - 1);
         }
 

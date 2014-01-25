@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GGJ_2014.Levels;
 
 namespace GGJ_2014.Graphics
 {
@@ -20,7 +21,7 @@ namespace GGJ_2014.Graphics
         {
             Texture2D texture;
 
-            texture = new Texture2D(graphicsDevice, Level.Tile.TILE_SIZE, Level.Tile.TILE_SIZE);
+            texture = new Texture2D(graphicsDevice, Tile.TILE_SIZE, Tile.TILE_SIZE);
 
             Color[] textureData = new Color[texture.Width * texture.Height];
 

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using GGJ_2014.Graphics;
 using GGJ_2014.MenuSystemNS;
+using GGJ_2014.Levels;
 
 namespace GGJ_2014
 {
@@ -30,12 +31,16 @@ namespace GGJ_2014
 
         Texture2D testTexture;
 
+        Level level = new Level();
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
+
+            Camera.ScreenSize = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
             Content.RootDirectory = "Content";
 
@@ -126,7 +131,7 @@ namespace GGJ_2014
 
                 case MenuScreenType.GAMEPLAY:
                     {
-
+                        level.Update(gameTime);
                         break;
                     }
 
@@ -167,7 +172,7 @@ namespace GGJ_2014
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
 
             //Add Game Draw code Here
-
+            level.Draw(spriteBatch);
 
             spriteBatch.End();
 

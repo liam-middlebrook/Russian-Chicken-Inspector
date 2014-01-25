@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using GGJ_2014.Graphics;
 
-namespace GGJ_2014.Level
+namespace GGJ_2014.Levels
 {
     class Tile : Sprite
     {
