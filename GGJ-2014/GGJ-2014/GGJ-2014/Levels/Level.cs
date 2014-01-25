@@ -22,12 +22,26 @@ namespace GGJ_2014.Levels
         public const int VILLAGE_BUFFER_SIZE = 10;
         //FORESTS
         public const int MIN_NUMBER_OF_FORESTS = 8;
-        public const int MAX_NUMBER_OF_FORESTS = 35;
+        public const int MAX_NUMBER_OF_FORESTS = 25;
         public const int MIN_FOREST_DENSITY = 10;
         public const int MAX_FOREST_DENSITY = 90;
         public const int MIN_FOREST_SIZE = 6;
         public const int MAX_FOREST_SIZE = 30;
         public const float FOREST_GRASS_DENSITY = 0.8f;
+        //GRASS PLANE
+        public const int MIN_NUMBER_OF_GRASS = 10;
+        public const int MAX_NUMBER_OF_GRASS = 20;
+        public const int MIN_GRASS_SIZE = 5;
+        public const int MAX_GRASS_SIZE = 30;
+        public const int MIN_BUSH_DENSITY = 4;
+        public const int MAX_BUSH_DENSITY = 10;
+        public const int GRASS_DENSITY = 100;
+        //ROCK
+        public const int MIN_NUMBER_OF_ROCKS = 1;
+        public const int MAX_NUMBER_OF_ROCKS = 4;
+        public const int MIN_ROCK_SIZE = 20;
+        public const int MAX_ROCK_SIZE = 30;
+        public const float BUSH_DENSITY = 1;
 
 
         static Level instance;
@@ -53,55 +67,40 @@ namespace GGJ_2014.Levels
 
         public void LoadLevel()
         {
-            tiles = new Tile[100, 100];
+            tiles = new Tile[128, 128];
 
             Random rand = new Random();
             List<Textures> availableTiles = new List<Textures>(new[] { Textures.TILE_COBBLESTONE, Textures.TILE_DIRT, Textures.TILE_GRASS });
             Textures tileToDraw = availableTiles[rand.Next(0, availableTiles.Count)];
-            //for (int x = 0; x < Width; x++)
-            //{
-            //    for (int y = 0; y < Height; y++)
-            //    {
-            //        bool collide;
 
-            //        double randNum = rand.NextDouble();
-            //        double randThreshold = 0.45;
-
-            //        if (tileToDraw == Textures.TILE_TREE_ON_GRASS || tileToDraw == Textures.TILE_PINETREE_ON_GRASS)
-            //        {
-            //            randThreshold = 0.3;
-            //        }
-            //        if (randNum >= randThreshold)
-            //        {
-            //            Textures tileDrawn = tileToDraw;
-
-
-
-            //            tileToDraw = availableTiles[rand.Next(0, availableTiles.Count)];
-
-            //            randNum = rand.NextDouble();
-
-
-            //            if (randNum > 0.99995)
-            //            {
-            //                tileToDraw = Textures.TILE_PINETREE_ON_GRASS;
-            //            }
-            //            else if (randNum > 0.9999)
-            //            {
-            //                tileToDraw = Textures.TILE_TREE_ON_GRASS;
-            //            }
-
-            //            availableTiles.Remove(tileToDraw);
-
-            //            availableTiles.Add(tileDrawn);
-            //        }
-            //        collide = tileToDraw == Textures.TILE_COBBLESTONE || tileToDraw == Textures.TILE_PINETREE_ON_GRASS || tileToDraw == Textures.TILE_TREE_ON_GRASS;
-            //        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(tileToDraw), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
-
-            //    }
-            //}
+            //DIRT
             FillTilesIn(new Rectangle(0, 0, Width, Height), Textures.TILE_DIRT, false);
 
+            //GRASS PLANES
+            int numberOfGrass = rand.Next(MIN_NUMBER_OF_GRASS, MAX_NUMBER_OF_GRASS);
+            for (int g = 0; g < numberOfGrass; g++)
+            {
+                int width = rand.Next(MIN_GRASS_SIZE, MAX_GRASS_SIZE);
+                int height = rand.Next(MIN_GRASS_SIZE, MAX_GRASS_SIZE);
+                int x = rand.Next(0, Width - width);
+                int y = rand.Next(0, Height - height);
+                FadeFillTexure(new Rectangle(x, y, width, height), Textures.TILE_GRASS, false, GRASS_DENSITY / 100.0f);
+                FillInClumpTile(new Rectangle(x, y, width, height), Textures.TILE_TREE_ON_GRASS, true, rand.Next(MIN_BUSH_DENSITY, MAX_BUSH_DENSITY) / 100.0f);
+            }
+
+            //ROCKS
+            int numberOfRocks = rand.Next(MIN_NUMBER_OF_ROCKS, MAX_NUMBER_OF_ROCKS);
+            for (int r = 0; r < numberOfRocks; r++)
+            {
+                int width = rand.Next(MIN_ROCK_SIZE, MAX_ROCK_SIZE);
+                int height = rand.Next(MIN_ROCK_SIZE, MAX_ROCK_SIZE);
+                int x = rand.Next(0, Width - width);
+                int y = rand.Next(0, Height - height);
+                FadeFillTexure(new Rectangle(x, y, width, height), Textures.TILE_COBBLESTONE, false, 1.0f);
+                FillInClumpTile(new Rectangle(x, y, width, height), Textures.TILE_TREE_ON_GRASS, true, rand.Next(MIN_BUSH_DENSITY, MAX_BUSH_DENSITY) / 100.0f);
+            }
+
+            //FORESTS
             int numberOfForest = rand.Next(MIN_NUMBER_OF_FORESTS, MAX_NUMBER_OF_FORESTS);
             for (int f = 0; f < numberOfForest; f++)
             {
@@ -109,13 +108,11 @@ namespace GGJ_2014.Levels
                 int height = rand.Next(MIN_FOREST_SIZE, MAX_FOREST_SIZE);
                 int x = rand.Next(0, Width - width);
                 int y = rand.Next(0, Height - height);
-                FillInClumpTile(new Rectangle(x-width/10, y-height/10, width+width/5, height+height/5), Textures.TILE_GRASS, false, FOREST_GRASS_DENSITY);
-                FillInClumpTile(new Rectangle(x - width / 6, y - height / 6, width + width / 3, height + height / 3), Textures.TILE_GRASS, false, FOREST_GRASS_DENSITY/2);
-                FillInClumpTile(new Rectangle(x - width / 2, y - height / 2, width + width, height + height), Textures.TILE_GRASS, false, FOREST_GRASS_DENSITY / 4);
+                FadeFillTexure(new Rectangle(x, y, width, height), Textures.TILE_GRASS, false, FOREST_GRASS_DENSITY);
                 FillInClumpTile(new Rectangle(x, y, width, height), Textures.TILE_PINETREE_ON_GRASS, true, rand.Next(MIN_FOREST_DENSITY, MAX_FOREST_DENSITY) / 100.0f);
             }
 
-
+            //VILLAGES
             int numberOfVillages = rand.Next(MIN_NUMBER_OF_VILLAGES, MAX_NUMBER_OF_VILLAGES);
             for (int v = 0; v < numberOfVillages; v++)
             {
@@ -123,6 +120,13 @@ namespace GGJ_2014.Levels
                 int height = rand.Next(MIN_VILLAGE_SIZE, MAX_VILLAGE_SIZE);
                 PlaceVillage(new Rectangle(rand.Next(VILLAGE_BUFFER_SIZE, Width - VILLAGE_BUFFER_SIZE - width), rand.Next(VILLAGE_BUFFER_SIZE, Height - VILLAGE_BUFFER_SIZE - height), width, height), rand.Next(MIN_NUMBER_OF_HOUSES, MAX_NUMBER_OF_HOUSES));
             }
+        }
+
+        private void FadeFillTexure(Rectangle bounds, Textures texture, bool isSolid, float density)
+        {
+            FillInClumpTile(new Rectangle(bounds.X - bounds.Width / 10, bounds.Y - bounds.Height / 10, bounds.Width + bounds.Width / 5, bounds.Height + bounds.Height / 5), texture, isSolid, density);
+            FillInClumpTile(new Rectangle(bounds.X - bounds.Width / 6, bounds.Y - bounds.Height / 6, bounds.Width + bounds.Width / 3, bounds.Height + bounds.Height / 3), texture, isSolid, density / 2);
+            FillInClumpTile(new Rectangle(bounds.X - bounds.Width / 2, bounds.Y - bounds.Height / 2, bounds.Width + bounds.Width, bounds.Height + bounds.Height), texture, isSolid, density / 4);
         }
 
         private void PlaceVillage(Rectangle bounds, int numberOfHouses)

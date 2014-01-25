@@ -481,8 +481,8 @@ namespace GGJ_2014.Graphics
                                 textureData[y * texture.Width + x] = Color.Transparent;
                             }
                         }
-                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 16, new Vector2(16, 16), baseColor);
-                        textureData = AddRectangle(textureData, new Vector2(texture.Width, texture.Height), new Rectangle(14, 2, 3, 8), Color.Black);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), width/2, new Vector2(width/2, height/2), baseColor);
+                        textureData = AddRectangle(textureData, new Vector2(texture.Width, texture.Height), new Rectangle(width/2-2, 1, 3, height/3), Color.Black);
                         break;
                     }
 
