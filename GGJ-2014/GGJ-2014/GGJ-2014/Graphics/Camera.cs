@@ -9,7 +9,7 @@ namespace GGJ_2014.Graphics
     class Camera
     {
         private static Matrix cameraMatrix;
-        private static Rectangle screenSize = new Rectangle(0, 0, 800, 500);
+        private static Rectangle screenSize = new Rectangle(0, 0, 800, 600);
         private static Rectangle viewBounds = new Rectangle(0, 0, 0, 0);
 
 

@@ -42,11 +42,11 @@ namespace GGJ_2014.Levels
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int x = 0; x < Width; x++)//GetTileIndexInBoundsX(Camera.ViewBounds.X + Camera.ViewBounds.Width)
+            for (int x = GetTileIndexInBoundsX(-Camera.ViewBounds.X/Tile.TILE_SIZE-1); x < GetTileIndexInBoundsX((-Camera.ViewBounds.X + Camera.ViewBounds.Width)/Tile.TILE_SIZE + 1); x++)
             {
-                for (int y = 0; y < Height; y++)//GetTileIndexInBoundsY(Camera.ViewBounds.Y + Camera.ViewBounds.Height)
+                for (int y = GetTileIndexInBoundsY(-Camera.ViewBounds.Y/Tile.TILE_SIZE-1); y < GetTileIndexInBoundsY((-Camera.ViewBounds.Y + Camera.ViewBounds.Height)/Tile.TILE_SIZE + 1); y++)
                 {
-                    if (true || tiles[x, y] != null)
+                    if (tiles[x, y] != null)
                     {
                         tiles[x, y].Draw(spriteBatch);
                     }
