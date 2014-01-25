@@ -41,7 +41,28 @@ namespace GGJ_2014.Levels
                 for (int y = 0; y < Height; y++)
                 {
                     bool collide = rand.Next(0, 2) == 0;
-                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(collide ? Textures.DIRT : Textures.GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                    double tileTex = rand.NextDouble();
+                    //tileTex = 1; // Set Texture to test the ELSE condition
+                    if (tileTex < 0.3)
+                    {
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.COBBLESTONE), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                    }
+                    else if (tileTex < 0.5)
+                    {
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.DIRT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                    }
+                    else if (tileTex < 0.7)
+                    {
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                    }
+                    else if (tileTex < 0.85)
+                    {
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.PAVEMENT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                    }
+                    else
+                    {
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TREE_ON_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                    }
                 }
             }
         }
