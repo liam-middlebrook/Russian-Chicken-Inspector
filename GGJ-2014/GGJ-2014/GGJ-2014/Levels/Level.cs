@@ -60,13 +60,14 @@ namespace GGJ_2014.Levels
 
                         randNum = rand.NextDouble();
 
-                        if (randNum > 0.9999)
-                        {
-                            tileToDraw = Textures.TILE_TREE_ON_GRASS;
-                        }
+
                         if (randNum > 0.99995)
                         {
                             tileToDraw = Textures.TILE_PINETREE_ON_GRASS;
+                        }
+                        else if (randNum > 0.9999)
+                        {
+                            tileToDraw = Textures.TILE_TREE_ON_GRASS;
                         }
 
                         availableTiles.Remove(tileToDraw);

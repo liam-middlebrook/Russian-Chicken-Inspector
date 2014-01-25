@@ -23,35 +23,41 @@ namespace GGJ_2014
         private string identifier = "FILL THIS OUT";
         private Direction directionFacing = Direction.NORTH;
         private float walkSpeed = 0.3f;
-        private Rectangle collitionBox;
+        private Rectangle collisionBox;
 
         public Creature(Texture2D texture, Vector2 position, string identifier)
             : base(texture, position)
         {
             this.RotationOrigin = new Vector2(texture.Width/2, texture.Height/2);
             this.identifier = identifier;
-            collitionBox = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
+            collisionBox = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             SyncCollitionBox();
-            CheckLevelCollitions();
+            CheckLevelCollisions();
         }
 
         protected void SyncCollitionBox()
         {
-            collitionBox.X = (int)Position.X;
-            collitionBox.Y = (int)Position.Y;
+            collisionBox.X = (int)Position.X;
+            collisionBox.Y = (int)Position.Y;
         }
 
-        public void CheckLevelCollitions()
+        public void CheckLevelCollisions()
         {
-            //for (int x = Level.GetInstance().GetTileIndexInBoundsX(Position.X / Tile.TILE_SIZE); x < Level.GetInstance().GetTileIndexInBoundsX((Position.X + Texture.Width) / Tile.TILE_SIZE); x++)
-            //{
-
-            //}
+            for (int x = Level.GetInstance().GetTileIndexInBoundsX((int)Position.X / Tile.TILE_SIZE); x < Level.GetInstance().GetTileIndexInBoundsX(((int)Position.X + Texture.Width) / Tile.TILE_SIZE); x++)
+            {
+                for (int y = Level.GetInstance().GetTileIndexInBoundsY((int)Position.Y / Tile.TILE_SIZE); x < Level.GetInstance().GetTileIndexInBoundsY(((int)Position.Y + Texture.Width) / Tile.TILE_SIZE); y++)
+                {
+                    if (Level.GetInstance().GetTile(x, y).IsSolid)
+                    {
+                        //COLLISION IS HAPPENING!!!11!
+                    }
+                }
+            }
         }
 
         public void Walk(bool north, bool east, bool south, bool west)
