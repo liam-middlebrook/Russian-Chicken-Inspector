@@ -514,13 +514,14 @@ namespace GGJ_2014.Graphics
                         }
                         int a = rand.Next(-10, 50);
                         textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 12, new Vector2(16, 14), SubtractColor(Color.White, new Color(a, a, a, 0)));
-                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 9, new Vector2(16, 10), Color.Black);
-                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 8, new Vector2(16, 10), SubtractColor(Color.White, new Color(a, a, a, 0)));
-                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 1, new Vector2(14, 8), Color.Black);
-                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 1, new Vector2(18, 8), Color.Black);
-                        textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(14, 10), new Vector2(18, 10), new Vector2(16, 16) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
-                        textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(20, 28), new Vector2(26, 28), new Vector2(19, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
-                        textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(6, 28), new Vector2(12, 28), new Vector2(13, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
+                        //textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 9, new Vector2(16, 10), Color.Black);
+                        //textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 8, new Vector2(16, 10), SubtractColor(Color.White, new Color(a, a, a, 0)));
+                       textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(10, 10), new Vector2(24, 10), new Vector2(16, 0) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
+                        //textureData = AddRectangle(textureData, new Vector2(texture.Width, texture.Height), new Rectangle(14, 12, 5, 8), Color.Red);
+                        //textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(20, 28), new Vector2(26, 28), new Vector2(19, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
+                        //textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(6, 28), new Vector2(12, 28), new Vector2(13, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
+                         textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 2, new Vector2(10, 14), Color.Black);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 2, new Vector2(22, 14), Color.Black);
                         break;
                     }
 
