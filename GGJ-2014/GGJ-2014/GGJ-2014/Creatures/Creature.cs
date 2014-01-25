@@ -24,7 +24,7 @@ namespace GGJ_2014
     {
         private string identifier = "FILL THIS OUT";
         private Direction directionFacing = Direction.NORTH;
-        private float walkSpeed = 0.2f;
+        private float walkSpeed = 3.5f;
         private Rectangle collisionBox;
 
         public Creature(Texture2D texture, Vector2 position, string identifier)
