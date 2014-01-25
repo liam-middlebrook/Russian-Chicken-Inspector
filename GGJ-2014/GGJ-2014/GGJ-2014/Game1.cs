@@ -142,7 +142,7 @@ namespace GGJ_2014
 
             // TODO: Add your update logic here
             Level.GetInstance().Update(gameTime);
-            player.Walk(keyState.IsKeyDown(Keys.W), keyState.IsKeyDown(Keys.D), keyState.IsKeyDown(Keys.S), keyState.IsKeyDown(Keys.A));
+            player.HandleInput(keyState);
             Camera.Focus(player.MiddlePosition);
             switch (MenuSystem.GetInstance().CurrentScreenType)
             {
