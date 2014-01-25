@@ -234,6 +234,13 @@ namespace GGJ_2014.Graphics
                         }
 
 
+                        for (int x = 15; x < 18; x++)
+                        {
+                            for (int y = 8; y < texture.Height; y++)
+                            {
+                                textureData[y * texture.Width + x] = Color.SaddleBrown;
+                            }
+                        }
                         for (int i = 0; i < 5; i++)
                         {
                             int a = rand.Next(-10, 30);
@@ -241,10 +248,11 @@ namespace GGJ_2014.Graphics
                             textureData = AddTriangle(
                                 textureData,
                                 new Vector2(texture.Width, texture.Height),
-                                new[] { new Vector2(16, rand.Next(0, 10)), new Vector2(rand.Next(0, 8), rand.Next(16, 24)), new Vector2(rand.Next(24,32), rand.Next(16, 24)) },
-                                SubtractColor(Color.ForestGreen, new Color(a, a, a, 0))
+                                new[] { new Vector2(16, rand.Next(0, 10)), new Vector2(rand.Next(0, 8), rand.Next(14, 24)), new Vector2(rand.Next(24,32), rand.Next(14, 24)) },
+                                SubtractColor(Color.ForestGreen, new Color(a, a, a, 20))
                                 );
                         }
+
 
 
                         break;
