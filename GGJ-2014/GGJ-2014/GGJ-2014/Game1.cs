@@ -182,7 +182,7 @@ namespace GGJ_2014
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
 
             //Add Game Draw code Here
-            level.Draw(spriteBatch);
+            //level.Draw(spriteBatch);
 
             spriteBatch.End();
 
@@ -190,6 +190,7 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().DrawOverlay(spriteBatch);
 
+            spriteBatch.Draw(testTexture, Vector2.Zero, Color.White);
             spriteBatch.End();
 
 
