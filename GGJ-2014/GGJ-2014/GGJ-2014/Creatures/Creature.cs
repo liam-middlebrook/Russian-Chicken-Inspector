@@ -48,16 +48,7 @@ namespace GGJ_2014
 
         public void CheckLevelCollisions()
         {
-            for (int x = Level.GetInstance().GetTileIndexInBoundsX((int)Position.X / Tile.TILE_SIZE); x < Level.GetInstance().GetTileIndexInBoundsX(((int)Position.X + Texture.Width) / Tile.TILE_SIZE); x++)
-            {
-                for (int y = Level.GetInstance().GetTileIndexInBoundsY((int)Position.Y / Tile.TILE_SIZE); x < Level.GetInstance().GetTileIndexInBoundsY(((int)Position.Y + Texture.Width) / Tile.TILE_SIZE); y++)
-                {
-                    if (Level.GetInstance().GetTile(x, y).IsSolid)
-                    {
-                        //COLLISION IS HAPPENING!!!11!
-                    }
-                }
-            }
+
         }
 
         public void Walk(bool north, bool east, bool south, bool west)

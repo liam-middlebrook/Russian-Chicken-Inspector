@@ -41,7 +41,7 @@ namespace GGJ_2014.Levels
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    bool collide = rand.Next(0, 2) == 0;
+                    bool collide;
 
                     double randNum = rand.NextDouble();
                     double randThreshold = 0.45;
@@ -74,7 +74,7 @@ namespace GGJ_2014.Levels
 
                         availableTiles.Add(tileDrawn);
                     }
-
+                    collide = tileToDraw == Textures.TILE_COBBLESTONE || tileToDraw == Textures.TILE_PINETREE_ON_GRASS || tileToDraw == Textures.TILE_TREE_ON_GRASS;
                     tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(tileToDraw), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                 }
             }
@@ -129,7 +129,7 @@ namespace GGJ_2014.Levels
 
         public bool IsTileIndexInBounds(int x, int y)
         {
-            return x > 0 && x < Width && y > 0 && y < Height;
+            return x >= 0 && x < Width && y >= 0 && y < Height;
         }
 
         public int GetTileIndexInBoundsX(int x)

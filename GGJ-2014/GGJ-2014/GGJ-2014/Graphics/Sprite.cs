@@ -72,6 +72,11 @@ namespace GGJ_2014.Graphics
             set { spriteEffects = value; }
         }
 
+        public Vector2 Center
+        {
+            get { return position + new Vector2(texture.Width / 2, texture.Height / 2); }
+        }
+
         #endregion
 
         #region Constructors
@@ -124,6 +129,5 @@ namespace GGJ_2014.Graphics
         {
             spriteBatch.Draw(texture, position, sourceRect, tintColor, rotation, rotationOrigin, scale, spriteEffects, 0.0f);
         }
-
     }
 }

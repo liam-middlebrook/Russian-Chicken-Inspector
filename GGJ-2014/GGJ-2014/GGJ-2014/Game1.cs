@@ -178,9 +178,12 @@ namespace GGJ_2014
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
 
+            /*
             Console.WriteLine("intelligence: " + Player.Intelligence);
             Console.WriteLine("charisma: " + Player.Charisma);
             Console.WriteLine("strength: " + Player.Strength);
+            //*/
+
 
             base.Update(gameTime);
         }
