@@ -21,7 +21,8 @@ namespace GGJ_2014.Graphics
         TILE_BRICK_WALL,
         TILE_WOOD_PLANK,
         CREATURE_CHICKEN,
-        CREATURE_GENERIC
+        CREATURE_GENERIC,
+        CHICKEN_EGG
     }
 
     class TextureGenerator
@@ -516,12 +517,33 @@ namespace GGJ_2014.Graphics
                         textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 12, new Vector2(16, 14), SubtractColor(Color.White, new Color(a, a, a, 0)));
                         //textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 9, new Vector2(16, 10), Color.Black);
                         //textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 8, new Vector2(16, 10), SubtractColor(Color.White, new Color(a, a, a, 0)));
-                       textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(10, 10), new Vector2(24, 10), new Vector2(16, 0) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
+                        textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(10, 10), new Vector2(24, 10), new Vector2(16, 0) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
                         //textureData = AddRectangle(textureData, new Vector2(texture.Width, texture.Height), new Rectangle(14, 12, 5, 8), Color.Red);
                         //textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(20, 28), new Vector2(26, 28), new Vector2(19, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
                         //textureData = AddTriangle(textureData, new Vector2(texture.Width, texture.Height), new[] { new Vector2(6, 28), new Vector2(12, 28), new Vector2(13, 24) }, SubtractColor(Color.Orange, new Color(a, a, a, 0)));
-                         textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 2, new Vector2(10, 14), Color.Black);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 2, new Vector2(10, 14), Color.Black);
                         textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 2, new Vector2(22, 14), Color.Black);
+                        break;
+                    }
+
+                #endregion
+
+                #region CHICKEN_EGG_GENERATOR
+
+                case Textures.CHICKEN_EGG:
+                    {
+                        Color baseColor = Color.LightSalmon;
+                        Random rand = new Random();
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+
+                                textureData[y * texture.Width + x] = Color.Transparent;
+                            }
+                        }
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 16, new Vector2(16, 16), Color.Black);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 15, new Vector2(16, 16), baseColor);
                         break;
                     }
 

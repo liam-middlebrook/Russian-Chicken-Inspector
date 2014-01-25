@@ -16,7 +16,7 @@ namespace GGJ_2014.Creatures
         public static float Strength;
         public static float Charisma;
         public static float Intelligence;
-
+        public static int Eggs;
 
         public Player(Texture2D texture, Vector2 position)
             : base(texture, position)
@@ -39,6 +39,19 @@ namespace GGJ_2014.Creatures
             }
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            for (int i = 0; i < Level.GetInstance().EggList.Count; ++i )
+            {
+                if (this.collisionBox.Intersects(Level.GetInstance().EggList[i].CollisionBox))
+                {
+                    Level.GetInstance().EggList.RemoveAt(i);
+                    --i;
+                    ++Eggs;
+                }
+            }
+            base.Update(gameTime);
+        }
         public void UseObject()
         {
             Tile tile = GetTileInFrontOf();
