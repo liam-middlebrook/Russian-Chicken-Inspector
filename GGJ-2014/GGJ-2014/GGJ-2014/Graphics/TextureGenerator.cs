@@ -9,6 +9,7 @@ namespace GGJ_2014.Graphics
 {
     enum Textures
     {
+        NONE,
         GRASS,
         DIRT,
         COBBLESTONE,

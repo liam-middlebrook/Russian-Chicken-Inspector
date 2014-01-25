@@ -22,6 +22,14 @@ namespace GGJ_2014.Levels
         public void LoadLevel()
         {
             tiles = new Tile[10, 10];
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.NONE), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), false);
+                }
+            }
         }
 
         public void Update(GameTime gameTime)
@@ -34,12 +42,11 @@ namespace GGJ_2014.Levels
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int x = GetTileIndexInBoundsX(Camera.ViewBounds.X); GetTileIndexInBoundsX(Camera.ViewBounds.X + Camera.ViewBounds.Width) < Width; x++)
+            for (int x = 0; x < Width; x++)//GetTileIndexInBoundsX(Camera.ViewBounds.X + Camera.ViewBounds.Width)
             {
-                for (int y = GetTileIndexInBoundsY(Camera.ViewBounds.Y); GetTileIndexInBoundsY(Camera.ViewBounds.Y + Camera.ViewBounds.Height) < Height; y++)
+                for (int y = 0; y < Height; y++)//GetTileIndexInBoundsY(Camera.ViewBounds.Y + Camera.ViewBounds.Height)
                 {
-                    Console.WriteLine(x + " "  + y + "  " + ( y < Width));
-                    if (tiles[x, y] != null)
+                    if (true || tiles[x, y] != null)
                     {
                         tiles[x, y].Draw(spriteBatch);
                     }
@@ -84,7 +91,6 @@ namespace GGJ_2014.Levels
 
         public int GetTileIndexInBoundsY(int y)
         {
-            Console.WriteLine("Height " + Height);
             return (int)MathHelper.Clamp(y, 0, Height - 1);
         }
 

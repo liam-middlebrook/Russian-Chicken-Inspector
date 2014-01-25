@@ -31,7 +31,9 @@ namespace GGJ_2014
 
         Texture2D testTexture;
 
-        Level level = new Level();
+        Level level;
+        int x = 0;
+        int y = 0;
 
         public Game1()
         {
@@ -41,6 +43,7 @@ namespace GGJ_2014
             graphics.ApplyChanges();
 
             Camera.ScreenSize = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            Camera.Focus(0, 0);
 
             Content.RootDirectory = "Content";
 
@@ -76,7 +79,9 @@ namespace GGJ_2014
             mouseState = Mouse.GetState();
             prevMouseState = mouseState;
 
-
+            //NEEDS TO CHANGE 
+            TextureStorage.GetInstance().LoadContent(Content);
+            level = new Level();
 
             base.Initialize();
         }
@@ -106,7 +111,6 @@ namespace GGJ_2014
 
             testTexture = TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT);
             // TODO: use this.Content to load your game content here
-
         }
 
         /// <summary>
@@ -130,7 +134,11 @@ namespace GGJ_2014
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            x += keyState.IsKeyDown(Keys.D) ? 3 : 0;
+            x -= keyState.IsKeyDown(Keys.A) ? 3 : 0;
+            y += keyState.IsKeyDown(Keys.S) ? 3 : 0;
+            y -= keyState.IsKeyDown(Keys.W) ? 3 : 0;
+            Camera.Focus(x, y);
             switch (MenuSystem.GetInstance().CurrentScreenType)
             {
                 case MenuScreenType.MAIN_MENU:
