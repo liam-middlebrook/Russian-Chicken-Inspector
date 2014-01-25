@@ -94,6 +94,16 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().Initalize(myFont, GraphicsDevice);
 
+            MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuScreenType.MAIN_MENU)
+                .AddControl(
+                new MenuBorderedTextItem(
+                    "Testing test test",
+                    MenuSystem.GetInstance().MenuFont,
+                    new Vector2(100, 100),
+                    Color.SandyBrown
+                    ));
+
             testTexture = TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT);
             // TODO: use this.Content to load your game content here
 

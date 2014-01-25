@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using GGJ_2014.Levels;
 
 namespace GGJ_2014.Graphics
 {
@@ -12,17 +11,24 @@ namespace GGJ_2014.Graphics
     {
         GRASS,
         DIRT,
-        COBBLESTONE
+        COBBLESTONE,
+        DEFAULT
     }
 
     class TextureGenerator
     {
-        public static Texture2D GenerateTexture(GraphicsDevice graphicsDevice, Textures textureToGenerate)
+        public static Texture2D GenerateTexture(GraphicsDevice graphicsDevice, Textures textureToGenerate, int width = 0, int height = 0)
         {
             Texture2D texture;
 
-            texture = new Texture2D(graphicsDevice, Tile.TILE_SIZE, Tile.TILE_SIZE);
-
+            if (width == 0 && height == 0)
+            {
+                texture = new Texture2D(graphicsDevice, Level.Tile.TILE_SIZE, Level.Tile.TILE_SIZE);
+            }
+            else
+            {
+                texture = new Texture2D(graphicsDevice, width, height);
+            }
             Color[] textureData = new Color[texture.Width * texture.Height];
 
             switch (textureToGenerate)
