@@ -14,11 +14,13 @@ namespace GGJ_2014.MenuSystemNS
 
         private Texture2D buttonTexture;
 
+        private Color buttonTint;
+
         private string text;
 
         private SpriteFont font;
 
-        public MenuBorderedTextItem(string text, SpriteFont font, Vector2 position)
+        public MenuBorderedTextItem(string text, SpriteFont font, Vector2 position, Color buttonTint)
             : base(position)
         {
             this.text = text;
@@ -30,6 +32,8 @@ namespace GGJ_2014.MenuSystemNS
             this.buttonRect = new Rectangle((int)position.X, (int)position.Y, (int)textSize.X + 20, (int)textSize.Y + 20);
 
             this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.DEFAULT);
+
+            this.buttonTint = buttonTint;
         }
 
         public override void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState)
@@ -39,7 +43,8 @@ namespace GGJ_2014.MenuSystemNS
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, text, position, Color.Black);
+            spriteBatch.Draw(buttonTexture, buttonRect, buttonTint);
+            spriteBatch.DrawString(font, text, position + new Vector2(10, 10), Color.Black);
         }
     }
 }
