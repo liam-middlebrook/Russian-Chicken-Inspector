@@ -12,6 +12,7 @@ namespace GGJ_2014.Physics
         : Sprite
     {
         public const float DRAG = 0.9f;
+        public const float ZERO_VELOCITY_THRUSHHOLD = 0.01f;
 
         private Vector2 velocity;
 
@@ -23,8 +24,32 @@ namespace GGJ_2014.Physics
 
         public virtual void Update(GameTime gameTime)
         {
+            if (Math.Abs(velocity.X) < ZERO_VELOCITY_THRUSHHOLD)
+            {
+                velocity.X = 0;
+            }
+            if (Math.Abs(velocity.Y) < ZERO_VELOCITY_THRUSHHOLD)
+            {
+                velocity.Y = 0;
+            }
             Position += velocity;
             velocity *= DRAG;
+        }
+
+        public void ApplyVelocity(float x, float y)
+        {
+            ApplyVelocityX(x);
+            ApplyVelocityY(y);
+        }
+
+        public void ApplyVelocityX(float x)
+        {
+            velocity.X += x;
+        }
+
+        public void ApplyVelocityY(float y)
+        {
+            velocity.Y += y;
         }
 
         public Vector2 Velocity

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using GGJ_2014.Graphics;
 using GGJ_2014.MenuSystemNS;
 using GGJ_2014.Levels;
+using GGJ_2014.Creatures;
 
 namespace GGJ_2014
 {
@@ -31,11 +32,7 @@ namespace GGJ_2014
 
         Texture2D testTexture;
 
-        Level level;
-
-        //Test
-        int x = 0;
-        int y = 0;
+        Player player;
 
         public Game1()
         {
@@ -83,7 +80,9 @@ namespace GGJ_2014
 
             //NEEDS TO CHANGE 
             TextureStorage.GetInstance().LoadContent(Content);
-            level = new Level();
+
+            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.NONE), new Vector2(0, 0));
+            Level.GetInstance().AddCreature(player);
 
             base.Initialize();
         }
@@ -136,11 +135,9 @@ namespace GGJ_2014
                 this.Exit();
 
             // TODO: Add your update logic here
-            x += keyState.IsKeyDown(Keys.D) ? 3 : 0;
-            x -= keyState.IsKeyDown(Keys.A) ? 3 : 0;
-            y += keyState.IsKeyDown(Keys.S) ? 3 : 0;
-            y -= keyState.IsKeyDown(Keys.W) ? 3 : 0;
-            Camera.Focus(x, y);
+            player.Walk(keyState.IsKeyDown(Keys.W),keyState.IsKeyDown(Keys.D), keyState.IsKeyDown(Keys.S),keyState.IsKeyDown(Keys.A));
+            Level.GetInstance().Update(gameTime);
+            Camera.Focus(player.MiddlePosition);
             switch (MenuSystem.GetInstance().CurrentScreenType)
             {
                 case MenuScreenType.MAIN_MENU:
@@ -151,7 +148,7 @@ namespace GGJ_2014
 
                 case MenuScreenType.GAMEPLAY:
                     {
-                        level.Update(gameTime);
+
                         break;
                     }
 
@@ -192,7 +189,7 @@ namespace GGJ_2014
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
 
             //Add Game Draw code Here
-            //level.Draw(spriteBatch);
+            Level.GetInstance().Draw(spriteBatch);
 
             spriteBatch.End();
 
