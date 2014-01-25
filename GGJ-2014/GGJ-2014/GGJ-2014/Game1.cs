@@ -93,7 +93,7 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.CREATURE_GENERIC, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_GENERIC, null, 12, 12));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_BRICK_WALL, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_BRICK_WALL, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_WOOD_PLANK, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_WOOD_PLANK, null));
-            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(0, 0));
+            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(100, 100));
 
             
             base.Initialize();
@@ -113,8 +113,6 @@ namespace GGJ_2014
             MenuSystem.GetInstance().LoadContent(myFont, GraphicsDevice);
 
             Level.GetInstance().AddCreature(player);
-            Level.GetInstance().AddCreature(new Chicken(new Vector2(500,500)));
-
 
             MenuSystemNS.MenuSystem.GetInstance().GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU).AddControl(new MenuSystemNS.MenuButton(Vector2.Zero, "Regen Map!", Color.White, () => { Level.GetInstance().LoadLevel(); }));
             MenuSystem.GetInstance()
@@ -122,6 +120,8 @@ namespace GGJ_2014
                 .AddControl(
                 new MultipleChoiceQuiz()
                 );
+
+            MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(graphics.PreferredBackBufferWidth * 0.01f, graphics.PreferredBackBufferHeight * 0.9f), "0000000 x Eggs", Color.PeachPuff));
 
             // TODO: use this.Content to load your game content here
         }

@@ -36,6 +36,17 @@ namespace GGJ_2014.MenuSystemNS
             this.buttonTint = buttonTint;
         }
 
+        public void ChangeText(string text, bool resize = true)
+        {
+            this.text = text;
+            if (resize)
+            {
+                Vector2 textSize = font.MeasureString(text);
+                this.buttonRect = new Rectangle((int)position.X, (int)position.Y, (int)textSize.X + 20, (int)textSize.Y + 20);
+                this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, null, buttonRect.Width, buttonRect.Height);
+            }
+        }
+
         public override void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState)
         {
             return;

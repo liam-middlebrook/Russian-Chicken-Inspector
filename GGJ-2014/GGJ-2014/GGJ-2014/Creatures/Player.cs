@@ -13,9 +13,12 @@ namespace GGJ_2014.Creatures
     class Player
         : Person
     {
+        public const int EGG_TREE_VALUE = 10;
+
         public static float Strength;
         public static float Charisma;
         public static float Intelligence;
+        public static int eggs = 0;
 
 
         public Player(Texture2D texture, Vector2 position)
@@ -57,6 +60,7 @@ namespace GGJ_2014.Creatures
         {
             tree.Texture = TextureStorage.GetInstance().GetTexture(Textures.TILE_PINETREE_STUMP);
             tree.IsSolid = false;
+            eggs += EGG_TREE_VALUE;
         }
     }
 }

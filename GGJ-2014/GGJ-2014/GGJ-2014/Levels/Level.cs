@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GGJ_2014.Graphics;
 using GGJ_2014.Levels;
+using GGJ_2014.Creatures;
 
 namespace GGJ_2014.Levels
 {
@@ -41,8 +42,12 @@ namespace GGJ_2014.Levels
         public const int MAX_NUMBER_OF_ROCKS = 4;
         public const int MIN_ROCK_SIZE = 20;
         public const int MAX_ROCK_SIZE = 30;
-        public const float BUSH_DENSITY = 1;
 
+        //SPAWN VARIABLES
+        public const float SPAWN_CHICKEN = 0.004f;
+
+        private Random rand = new Random();
+        private int numberChickens = 0;
 
         static Level instance;
 
@@ -68,8 +73,6 @@ namespace GGJ_2014.Levels
         public void LoadLevel()
         {
             tiles = new Tile[128, 128];
-
-            Random rand = new Random();
             List<Textures> availableTiles = new List<Textures>(new[] { Textures.TILE_COBBLESTONE, Textures.TILE_DIRT, Textures.TILE_GRASS });
             Textures tileToDraw = availableTiles[rand.Next(0, availableTiles.Count)];
 
@@ -97,7 +100,6 @@ namespace GGJ_2014.Levels
                 int x = rand.Next(0, Width - width);
                 int y = rand.Next(0, Height - height);
                 FadeFillTexure(new Rectangle(x, y, width, height), Textures.TILE_COBBLESTONE, false, 1.0f);
-                FillInClumpTile(new Rectangle(x, y, width, height), Textures.TILE_TREE_ON_GRASS, true, BUSH_DENSITY);
             }
 
             //FORESTS
@@ -120,6 +122,8 @@ namespace GGJ_2014.Levels
                 int height = rand.Next(MIN_VILLAGE_SIZE, MAX_VILLAGE_SIZE);
                 PlaceVillage(new Rectangle(rand.Next(VILLAGE_BUFFER_SIZE, Width - VILLAGE_BUFFER_SIZE - width), rand.Next(VILLAGE_BUFFER_SIZE, Height - VILLAGE_BUFFER_SIZE - height), width, height), rand.Next(MIN_NUMBER_OF_HOUSES, MAX_NUMBER_OF_HOUSES));
             }
+
+            TraceRectangleTiles(new Rectangle(0, 0, Width, Height), Textures.NONE, true);
         }
 
         private void FadeFillTexure(Rectangle bounds, Textures texture, bool isSolid, float density)
@@ -131,8 +135,6 @@ namespace GGJ_2014.Levels
 
         private void PlaceVillage(Rectangle bounds, int numberOfHouses)
         {
-            Random rand = new Random();
-
             int minX = GetTileIndexInBoundsX(bounds.X);
             int maxX = GetTileIndexInBoundsX(bounds.X + bounds.Width);
             int minY = GetTileIndexInBoundsY(bounds.Y);
@@ -168,8 +170,6 @@ namespace GGJ_2014.Levels
 
         private void PlaceHouse(Rectangle bounds)
         {
-            Random rand = new Random();
-
             Textures floorTexture = Textures.TILE_WOOD_PLANK;
             Textures wallTexture = Textures.TILE_BRICK_WALL;
 
@@ -194,10 +194,7 @@ namespace GGJ_2014.Levels
 
             FillTilesIn(new Rectangle(minX, minY, width, height), floorTexture, false);//Floor
 
-            FillTilesIn(new Rectangle(minX, minY, 1, height), wallTexture, true);//Left wall
-            FillTilesIn(new Rectangle(maxX - 1, minY, 1, height), wallTexture, true);//Right Wall
-            FillTilesIn(new Rectangle(minX, minY, width, 1), wallTexture, true);//Top Wall
-            FillTilesIn(new Rectangle(minX, maxY - 1, width, 1), wallTexture, true);//Bottom Wall
+            TraceRectangleTiles(new Rectangle(minX, minY, width, height), wallTexture, true);
 
             //Door stuff
             int x = rand.Next(minX+1, maxX-1);
@@ -207,6 +204,22 @@ namespace GGJ_2014.Levels
                 y = maxY - 1;
             }
             tiles[x, y] = new Tile(floorTexture, new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), false);
+        }
+
+        private void TraceRectangleTiles(Rectangle bounds, Textures tileTexture, bool isSolid)
+        {
+            int minX = GetTileIndexInBoundsX(bounds.X);
+            int maxX = GetTileIndexInBoundsX(bounds.X + bounds.Width);
+            int minY = GetTileIndexInBoundsY(bounds.Y);
+            int maxY = GetTileIndexInBoundsY(bounds.Y + bounds.Height);
+
+            int width = maxX - minX;
+            int height = maxY - minY;
+
+            FillTilesIn(new Rectangle(minX, minY, 1, height), tileTexture, isSolid);//Left wall
+            FillTilesIn(new Rectangle(maxX - 1, minY, 1, height), tileTexture, isSolid);//Right Wall
+            FillTilesIn(new Rectangle(minX, minY, width, 1), tileTexture, isSolid);//Top Wall
+            FillTilesIn(new Rectangle(minX, maxY - 1, width, 1), tileTexture, isSolid);//Bottom Wall
         }
 
         private void FillTilesIn(Rectangle bounds, Textures tileTexture, bool isSolid)
@@ -226,7 +239,6 @@ namespace GGJ_2014.Levels
 
         private void FillInClumpTile(Rectangle bounds, Textures tileTexture, bool isSolid, float percent)
         {
-            Random rand = new Random();
             int minX = GetTileIndexInBoundsX(bounds.X);
             int maxX = GetTileIndexInBoundsX(bounds.X + bounds.Width);
             int minY = GetTileIndexInBoundsY(bounds.Y);
@@ -249,6 +261,37 @@ namespace GGJ_2014.Levels
             {
                 creatures[c].Update(gameTime);
             }
+            HandleSpawns(gameTime);
+        }
+
+        private void HandleSpawns(GameTime gameTime)
+        {
+            double chance = rand.NextDouble();
+            if (chance < SPAWN_CHICKEN)
+            {
+                AddCreature(new Chicken(FindSpawnPlace()));
+                Console.WriteLine("CHICKEN!");
+            }
+        }
+
+        private Vector2 FindSpawnPlace()
+        {
+            Vector2 spawnPlace = new Vector2(-1, -1);
+            int x = 0;
+            int y = 0;
+            Tile tile;
+            int timesTried = 0;
+            while (spawnPlace.X == -1 && spawnPlace.Y == -1 && timesTried < 10)
+            {
+                x = rand.Next(0, Width);
+                y = rand.Next(0, Height);
+                tile = GetTile(x, y);
+                if (tile != null && !tile.IsSolid)
+                {
+                    spawnPlace = new Vector2(x * Tile.TILE_SIZE + Tile.TILE_SIZE / 2, y * Tile.TILE_SIZE + Tile.TILE_SIZE / 2);
+                }
+            }
+            return spawnPlace;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -274,6 +317,10 @@ namespace GGJ_2014.Levels
         public void AddCreature(Creature creature)
         {
             creatures.Add(creature);
+            if (creature is Chicken)
+            {
+                numberChickens++;
+            }
         }
 
         public void RemoveCreature(Creature creature)
