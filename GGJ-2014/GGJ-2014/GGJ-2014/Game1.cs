@@ -93,6 +93,8 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.TILE_BRICK_WALL, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_BRICK_WALL, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_WOOD_PLANK, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_WOOD_PLANK, null));
             player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(0, 0));
+
+            
             base.Initialize();
         }
 
@@ -110,6 +112,7 @@ namespace GGJ_2014
             MenuSystem.GetInstance().LoadContent(myFont, GraphicsDevice);
 
             Level.GetInstance().AddCreature(player);
+            Level.GetInstance().AddCreature(new Chicken(new Vector2(500,500)));
 
 
             MenuSystemNS.MenuSystem.GetInstance().GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU).AddControl(new MenuSystemNS.MenuButton(Vector2.Zero, "Regen Map!", Color.White, () => { Level.GetInstance().LoadLevel(); }));

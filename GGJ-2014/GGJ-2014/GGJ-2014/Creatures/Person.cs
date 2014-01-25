@@ -22,5 +22,10 @@ namespace GGJ_2014.Creatures
         {
             
         }
+
+        public override void HandleInput(Microsoft.Xna.Framework.Input.KeyboardState keyState)
+        {
+            
+        }
     }
 }
