@@ -17,6 +17,8 @@ namespace GGJ_2014.Graphics
         TILE_PAVEMENT,
         TILE_TREE_ON_GRASS,
         TILE_PINETREE_ON_GRASS,
+        TILE_BRICK_WALL,
+        TILE_WOOD_PLANK,
         CREATURE_CHICKEN,
         CREATURE_GENERIC
     }
@@ -97,6 +99,80 @@ namespace GGJ_2014.Graphics
                                 else
                                 {
                                     subtractiveColor = new Color(25, 25, 25, 0);
+                                }
+                                textureData[y * texture.Width + x] = AddColor(baseColor, subtractiveColor);
+                            }
+                        }
+                        break;
+                    }
+
+                #endregion
+
+                #region BRICK_WALL_GENERATOR
+
+                case Textures.TILE_BRICK_WALL:
+                    {
+                        Color baseColor = Color.SaddleBrown;
+                        Color subtractiveColor;
+                        Random rand = new Random();
+                        double randVal;
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+                                randVal = rand.NextDouble();
+
+                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width - 1);
+                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height - 1);
+                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width - 1);
+                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height - 1);
+
+                                if (DarkerThan(textureData[y * texture.Width + safeXMax], baseColor)
+                                    || DarkerThan(textureData[y * texture.Width + safeXMin], baseColor)
+                                    || DarkerThan(textureData[safeYMax * texture.Width + x], baseColor)
+                                    || DarkerThan(textureData[safeYMin * texture.Width + x], baseColor))
+                                {
+                                    randVal = MathHelper.Clamp((float)randVal - 0.05f, 0.0f, 1.0f);
+                                }
+
+                                if (randVal > 0.7)
+                                {
+                                    subtractiveColor = new Color(45, 45, 45, 0);
+                                }
+                                else
+                                {
+                                    subtractiveColor = new Color(85, 85, 85, 0);
+                                }
+                                textureData[y * texture.Width + x] = SubtractColor(baseColor, subtractiveColor);
+                            }
+                        }
+                        break;
+                    }
+
+                #endregion
+
+                #region WOOD_PLANK_GENERATOR
+
+                case Textures.TILE_WOOD_PLANK:
+                    {
+                        Color baseColor = Color.SaddleBrown;
+                        Color subtractiveColor;
+                        Random rand = new Random();
+                        double randVal;
+
+                        for (int x = 0; x < texture.Width; x++)
+                        {
+                            for (int y = 0; y < texture.Height; y++)
+                            {
+                                randVal = rand.NextDouble();
+
+                                if (randVal > 0.99 || x % 4 == 0 || x % 4 == 1)
+                                {
+                                    subtractiveColor = new Color(rand.Next(20, 65), rand.Next(20, 65), rand.Next(20, 65), 0);
+                                }
+                                else
+                                {
+                                    subtractiveColor = new Color(85, 85, 85, 0);
                                 }
                                 textureData[y * texture.Width + x] = AddColor(baseColor, subtractiveColor);
                             }
