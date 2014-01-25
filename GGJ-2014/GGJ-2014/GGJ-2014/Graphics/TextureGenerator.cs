@@ -137,13 +137,20 @@ namespace GGJ_2014.Graphics
                             for (int x = 0; x < texture.Width; x++)
                             {
 
-                                textureData[y * texture.Width + x] = baseColor;
+                                textureData[y * texture.Width + x] = Color.DarkSlateGray;
                             }
 
                         }
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 25; i++)
                         {
-                            textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), rand.Next(3, 8), new Vector2(rand.Next(0, 32), rand.Next(0, 32)), AddColor(baseColor, new Color(25, 25, 25, 0)));
+                            int a = rand.Next(-10, 30);
+                            textureData = AddCircle(
+                                textureData,
+                                new Vector2(texture.Width, texture.Height),
+                                rand.Next(3, 5),
+                                new Vector2(rand.Next(0, 32), rand.Next(0, 32)),
+                                AddColor(baseColor, new Color(a, a, a, 0))
+                                );
                         }
                         /*
                         for (int y = 0; y < texture.Height; y++)
