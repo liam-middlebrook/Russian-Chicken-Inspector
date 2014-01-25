@@ -100,6 +100,7 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().Initalize(myFont, GraphicsDevice);
 
+            MenuSystemNS.MenuSystem.GetInstance().GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU).AddControl(new MenuSystemNS.MenuButton(Vector2.Zero, "Regen Map!", Color.White, () => { Level.GetInstance().LoadLevel(); }));
             MenuSystem.GetInstance()
                 .GetMenuScreenOfType(MenuScreenType.MAIN_MENU)
                 .AddControl(
