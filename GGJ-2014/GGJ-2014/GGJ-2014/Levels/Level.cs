@@ -11,6 +11,17 @@ namespace GGJ_2014.Levels
 {
     class Level
     {
+        static Level instance;
+
+        public static Level GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Level();
+            }
+            return instance;
+        }
+
         private Tile[,] tiles;
         private List<Creature> creatures = new List<Creature>();
 
@@ -29,7 +40,8 @@ namespace GGJ_2014.Levels
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.COBBLESTONE), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), false);
+                    bool collide = rand.Next(0, 2) == 0;
+                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(collide?Textures.DIRT:Textures.GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                 }
             }
         }

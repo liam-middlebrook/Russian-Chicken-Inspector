@@ -5,6 +5,7 @@ using System.Text;
 using GGJ_2014.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GGJ_2014.Levels;
 
 namespace GGJ_2014
 {
@@ -22,23 +23,35 @@ namespace GGJ_2014
         private string identifier = "FILL THIS OUT";
         private Direction directionFacing = Direction.NORTH;
         private float walkSpeed = 0.3f;
+        private Rectangle collitionBox;
 
         public Creature(Texture2D texture, Vector2 position, string identifier)
             : base(texture, position)
         {
             this.RotationOrigin = new Vector2(texture.Width/2, texture.Height/2);
             this.identifier = identifier;
+            collitionBox = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            SyncCollitionBox();
             CheckLevelCollitions();
+        }
+
+        protected void SyncCollitionBox()
+        {
+            collitionBox.X = (int)Position.X;
+            collitionBox.Y = (int)Position.Y;
         }
 
         public void CheckLevelCollitions()
         {
-            //for(int x = Level.GetInstan
+            //for (int x = Level.GetInstance().GetTileIndexInBoundsX(Position.X / Tile.TILE_SIZE); x < Level.GetInstance().GetTileIndexInBoundsX((Position.X + Texture.Width) / Tile.TILE_SIZE); x++)
+            //{
+
+            //}
         }
 
         public void Walk(bool north, bool east, bool south, bool west)
