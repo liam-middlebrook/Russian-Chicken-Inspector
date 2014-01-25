@@ -91,6 +91,7 @@ namespace GGJ_2014.Creatures
                     }
             }
             Walk(directionFacing);
+            Levels.Level.GetInstance().EggList.Add(new Egg(Center));
             base.Update(gameTime);
         }
 

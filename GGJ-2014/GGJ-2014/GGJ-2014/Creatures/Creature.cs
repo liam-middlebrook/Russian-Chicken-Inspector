@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using GGJ_2014.Levels;
 
-namespace GGJ_2014
+namespace GGJ_2014.Creatures
 {
     public enum Direction
     {
@@ -25,7 +25,7 @@ namespace GGJ_2014
         private string identifier = "FILL THIS OUT";
         protected Direction directionFacing = Direction.NORTH;
         protected float walkSpeed = 0.5f;
-        private Rectangle collisionBox;
+        protected Rectangle collisionBox;
 
         public Creature(Texture2D texture, Vector2 position, string identifier)
             : base(texture, position)

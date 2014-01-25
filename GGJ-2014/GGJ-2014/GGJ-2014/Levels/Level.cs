@@ -62,6 +62,7 @@ namespace GGJ_2014.Levels
 
         private Tile[,] tiles;
         private List<Creature> creatures = new List<Creature>();
+        private List<Egg> eggs = new List<Egg>();
         private List<Rectangle> housesPositions = new List<Rectangle>();
         private List<Rectangle> villagePositions = new List<Rectangle>();
 
@@ -312,6 +313,10 @@ namespace GGJ_2014.Levels
             {
                 creatures[c].Draw(spriteBatch);
             }
+            for (int e = 0; e < eggs.Count; e++)
+            {
+                eggs[e].Draw(spriteBatch);
+            }
         }
 
         public void AddCreature(Creature creature)
@@ -367,5 +372,11 @@ namespace GGJ_2014.Levels
                 return tiles.GetLength(1);
             }
         }
+
+        public List<Egg> EggList
+        {
+            get { return eggs; }
+        }
+
     }
 }
