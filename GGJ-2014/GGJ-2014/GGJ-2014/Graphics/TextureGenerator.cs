@@ -23,7 +23,7 @@ namespace GGJ_2014.Graphics
 
             if (width == 0 && height == 0)
             {
-                texture = new Texture2D(graphicsDevice, Level.Tile.TILE_SIZE, Level.Tile.TILE_SIZE);
+                texture = new Texture2D(graphicsDevice, Levels.Tile.TILE_SIZE, Levels.Tile.TILE_SIZE);
             }
             else
             {
