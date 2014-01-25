@@ -15,6 +15,7 @@ namespace GGJ_2014.Graphics
         COBBLESTONE,
         PAVEMENT,
         TREE_ON_GRASS,
+        PINETREE_ON_GRASS,
         BORDERED
     }
 
@@ -179,6 +180,68 @@ namespace GGJ_2014.Graphics
                                 new Vector2(texture.Width, texture.Height),
                                 rand.Next(8, 12),
                                 new Vector2(rand.Next(8, 24), rand.Next(8, 24)),
+                                SubtractColor(Color.ForestGreen, new Color(a, a, a, 0))
+                                );
+                        }
+
+
+                        break;
+                    }
+
+                #endregion
+
+                #region PINETREE_ON_GRASS_GENERATOR
+
+                case Textures.PINETREE_ON_GRASS:
+                    {
+                        Color baseColor = Color.MediumSeaGreen;
+                        Color subtractiveColor;
+                        Random rand = new Random();
+                        double randVal;
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+                                randVal = rand.NextDouble();
+
+                                int safeXMax = (int)MathHelper.Clamp(x + 1, 0, texture.Width - 1);
+                                int safeYMax = (int)MathHelper.Clamp(y + 1, 0, texture.Height - 1);
+                                int safeXMin = (int)MathHelper.Clamp(x - 1, 0, texture.Width - 1);
+                                int safeYMin = (int)MathHelper.Clamp(y - 1, 0, texture.Height - 1);
+
+                                if (DarkerThan(textureData[y * texture.Width + safeXMax], baseColor)
+                                    || DarkerThan(textureData[y * texture.Width + safeXMin], baseColor)
+                                    || DarkerThan(textureData[safeYMax * texture.Width + x], baseColor)
+                                    || DarkerThan(textureData[safeYMin * texture.Width + x], baseColor))
+                                {
+                                    randVal = MathHelper.Clamp((float)randVal - 0.05f, 0.0f, 1.0f);
+                                }
+
+                                if (randVal > 0.7)
+                                {
+                                    subtractiveColor = new Color(25, 25, 25, 0);
+                                }
+                                else if (randVal > 0.5)
+                                {
+                                    subtractiveColor = new Color(0, 0, 0, 0);
+                                }
+                                else
+                                {
+                                    subtractiveColor = new Color(25, 25, -25, 0);
+                                }
+                                textureData[y * texture.Width + x] = SubtractColor(baseColor, subtractiveColor);
+                            }
+                        }
+
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int a = rand.Next(-10, 30);
+
+                            textureData = AddTriangle(
+                                textureData,
+                                new Vector2(texture.Width, texture.Height),
+                                new[] { new Vector2(16, rand.Next(0, 10)), new Vector2(rand.Next(0, 8), rand.Next(16, 24)), new Vector2(rand.Next(24,32), rand.Next(16, 24)) },
                                 SubtractColor(Color.ForestGreen, new Color(a, a, a, 0))
                                 );
                         }
@@ -426,3 +489,5 @@ namespace GGJ_2014.Graphics
         }
     }
 }
+
+                           

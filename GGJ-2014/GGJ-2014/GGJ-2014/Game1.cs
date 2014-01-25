@@ -83,6 +83,7 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.COBBLESTONE));
             TextureStorage.GetInstance().AddTexture(Textures.PAVEMENT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.PAVEMENT));
             TextureStorage.GetInstance().AddTexture(Textures.TREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TREE_ON_GRASS));
+            TextureStorage.GetInstance().AddTexture(Textures.PINETREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.PINETREE_ON_GRASS));
             player = new Player(TextureStorage.GetInstance().GetTexture(Textures.NONE), new Vector2(0, 0));
             Level.GetInstance().AddCreature(player);
 

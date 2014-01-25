@@ -61,7 +61,7 @@ namespace GGJ_2014.Levels
                     }
                     else
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TREE_ON_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.PINETREE_ON_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                     }
                 }
             }
