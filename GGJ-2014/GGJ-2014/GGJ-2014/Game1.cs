@@ -78,7 +78,10 @@ namespace GGJ_2014
             prevMouseState = mouseState;
 
             //NEEDS TO CHANGE 
-            TextureStorage.GetInstance().LoadContent(Content);
+
+            //TextureStorage.GetInstance().LoadContent(Content);
+            TextureStorage.GetInstance().AddTexture(Textures.NONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.NONE, null));
+            
             TextureStorage.GetInstance().AddTexture(Textures.TILE_DIRT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_DIRT, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_GRASS, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_COBBLESTONE, null));
@@ -86,7 +89,8 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.TILE_TREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_TREE_ON_GRASS, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_PINETREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_PINETREE_ON_GRASS, null));
             TextureStorage.GetInstance().AddTexture(Textures.CREATURE_CHICKEN, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_CHICKEN, null));
-            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.NONE), new Vector2(0, 0));
+            TextureStorage.GetInstance().AddTexture(Textures.CREATURE_GENERIC, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_GENERIC, null));
+            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(0, 0));
             base.Initialize();
         }
 

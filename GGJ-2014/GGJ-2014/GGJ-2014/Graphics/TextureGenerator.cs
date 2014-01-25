@@ -17,7 +17,8 @@ namespace GGJ_2014.Graphics
         TILE_PAVEMENT,
         TILE_TREE_ON_GRASS,
         TILE_PINETREE_ON_GRASS,
-        CREATURE_CHICKEN
+        CREATURE_CHICKEN,
+        CREATURE_GENERIC
     }
 
     class TextureGenerator
@@ -390,6 +391,27 @@ namespace GGJ_2014.Graphics
 
                 #endregion
 
+                #region CREATURE_GENERIC_GENERATOR
+
+                case Textures.CREATURE_GENERIC:
+                    {
+                        Color baseColor = Color.White;
+                        Random rand = new Random();
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+
+                                textureData[y * texture.Width + x] = Color.Transparent;
+                            }
+                        }
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 16, new Vector2(16, 16), baseColor);
+                        textureData = AddRectangle(textureData, new Vector2(texture.Width, texture.Height), new Rectangle(14, 2, 3, 8), Color.Black);
+                        break;
+                    }
+
+                #endregion
+
 
 
                 #region DEFAULT_TEXTURE_GEN
@@ -400,7 +422,14 @@ namespace GGJ_2014.Graphics
                         {
                             for (int x = 0; x < texture.Width; x++)
                             {
-                                textureData[y * texture.Width + x] = Color.White;
+                                if (y % 4 == 0 || x % 4 == 0)
+                                {
+                                    textureData[y * texture.Width + x] = Color.Black;
+                                }
+                                else
+                                {
+                                    textureData[y * texture.Width + x] = Color.Purple;
+                                }
                             }
                         }
                         break;
