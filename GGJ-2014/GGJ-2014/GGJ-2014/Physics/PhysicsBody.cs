@@ -12,7 +12,7 @@ namespace GGJ_2014.Physics
         : Sprite
     {
         public const float DRAG = 0.9f;
-        public const float ZERO_VELOCITY_THRUSHHOLD = 0.001f;
+        public const float ZERO_VELOCITY_THRUSHHOLD = 0.03f;
 
         private Vector2 velocity;
 

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using GGJ_2014.Levels;
+using Microsoft.Xna.Framework.Input;
 
 namespace GGJ_2014.Creatures
 {
@@ -19,6 +21,24 @@ namespace GGJ_2014.Creatures
             : base(texture, position)
         {
 
+        }
+
+        public override void HandleInput(KeyboardState keyState)
+        {
+            base.HandleInput(keyState);
+            if (keyState.IsKeyDown(Keys.Space))
+            {
+                UseObject();
+            }
+        }
+
+        public void UseObject()
+        {
+            Tile tile = GetTileInFrontOf();
+            if (tile != null)
+            {
+                Console.WriteLine(tile);
+            }
         }
     }
 }

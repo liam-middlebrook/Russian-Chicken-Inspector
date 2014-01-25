@@ -24,7 +24,7 @@ namespace GGJ_2014
     {
         private string identifier = "FILL THIS OUT";
         private Direction directionFacing = Direction.NORTH;
-        private float walkSpeed = 0.3f;
+        private float walkSpeed = 0.2f;
         private Rectangle collisionBox;
 
         public Creature(Texture2D texture, Vector2 position, string identifier)
@@ -62,37 +62,47 @@ namespace GGJ_2014
                     SyncCollitionBox();
                     if (tile != null && tile.IsSolid)
                     {
+
                         Rectangle tileRectangle = tile.TileRectangle;
-                        Vector2 collitionResolve = new Vector2(0, 0);
+                        Rectangle intersection = Rectangle.Intersect(collisionBox, tileRectangle);
+                        //if (intersection.Width > 0)
+                        //{
+                        //    Console.WriteLine("X");
+                        //    Position -= new Vector2(Velocity.X / PhysicsBody.DRAG + 0.5f * Math.Sign(Velocity.X), 0);
+                        //}
+                        //if (intersection.Height > 0)
+                        //{
+                        //    Console.WriteLine("Y");
+                        //    Position -= new Vector2(0, Velocity.Y / PhysicsBody.DRAG + 0.5f * Math.Sign(Velocity.Y));
+                        //}
+
                         bool tileNorth = IsCollidableTileAdjacent(x, y, 0, -1);
                         bool tileEast = IsCollidableTileAdjacent(x, y, 1, 0);
                         bool tileSouth = IsCollidableTileAdjacent(x, y, 0, 1);
                         bool tileWest = IsCollidableTileAdjacent(x, y, -1, 0);
 
-                        Rectangle intersection = Rectangle.Intersect(collisionBox, tileRectangle);
-                        Console.WriteLine(intersection);
+                        int downDepth = Math.Abs(collisionBox.Bottom - tileRectangle.Top);
+                        int upDepth = Math.Abs(collisionBox.Top - tileRectangle.Bottom);
+                        int leftDepth = Math.Abs(collisionBox.Right - tileRectangle.Left);
+                        int rightDepth = Math.Abs(collisionBox.Left - tileRectangle.Right);
 
-                        Position -= new Vector2(intersection.Width, intersection.Height);
-
-                        if (collisionBox.Bottom > tileRectangle.Top && !tileNorth) // Down
+                        if (collisionBox.Bottom > tileRectangle.Top && downDepth < upDepth && !tileNorth && Velocity.Y > 0) // Down
                         {
-                            collitionResolve.Y = collisionBox.Bottom - tileRectangle.Top;
+                            Position -= new Vector2(0, intersection.Height);
                         }
-                        if (collisionBox.Top < tileRectangle.Bottom && !tileSouth) //Top
+                        if (collisionBox.Top < tileRectangle.Bottom && upDepth < downDepth && !tileSouth && Velocity.Y < 0) //Top
                         {
-                            collitionResolve.Y = collisionBox.Top - tileRectangle.Bottom;
+                            Position += new Vector2(0, intersection.Height);
                         }
                         SyncCollitionBox();
-                        //if (collisionBox.Left > tileRectangle.Right && !tileWest) //Right
-                        //{
-                        //    collitionResolve.X = tileRectangle.Left - collisionBox.Right;
-                        //}
-                        //else if (collisionBox.Left < tileRectangle.Right && !tileEast) //Left
-                        //{
-                        //    collitionResolve.X = collisionBox.Left - tileRectangle.Right;
-                        //}
-
-                        //Position -= collitionResolve;
+                        if (collisionBox.Right > tileRectangle.Left && leftDepth < rightDepth && !tileWest && Velocity.X > 0) //Left
+                        {
+                            Position -= new Vector2(intersection.Width, 0);
+                        }
+                        if (collisionBox.Left < tileRectangle.Right && rightDepth < leftDepth && !tileEast && Velocity.X < 0) //Right
+                        {
+                            Position += new Vector2(intersection.Width, 0);
+                        }
                     }
                 }
             }
@@ -104,7 +114,7 @@ namespace GGJ_2014
             return tile == null || (tile != null && tile.IsSolid);
         }
 
-        public void HandleInput(KeyboardState keyState)
+        public virtual void HandleInput(KeyboardState keyState)
         {
             Direction direction = 0;
             direction = keyState.IsKeyDown(Keys.W) ? Direction.NORTH : direction;
@@ -136,6 +146,11 @@ namespace GGJ_2014
                     ApplyVelocityX(-walkSpeed);
                     break;
             }
+        }
+
+        protected Tile GetTileInFrontOf()
+        {
+            return Level.GetInstance().GetTile((int)(MiddlePosition.X / Tile.TILE_SIZE + Math.Round(Math.Sin(Rotation))), (int)(MiddlePosition.Y / Tile.TILE_SIZE + Math.Round(Math.Cos(Rotation))));
         }
 
         public abstract void Interact(Creature user);

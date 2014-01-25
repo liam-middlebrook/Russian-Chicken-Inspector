@@ -8,16 +8,30 @@ using GGJ_2014.Graphics;
 
 namespace GGJ_2014.Levels
 {
-    class Tile : Sprite
+    public enum TileType
+    {
+        ENVORMENT,
+        TREE,
+
+    }
+    public class Tile : Sprite
     {
         public const int TILE_SIZE = 32;
 
         private bool isSolid = false;
+        private TileType tileType = TileType.ENVORMENT;
 
-        public Tile(Texture2D texture, Vector2 position, bool isSolid)
+        public Tile(Texture2D texture, Vector2 position, bool isSolid, TileType tileType)
             : base(texture, position)
         {
             this.isSolid = isSolid;
+            this.tileType = tileType;
+        }
+
+        public Tile(Texture2D texture, Vector2 position, bool isSolid)
+            : this(texture, position, isSolid, TileType.ENVORMENT)
+        {
+
         }
 
         public Rectangle TileRectangle
