@@ -76,6 +76,7 @@
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\TextureGenerator.cs" />
     <Compile Include="Graphics\TextureStorage.cs" />
+    <Compile Include="MenuSystem\MenuBorderedTextItem.cs" />
     <Compile Include="MenuSystem\MenuButton.cs" />
     <Compile Include="MenuSystem\MenuControl.cs" />
     <Compile Include="MenuSystem\MenuHiddenButton.cs" />
