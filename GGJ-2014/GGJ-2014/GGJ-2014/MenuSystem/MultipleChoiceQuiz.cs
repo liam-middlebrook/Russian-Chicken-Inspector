@@ -27,13 +27,13 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuBorderedTextItem(
                     new Vector2(10, 10),
                     "Multiple Choice Question 1",
-                    Color.Salmon
+                    Color.PeachPuff
                 ));
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 60),
                     "Multiple Choice 1 Answer 1",
-                    Color.White,
+                    Color.PeachPuff,
                     () =>
                     {
                         intelligence -= 0.2f;
@@ -46,7 +46,7 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuButton(
                     new Vector2(10, 110),
                     "Multiple Choice 1 Answer 2",
-                    Color.White,
+                    Color.PeachPuff,
                     () =>
                     {
                         intelligence -= 0.4f;
@@ -59,7 +59,7 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuButton(
                     new Vector2(10, 160),
                     "Multiple Choice 1 Answer 3",
-                    Color.White,
+                    Color.PeachPuff,
                     () =>
                     {
                         intelligence += 0.1f;
@@ -73,13 +73,13 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuBorderedTextItem(
                     new Vector2(10, 10),
                     "Multiple Choice Question 2",
-                    Color.Salmon
+                    Color.PeachPuff
                 ));
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 60),
                     "Multiple Choice 2 Answer 1",
-                    Color.White,
+                    Color.PeachPuff,
                     () =>
                     {
                         intelligence -= 0.2f;
@@ -92,7 +92,7 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuButton(
                     new Vector2(10, 110),
                     "Multiple Choice 2 Answer 2",
-                    Color.White,
+                    Color.PeachPuff,
                     () =>
                     {
                         intelligence -= 0.4f;
@@ -105,7 +105,7 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuButton(
                     new Vector2(10, 160),
                     "Multiple Choice 2 Answer 3",
-                    Color.White,
+                    Color.PeachPuff,
                     () =>
                     {
                         intelligence += 0.1f;

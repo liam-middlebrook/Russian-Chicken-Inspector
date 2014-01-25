@@ -105,7 +105,7 @@ namespace GGJ_2014
 
             myFont = Content.Load<SpriteFont>("SpriteFont1");
 
-            MenuSystem.GetInstance().Initalize(myFont, GraphicsDevice);
+            MenuSystem.GetInstance().LoadContent(myFont, GraphicsDevice);
 
             Level.GetInstance().AddCreature(player);
 

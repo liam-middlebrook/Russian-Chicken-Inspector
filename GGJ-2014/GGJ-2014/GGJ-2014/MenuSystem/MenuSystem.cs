@@ -46,7 +46,7 @@ namespace GGJ_2014.MenuSystemNS
             menuScreens = new Dictionary<MenuScreenType, MenuScreen>();
         }
 
-        public void Initalize(SpriteFont font, GraphicsDevice graphicsDevice)
+        public void LoadContent(SpriteFont font, GraphicsDevice graphicsDevice)
         {
             this.menuFont = font;
             this.graphicsDevice = graphicsDevice;
