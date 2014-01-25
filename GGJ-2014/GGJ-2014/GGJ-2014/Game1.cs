@@ -88,6 +88,7 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.TILE_PAVEMENT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_PAVEMENT, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_TREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_TREE_ON_GRASS, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_PINETREE_ON_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_PINETREE_ON_GRASS, null));
+            TextureStorage.GetInstance().AddTexture(Textures.TILE_PINETREE_STUMP, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_PINETREE_STUMP, null));
             TextureStorage.GetInstance().AddTexture(Textures.CREATURE_CHICKEN, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_CHICKEN, null));
             TextureStorage.GetInstance().AddTexture(Textures.CREATURE_GENERIC, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_GENERIC, null, 12, 12));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_BRICK_WALL, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_BRICK_WALL, null));
