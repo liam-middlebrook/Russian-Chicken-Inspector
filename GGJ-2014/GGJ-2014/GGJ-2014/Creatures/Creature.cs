@@ -21,33 +21,42 @@ namespace GGJ_2014
     {
         private string identifier = "FILL THIS OUT";
         private Direction directionFacing = Direction.NORTH;
+        private float walkSpeed = 3.0f;
 
-        public Creature(Texture2D texture, Vector2 position)
+        public Creature(Texture2D texture, Vector2 position, string identifier)
             : base(texture, position)
         {
-
+            this.identifier = identifier;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+        }
 
-            if (Velocity.X > 0)
-            {
-                directionFacing = Direction.EAST;
-            }
-            else if(Velocity.X < 0)
-            {
-                directionFacing = Direction.WEST;
-            }
-            if (Velocity.Y > 0)
-            {
-                directionFacing = Direction.SOUTH;
-            }
-            else if (Velocity.Y < 0)
+        public void Walk(bool north, bool east, bool south, bool west)
+        {
+            if (north)
             {
                 directionFacing = Direction.NORTH;
             }
+            else if(east)
+            {
+                directionFacing = Direction.EAST;
+            }
+            else if(south)
+            {
+                directionFacing = Direction.SOUTH;
+            }
+            else if(west)
+            {
+                directionFacing = Direction.WEST;
+            }
+            Vector2 velocity = Velocity;
+            velocity.X += east ? walkSpeed : 0;
+            velocity.X -= west ? walkSpeed : 0;
+            velocity.Y += south ? walkSpeed : 0;
+            velocity.Y -= north ? walkSpeed : 0;
         }
 
         public abstract void Interact(Creature user);
