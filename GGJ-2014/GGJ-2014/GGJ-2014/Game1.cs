@@ -28,6 +28,7 @@ namespace GGJ_2014
 
         SpriteFont myFont;
 
+        Texture2D testTexture;
 
         public Game1()
         {
@@ -88,6 +89,7 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().Initalize(myFont, GraphicsDevice);
 
+            testTexture = TextureGenerator.GenerateTexture(GraphicsDevice, Textures.DIRT);
             // TODO: use this.Content to load your game content here
 
         }
@@ -165,6 +167,7 @@ namespace GGJ_2014
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
 
             //Add Game Draw code Here
+
 
             spriteBatch.End();
 
