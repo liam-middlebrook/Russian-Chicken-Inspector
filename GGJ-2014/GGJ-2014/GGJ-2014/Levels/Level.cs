@@ -149,8 +149,8 @@ namespace GGJ_2014.Levels
         {
             Random rand = new Random();
 
-            Textures floorTexture = Textures.TILE_COBBLESTONE;
-            Textures wallTexture = Textures.NONE;
+            Textures floorTexture = Textures.TILE_WOOD_PLANK;
+            Textures wallTexture = Textures.TILE_BRICK_WALL;
 
             int minX = GetTileIndexInBoundsX(bounds.X);
             int maxX = GetTileIndexInBoundsX(bounds.X + bounds.Width);
