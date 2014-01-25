@@ -11,6 +11,7 @@ namespace GGJ_2014.Level
     class Level
     {
         private Tile[,] tiles;
+        private List<Creature> creatures = new List<Creature>();
 
         public void LoadLevel()
         {
@@ -19,7 +20,10 @@ namespace GGJ_2014.Level
 
         public void Update(GameTime gameTime)
         {
-
+            for (int c = 0; c < creatures.Count; c++)
+            {
+                creatures[c].Update(gameTime);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -30,6 +34,12 @@ namespace GGJ_2014.Level
                 {
                     tiles[x, y].Draw(spriteBatch);
                 }
+            }
+
+            //Optomise?
+            for (int c = 0; c < creatures.Count; c++)
+            {
+                creatures[c].Draw(spriteBatch);
             }
         }
 

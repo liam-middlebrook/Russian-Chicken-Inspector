@@ -27,6 +27,11 @@ namespace GGJ_2014.Graphics
             }
         }
 
+        public static void ScreenSize
+        {
+
+        }
+
         public static Rectangle ViewBounds
         {
             get
