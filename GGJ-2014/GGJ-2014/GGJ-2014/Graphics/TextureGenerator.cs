@@ -12,7 +12,7 @@ namespace GGJ_2014.Graphics
         GRASS,
         DIRT,
         COBBLESTONE,
-        DEFAULT
+        BORDERED
     }
 
     class TextureGenerator
@@ -40,6 +40,25 @@ namespace GGJ_2014.Graphics
                             for (int x = 0; x < texture.Width; x++)
                             {
                                 textureData[y * texture.Width + x] = Color.Brown;
+                            }
+                        }
+                        break;
+                    }
+
+                case Textures.BORDERED:
+                    {
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+                                if (x == 0 || x == texture.Width - 1 || y == 0 || y == texture.Height - 1)
+                                {
+                                    textureData[y * texture.Width + x] = Color.Black;
+                                }
+                                else
+                                {
+                                    textureData[y * texture.Width + x] = Color.White;
+                                }
                             }
                         }
                         break;
