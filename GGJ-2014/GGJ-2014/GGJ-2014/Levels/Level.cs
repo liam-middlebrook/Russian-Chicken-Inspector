@@ -35,34 +35,46 @@ namespace GGJ_2014.Levels
             tiles = new Tile[100, 100];
 
             Random rand = new Random();
-
+            List<Textures> availableTiles = new List<Textures>(new[] { Textures.TILE_COBBLESTONE, Textures.TILE_DIRT, Textures.TILE_GRASS });
+            Textures tileToDraw = availableTiles[rand.Next(0, availableTiles.Count)];
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
                     bool collide = rand.Next(0, 2) == 0;
-                    double tileTex = rand.NextDouble();
-                    //tileTex = 1; // Set Texture to test the ELSE condition
-                    if (tileTex < 0.3)
+
+                    double randNum = rand.NextDouble();
+                    double randThreshold = 0.45;
+
+                    if (tileToDraw == Textures.TILE_TREE_ON_GRASS || tileToDraw == Textures.TILE_PINETREE_ON_GRASS)
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_COBBLESTONE), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        randThreshold = 0.3;
                     }
-                    else if (tileTex < 0.5)
+                    if (randNum >= randThreshold)
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_DIRT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
+                        Textures tileDrawn = tileToDraw;
+
+
+
+                        tileToDraw = availableTiles[rand.Next(0, availableTiles.Count)];
+
+                        randNum = rand.NextDouble();
+
+                        if (randNum > 0.9999)
+                        {
+                            tileToDraw = Textures.TILE_TREE_ON_GRASS;
+                        }
+                        if (randNum > 0.99995)
+                        {
+                            tileToDraw = Textures.TILE_PINETREE_ON_GRASS;
+                        }
+
+                        availableTiles.Remove(tileToDraw);
+
+                        availableTiles.Add(tileDrawn);
                     }
-                    else if (tileTex < 0.7)
-                    {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
-                    }
-                    else if (tileTex < 0.85)
-                    {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(Textures.TILE_PAVEMENT), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
-                    }
-                    else
-                    {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(rand.NextDouble() > 0.5 ?Textures.TILE_PINETREE_ON_GRASS : Textures.TILE_TREE_ON_GRASS), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
-                    }
+
+                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(tileToDraw), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), collide);
                 }
             }
         }
