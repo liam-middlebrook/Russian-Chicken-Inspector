@@ -24,7 +24,7 @@ namespace GGJ_2014.MenuSystemNS
 
         public MenuScreenType MenuScreenType { get { return menuScreenType; } }
 
-        List<MenuControl> menuControls;
+        public List<MenuControl> menuControls;
 
 
         public MenuScreen(MenuScreenType menuScreenType, Color backgroundColor)
@@ -43,9 +43,9 @@ namespace GGJ_2014.MenuSystemNS
 
         public virtual void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState, GameTime gameTime)
         {
-            foreach (MenuControl control in menuControls)
+            for (int i = 0; i < menuControls.Count; i++)
             {
-                control.Update(keyState, prevKeyState, mouseState, prevMouseState);
+                menuControls[i].Update(keyState, prevKeyState, mouseState, prevMouseState);
             }
         }
 

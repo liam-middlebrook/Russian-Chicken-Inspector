@@ -15,6 +15,7 @@ namespace GGJ_2014.MenuSystemNS
         private SpriteFont spriteFont;
         private string text;
         private Color buttonTint;
+        private Color buttonColor;
         private event ButtonDelegate OnTriggered;
 
         private Keys keyForTrigger;
@@ -31,9 +32,10 @@ namespace GGJ_2014.MenuSystemNS
             this.text = text;
             Vector2 textSize = spriteFont.MeasureString(text);
             this.buttonRect = new Rectangle((int)position.X, (int)position.Y, (int)textSize.X + 20, (int)textSize.Y + 20);
-            this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, buttonRect.Width, buttonRect.Height);
+            this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, color, buttonRect.Width, buttonRect.Height);
             this.OnTriggered += buttonDelegate;
-            this.buttonTint = new Color(255, 255, 255, 128);
+            this.buttonColor = color;
+            this.buttonTint = new Color(230, 230, 230, 128);
             keyForTrigger = triggerKey;
         }
 
@@ -54,7 +56,7 @@ namespace GGJ_2014.MenuSystemNS
             }
             else
             {
-                buttonTint = new Color(255, 255, 255, 128);
+                buttonTint = new Color(230, 230, 230, 128);
             }
             if (keyState.IsKeyUp(keyForTrigger) && prevKeyState.IsKeyDown(keyForTrigger))
             {

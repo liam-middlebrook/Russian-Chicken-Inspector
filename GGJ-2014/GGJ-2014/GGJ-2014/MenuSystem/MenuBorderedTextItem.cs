@@ -20,18 +20,18 @@ namespace GGJ_2014.MenuSystemNS
 
         private SpriteFont font;
 
-        public MenuBorderedTextItem(string text, SpriteFont font, Vector2 position, Color buttonTint)
+        public MenuBorderedTextItem(Vector2 position, string text, Color buttonTint)
             : base(position)
         {
             this.text = text;
 
-            this.font = font;
+            this.font = MenuSystem.GetInstance().MenuFont;
 
             Vector2 textSize = font.MeasureString(text);
 
             this.buttonRect = new Rectangle((int)position.X, (int)position.Y, (int)textSize.X + 20, (int)textSize.Y + 20);
 
-            this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, buttonRect.Width, buttonRect.Height);
+            this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, null, buttonRect.Width, buttonRect.Height);
 
             this.buttonTint = buttonTint;
         }
