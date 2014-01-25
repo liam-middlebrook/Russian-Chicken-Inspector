@@ -219,7 +219,7 @@ namespace GGJ_2014.Levels
             {
                 for (int y = minY; y < maxY; y++)
                 {
-                    tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(tileTexture), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), isSolid);
+                    tiles[x, y] = new Tile(tileTexture, new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), isSolid);
                 }
             }
         }
@@ -237,7 +237,7 @@ namespace GGJ_2014.Levels
                 {
                     if (rand.NextDouble() < percent)
                     {
-                        tiles[x, y] = new Tile(TextureStorage.GetInstance().GetTexture(tileTexture), new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), isSolid);
+                        tiles[x, y] = new Tile(tileTexture, new Vector2(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE), isSolid);
                     }
                 }
             }

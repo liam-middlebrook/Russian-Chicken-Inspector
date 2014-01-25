@@ -142,7 +142,7 @@ namespace GGJ_2014
 
         protected Tile GetTileInFrontOf()
         {
-            return Level.GetInstance().GetTile((int)(MiddlePosition.X / Tile.TILE_SIZE + Math.Round(Math.Sin(Rotation))), (int)(MiddlePosition.Y / Tile.TILE_SIZE + Math.Round(Math.Cos(Rotation))));
+            return Level.GetInstance().GetTile((int)(MiddlePosition.X / Tile.TILE_SIZE + Math.Round(Math.Cos(Rotation - Math.PI / 2))), (int)(MiddlePosition.Y / Tile.TILE_SIZE + Math.Round(Math.Sin(Rotation - Math.PI / 2))));
         }
 
         public abstract void Interact(Creature user);

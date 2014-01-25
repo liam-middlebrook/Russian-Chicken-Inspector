@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using GGJ_2014.Levels;
 using Microsoft.Xna.Framework.Input;
+using GGJ_2014.Graphics;
 
 namespace GGJ_2014.Creatures
 {
@@ -43,8 +44,19 @@ namespace GGJ_2014.Creatures
             Tile tile = GetTileInFrontOf();
             if (tile != null)
             {
-                Console.WriteLine(tile);
+                switch (tile.Type)
+                {
+                    case Textures.TILE_PINETREE_ON_GRASS :
+                        ChopDownTree(tile);
+                        break;
+                }
             }
+        }
+
+        private void ChopDownTree(Tile tree)
+        {
+            tree.Texture = TextureStorage.GetInstance().GetTexture(Textures.TILE_PINETREE_STUMP);
+            tree.IsSolid = false;
         }
     }
 }

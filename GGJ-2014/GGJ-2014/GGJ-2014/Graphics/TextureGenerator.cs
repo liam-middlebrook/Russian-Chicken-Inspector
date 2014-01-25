@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GGJ_2014.Graphics
 {
-    enum Textures
+    public enum Textures
     {
         NONE,
         BORDERED,
