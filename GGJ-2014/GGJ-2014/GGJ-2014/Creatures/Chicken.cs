@@ -19,7 +19,7 @@ namespace GGJ_2014.Creatures
         private int timePassed = 0;
 
         public Chicken(Vector2 position)
-            : base(Graphics.TextureStorage.GetInstance().GetTexture(Graphics.Textures.CREATURE_CHICKEN), position, "chicken")
+            : base(Graphics.TextureStorage.GetInstance().GetTexture(Graphics.Textures.CREATURE_CHICKEN), position, "Chicken")
         {
             walkSpeed = 0.25f;
         }
@@ -100,7 +100,7 @@ namespace GGJ_2014.Creatures
             Walk(directionFacing);
             if (timePassed >= EGG_SPAWN_MILISECONDS + rand.Next(0, EGG_SPAWN_MAX_RAND))
             {
-                Levels.Level.GetInstance().EggList.Add(new Egg(MiddlePosition));
+                Levels.Level.GetInstance().AddEgg(new Egg(MiddlePosition));
                 timePassed -= EGG_SPAWN_MILISECONDS;
             }
             base.Update(gameTime);
@@ -113,7 +113,6 @@ namespace GGJ_2014.Creatures
 
         public override void Interact(Creature user)
         {
-            Console.WriteLine("I hate you" + DateTime.Now.Millisecond);
             MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.PAUSED);
 
             MenuSystem
@@ -126,12 +125,16 @@ namespace GGJ_2014.Creatures
                     Color.White,
                     () =>
                     {
-                        Levels.Level.GetInstance().CreatureList.Remove(this);
+                        Random random = new Random();
+                        int eggsGained = (int)Math.Round(2.0f * Player.Luck + rand.NextDouble());
+                        float compassonLost = 0.2f * 1.0f / Player.Luck;
+                        isAlive = false;
                         Player.Strength += 0.01f + 0.01f * Player.Luck;
-                        Player.Compassion -= 0.2f * 1.0f / Player.Luck;
-                        Player.Eggs += (int)(2.0f * Player.Luck);
+                        Player.Compassion -= compassonLost;
+                        Player.Eggs += eggsGained;
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
+                        MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.Tomato, string.Format("You Gained {0} Egg and lost {1:F2} Compassion", eggsGained, compassonLost), 5.0f));
                     }
             ));
 
@@ -145,11 +148,13 @@ namespace GGJ_2014.Creatures
                     Color.White,
                     () =>
                     {
-                        Levels.Level.GetInstance().CreatureList.Remove(this);
+                        float compassonGoten = 0.2f * 1.0f / Player.Luck;
+                        isAlive = false;
                         ++Player.Eggs;
-                        Player.Compassion += 0.2f * 1.0f / Player.Luck;
+                        Player.Compassion += compassonGoten;
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
+                        MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.SpringGreen, string.Format("You Gained 1 Egg and {0:F2} Compassion", compassonGoten), 5.0f));
                     }
             ));
         }

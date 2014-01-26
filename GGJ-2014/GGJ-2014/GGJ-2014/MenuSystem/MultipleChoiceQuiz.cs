@@ -26,7 +26,7 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuBorderedTextItem(
                     new Vector2(10, 10),
                     Color.PeachPuff,
-                    "Multiple Choice Question 1"
+                    "What would you rather spend your day doing?"
                 ));
             questionSets[0].Add(
                 new MenuButton(
@@ -69,40 +69,38 @@ namespace GGJ_2014.MenuSystemNS
                 new MenuBorderedTextItem(
                     new Vector2(10, 10),
                     Color.PeachPuff,
-                    "Multiple Choice Question 2"
+                    "When you see someone in need of help what do you do?"
                 ));
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Bad answer lower both traits",
+                    "Ignore them",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion -= 0.2f;
-                        strength -= 0.3f;
                         ++questionSetIndex;
                     }
                 ));
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 110),
-                    "Increase compassion, lower strength",
+                    "Help Them",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion += 0.4f;
-                        strength -= 0.3f;
                         ++questionSetIndex;
                     }
                 ));
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 160),
-                    "Good answer, raise both traits!",
+                    "Kick them",
                     Color.PeachPuff,
                     () =>
                     {
-                        compassion += 0.1f;
+                        compassion -= 0.5f;
                         strength += 0.5f;
                         ++questionSetIndex;
                     }
@@ -122,7 +120,7 @@ namespace GGJ_2014.MenuSystemNS
             {
                 Random rand = new Random();
                 GGJ_2014.Creatures.Player.Compassion = compassion;
-                GGJ_2014.Creatures.Player.Luck = (float)rand.NextDouble()*2 - 1.0f;
+                GGJ_2014.Creatures.Player.Luck = Math.Abs((float)rand.NextDouble()*2 - 1.0f)+0.01f;
                 GGJ_2014.Creatures.Player.Strength = strength;
                 MenuSystem.GetInstance().CurrentScreen.menuControls.Remove(this);
                 MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);

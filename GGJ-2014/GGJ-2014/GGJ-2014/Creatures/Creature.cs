@@ -20,12 +20,13 @@ namespace GGJ_2014.Creatures
     }
 
     public abstract class Creature
-        : PhysicsBody
+        : PhysicsBody , Interactable
     {
         private string identifier = "FILL THIS OUT";
         protected Direction directionFacing = Direction.NORTH;
         protected float walkSpeed = 0.5f;
         protected Rectangle collisionBox;
+        protected bool isAlive = true;
 
         public Creature(Texture2D texture, Vector2 position, string identifier)
             : base(texture, position)
@@ -65,16 +66,7 @@ namespace GGJ_2014.Creatures
 
                         Rectangle tileRectangle = tile.TileRectangle;
                         Rectangle intersection = Rectangle.Intersect(collisionBox, tileRectangle);
-                        //if (intersection.Width > 0)
-                        //{
-                        //    Console.WriteLine("X");
-                        //    Position -= new Vector2(Velocity.X / PhysicsBody.DRAG + 0.5f * Math.Sign(Velocity.X), 0);
-                        //}
-                        //if (intersection.Height > 0)
-                        //{
-                        //    Console.WriteLine("Y");
-                        //    Position -= new Vector2(0, Velocity.Y / PhysicsBody.DRAG + 0.5f * Math.Sign(Velocity.Y));
-                        //}
+                        CollidedWithTile(tile);
 
                         bool tileNorth = IsCollidableTileAdjacent(x, y, 0, -1);
                         bool tileEast = IsCollidableTileAdjacent(x, y, 1, 0);
@@ -106,6 +98,11 @@ namespace GGJ_2014.Creatures
                     }
                 }
             }
+        }
+
+        protected virtual void CollidedWithTile(Tile t)
+        {
+
         }
 
         private bool IsCollidableTileAdjacent(int originX, int originY, int directionX, int directionY)
@@ -140,12 +137,20 @@ namespace GGJ_2014.Creatures
             }
         }
 
+        public virtual void Interact(Creature user)
+        {
+
+        }
+
+        public bool IsAlive()
+        {
+            return isAlive;
+        }
+
         protected Tile GetTileInFrontOf()
         {
             return Level.GetInstance().GetTile((int)(MiddlePosition.X / Tile.TILE_SIZE + Math.Round(Math.Cos(Rotation - Math.PI / 2))), (int)(MiddlePosition.Y / Tile.TILE_SIZE + Math.Round(Math.Sin(Rotation - Math.PI / 2))));
         }
-
-        public abstract void Interact(Creature user);
 
         public string Identifyer
         {
@@ -163,12 +168,14 @@ namespace GGJ_2014.Creatures
             }
         }
 
-        public Rectangle CollitionBox
+        public Rectangle GetCollisionBox()
         {
-            get
-            {
-                return collisionBox;
-            }
+            return collisionBox;
+        }
+
+        public string GetIdentifier()
+        {
+            return identifier;
         }
     }
 }

@@ -15,7 +15,8 @@ namespace GGJ_2014.Creatures
     {
         public const int EGG_SPAWN_CHICKEN_TIME = 60000;
 
-        private bool removeEgg = false;
+        protected bool removeEgg = false;
+        protected bool canPickUp = true;
         private int timePassed = 0;
 
         public Egg(Vector2 position)
@@ -24,9 +25,9 @@ namespace GGJ_2014.Creatures
             Scale = new Vector2(0.25f, .5f);
         }
 
-        public Rectangle CollisionBox
+        public virtual Rectangle GetCollisionBox()
         {
-            get { return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width/4, (int)Texture.Height/2); }
+            return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width/4, (int)Texture.Height/2);
         }
 
         public void Update(GameTime gameTime)
@@ -50,6 +51,22 @@ namespace GGJ_2014.Creatures
             get
             {
                 return removeEgg;
+            }
+        }
+
+        public virtual int EggsGiven
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public bool CanPickUpEgg
+        {
+            get
+            {
+                return canPickUp;
             }
         }
     }

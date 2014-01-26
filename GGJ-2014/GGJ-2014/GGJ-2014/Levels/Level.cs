@@ -45,6 +45,7 @@ namespace GGJ_2014.Levels
 
         //SPAWN VARIABLES
         public const float SPAWN_CHICKEN = 0.001f;
+        public const float SPAWN_GOLDEN_EGG = 0.043f;
 
         //SPAWN CAPS
         public const int MAX_CHICKENS = 500; 
@@ -64,10 +65,11 @@ namespace GGJ_2014.Levels
         }
 
         private Tile[,] tiles;
-        private List<Creature> creatures = new List<Creature>();
-        private List<Egg> eggs = new List<Egg>();
-        private List<Rectangle> housesPositions = new List<Rectangle>();
-        private List<Rectangle> villagePositions = new List<Rectangle>();
+        private List<Creature> creatures;
+        private List<Egg> eggs;
+        private List<Rectangle> housesPositions;
+        private List<Rectangle> villagePositions;
+        private List<Interactable> interactables;
 
         public Level()
         {
@@ -77,6 +79,13 @@ namespace GGJ_2014.Levels
         public void LoadLevel()
         {
             tiles = new Tile[128, 128];
+            creatures = new List<Creature>();
+            eggs = new List<Egg>();
+            housesPositions = new List<Rectangle>();
+            villagePositions = new List<Rectangle>();
+            interactables = new List<Interactable>();
+            numberChickens = 0;
+
             List<Textures> availableTiles = new List<Textures>(new[] { Textures.TILE_COBBLESTONE, Textures.TILE_DIRT, Textures.TILE_GRASS });
             Textures tileToDraw = availableTiles[rand.Next(0, availableTiles.Count)];
 
@@ -127,7 +136,7 @@ namespace GGJ_2014.Levels
                 PlaceVillage(new Rectangle(rand.Next(VILLAGE_BUFFER_SIZE, Width - VILLAGE_BUFFER_SIZE - width), rand.Next(VILLAGE_BUFFER_SIZE, Height - VILLAGE_BUFFER_SIZE - height), width, height), rand.Next(MIN_NUMBER_OF_HOUSES, MAX_NUMBER_OF_HOUSES));
             }
 
-            TraceRectangleTiles(new Rectangle(0, 0, Width, Height), Textures.NONE, true);
+            TraceRectangleTiles(new Rectangle(0, 0, Width, Height), Textures.TILE_BRICK_WALL, true);
         }
 
         private void FadeFillTexure(Rectangle bounds, Textures texture, bool isSolid, float density)
@@ -261,7 +270,7 @@ namespace GGJ_2014.Levels
 
         public void Update(GameTime gameTime)
         {
-            for (int e = eggs.Count - 1; e > 0; e--)
+            for (int e = eggs.Count - 1; e > -1; e--)
             {
                 if (eggs[e].RemoveEgg)
                 {
@@ -272,9 +281,16 @@ namespace GGJ_2014.Levels
                     eggs[e].Update(gameTime);
                 }
             }
-            for (int c = 0; c < creatures.Count; c++)
+            for (int c = creatures.Count-1; c > -1; c--)
             {
-                creatures[c].Update(gameTime);
+                if (creatures[c].IsAlive())
+                {
+                    creatures[c].Update(gameTime);
+                }
+                else
+                {
+                    creatures.RemoveAt(c);
+                }
             }
             HandleSpawns(gameTime);
         }
@@ -282,14 +298,20 @@ namespace GGJ_2014.Levels
         private void HandleSpawns(GameTime gameTime)
         {
             double chance = rand.NextDouble();
-            if (chance < SPAWN_CHICKEN/numberChickens)
+            if (chance < SPAWN_CHICKEN/numberChickens + Player.Luck/300.0f)
             {
-                AddCreature(new Chicken(FindSpawnPlace()));
+                AddCreature(new Chicken(FindSpawnPlace(new Rectangle(0, 0, Width, Height))));
                 Console.WriteLine("CHICKEN Spwaned!");
+            }
+            if (chance < SPAWN_GOLDEN_EGG)
+            {
+                Rectangle houseBounds =housesPositions[rand.Next(0, housesPositions.Count)];
+                AddEgg(new GoldenEgg(FindSpawnPlace(new Rectangle(houseBounds.X/ Tile.TILE_SIZE, houseBounds.Y / Tile.TILE_SIZE, houseBounds.Width/Tile.TILE_SIZE, houseBounds.Height/ Tile.TILE_SIZE))));
+                Console.WriteLine("Golden Egg Spawned!");
             }
         }
 
-        private Vector2 FindSpawnPlace()
+        private Vector2 FindSpawnPlace(Rectangle bounds)
         {
             Vector2 spawnPlace = new Vector2(-1, -1);
             int x = 0;
@@ -298,8 +320,8 @@ namespace GGJ_2014.Levels
             int timesTried = 0;
             while (spawnPlace.X == -1 && spawnPlace.Y == -1 && timesTried < 10)
             {
-                x = rand.Next(0, Width);
-                y = rand.Next(0, Height);
+                x = rand.Next(bounds.X, bounds.X + bounds.Width);
+                y = rand.Next(bounds.Y, bounds.Y + Height);
                 tile = GetTile(x, y);
                 if (tile != null && !tile.IsSolid)
                 {
@@ -344,7 +366,20 @@ namespace GGJ_2014.Levels
                 }
                 numberChickens++;
             }
+            if (creature is Interactable)
+            {
+                interactables.Add(creature);
+            }
             creatures.Add(creature);
+        }
+
+        public void AddEgg(Egg egg)
+        {
+            if (egg is Interactable)
+            {
+                interactables.Add((Interactable)egg);
+            }
+            eggs.Add(egg);
         }
 
         public void RemoveCreature(Creature creature)
@@ -392,6 +427,7 @@ namespace GGJ_2014.Levels
             }
         }
 
+        //DO NOT DIRECTLY ADD TO EGG LIST
         public List<Egg> EggList
         {
             get { return eggs; }
@@ -402,6 +438,14 @@ namespace GGJ_2014.Levels
             get
             {
                 return creatures;
+            }
+        }
+
+        public List<Interactable> InteractableList
+        {
+            get
+            {
+                return interactables;
             }
         }
     }

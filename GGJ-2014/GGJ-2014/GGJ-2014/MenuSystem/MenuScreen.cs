@@ -45,6 +45,11 @@ namespace GGJ_2014.MenuSystemNS
             menuControls.Add(control);
         }
 
+        public void RemoveControl(MenuControl control)
+        {
+            menuControls.Remove(control);
+        }
+
         public virtual void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState, GameTime gameTime)
         {
             for (int i = 0; i < menuControls.Count; i++)

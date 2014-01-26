@@ -20,6 +20,12 @@ namespace GGJ_2014
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        public const int PLAYER_SPAWN_X = 100;
+        public const int PLAYER_SPAWN_Y = 100;
+
+        public const int POPUP_DISPLAY_POSITION_X = 10;
+        public const int POPUP_DISPLAY_POSITION_Y = 10;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -117,7 +123,7 @@ namespace GGJ_2014
 
             #endregion
 
-            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(100, 100));
+            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y));
 
 
             base.Initialize();
@@ -147,7 +153,7 @@ namespace GGJ_2014
                     Vector2.Zero,
                     "Regen Map!",
                     Color.White,
-                    () => { Level.GetInstance().LoadLevel(); }
+                    () => { ResetGame(); }
                     ));
 
             eggCounter = new MenuBorderedTextItem(
@@ -169,7 +175,7 @@ namespace GGJ_2014
                        graphics.PreferredBackBufferHeight * 0.01f
                        ),
                        Color.PeachPuff,
-                       string.Format("Compassion: {0}\nLuck: {1}\nStrength: {2}", Player.Compassion, Player.Luck, Player.Strength)
+                       string.Format("Compassion: {0:F2}\nLuck: {1:F2}\nStrength: {2:F2}", Player.Compassion, Player.Luck, Player.Strength)
                        );
             MenuSystem.GetInstance()
                 .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
@@ -217,6 +223,14 @@ namespace GGJ_2014
             // TODO: Unload any non ContentManager content here
         }
 
+        private void ResetGame()
+        {
+            Level.GetInstance().LoadLevel(); 
+            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y)); 
+            Level.GetInstance().AddCreature(player);
+            Player.Eggs = 0;
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -244,7 +258,7 @@ namespace GGJ_2014
                         player.HandleInput(keyState);
                         Camera.Focus(player.MiddlePosition);
                         eggCounter.Text = string.Format("{0:000000} x Eggs Collected", Player.Eggs);
-                        playerStats.Text = string.Format("Compassion: {0}\nLuck: {1}\nStrength: {2}", Player.Compassion, Player.Luck, Player.Strength);
+                        playerStats.Text = string.Format("Compassion: {0:F2}\nLuck: {1:F2}\nStrength: {2:F2}", Player.Compassion, Player.Luck, Player.Strength);
 
                         break;
                     }

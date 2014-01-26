@@ -11,6 +11,8 @@ namespace GGJ_2014.MenuSystemNS
     delegate void UpdateDelegate();
     class MenuBorderedTextItem : MenuControl
     {
+        public const int TICK_CONSTANT_SECOND = 10000000;
+
         private Rectangle buttonRect;
 
         private Texture2D buttonTexture;
@@ -22,6 +24,9 @@ namespace GGJ_2014.MenuSystemNS
         private SpriteFont font;
 
         private UpdateDelegate delegatePrm;
+
+        private int timeExistFor;
+        private long currentTime;
 
         public string Text
         {
@@ -38,7 +43,7 @@ namespace GGJ_2014.MenuSystemNS
             }
         }
 
-        public MenuBorderedTextItem(Vector2 position, Color buttonTint, string text)
+        public MenuBorderedTextItem(Vector2 position, Color buttonTint, string text, float timeForMessageToApearFor = 0)
             : base(position)
         {
             this.text = text;
@@ -52,6 +57,9 @@ namespace GGJ_2014.MenuSystemNS
             this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, null, buttonRect.Width, buttonRect.Height);
 
             this.buttonTint = buttonTint;
+
+            currentTime = DateTime.Now.Ticks;
+            timeExistFor = (int)(timeForMessageToApearFor * TICK_CONSTANT_SECOND);
         }
 
         public void ChangeText(string text, bool resize = true)
@@ -67,6 +75,12 @@ namespace GGJ_2014.MenuSystemNS
 
         public override void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState)
         {
+            if (timeExistFor > 0 && (DateTime.Now.Ticks - currentTime) > timeExistFor)
+            {
+                //Console.WriteLine("Go " + DateTime.Now.Second);
+                MenuSystem.GetInstance().CurrentScreen.RemoveControl(this);
+                currentTime = DateTime.Now.Ticks;
+            }
             if (delegatePrm != null)
             {
                 delegatePrm();

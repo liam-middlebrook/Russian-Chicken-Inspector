@@ -75,6 +75,8 @@
     <Compile Include="Creatures\Chicken.cs" />
     <Compile Include="Creatures\Creature.cs" />
     <Compile Include="Creatures\Egg.cs" />
+    <Compile Include="Creatures\GoldenEgg.cs" />
+    <Compile Include="Creatures\Interactable.cs" />
     <Compile Include="Creatures\Person.cs" />
     <Compile Include="Creatures\Player.cs" />
     <Compile Include="Graphics\Camera.cs" />

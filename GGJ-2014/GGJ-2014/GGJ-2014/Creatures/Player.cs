@@ -20,13 +20,21 @@ namespace GGJ_2014.Creatures
         public const int INTERACT_LONG_LENGTH = 32;
         public const int INTERACT_SHORT_LENGTH = 16;
 
+        public const float TREE_STRNGTH_VALUE = 0.002f;
+
+        public const int IDENTIFIER_POSITION_X = 10;
+        public const int IDENTIFIER_POSITION_Y = 480;
+
         public static float Strength;
         public static float Compassion;
         public static float Luck;
         public static int Eggs;
 
         private Rectangle interactRectangle;
-        private Creature lastInteractor;
+        private Interactable lastInteractor;
+        private bool isInteracting = false;//When spacebar it hit
+        private float numberOfTreesChopedThisTick = 0;
+        private MenuBorderedTextItem interactIdentifier;
 
         public Player(Texture2D texture, Vector2 position)
             : base(texture, position)
@@ -44,7 +52,8 @@ namespace GGJ_2014.Creatures
             direction = keyState.IsKeyDown(Keys.D) ? Direction.EAST : direction;
             Walk(direction);
 
-            if (keyState.IsKeyDown(Keys.Space))
+            isInteracting = keyState.IsKeyDown(Keys.Space);
+            if (isInteracting)
             {
                 UseObject();
             }
@@ -52,13 +61,14 @@ namespace GGJ_2014.Creatures
 
         public override void Update(GameTime gameTime)
         {
+            numberOfTreesChopedThisTick = Math.Max(numberOfTreesChopedThisTick-Strength/8, 0);
             for (int i = 0; i < Level.GetInstance().EggList.Count; ++i)
             {
-                if (this.collisionBox.Intersects(Level.GetInstance().EggList[i].CollisionBox))
+                if (Level.GetInstance().EggList[i].CanPickUpEgg && this.collisionBox.Intersects(Level.GetInstance().EggList[i].GetCollisionBox()))
                 {
+                    Eggs += Level.GetInstance().EggList[i].EggsGiven;
                     Level.GetInstance().EggList.RemoveAt(i);
                     --i;
-                    ++Eggs;
                 }
             }
             base.Update(gameTime);
@@ -79,23 +89,46 @@ namespace GGJ_2014.Creatures
             }
         }
 
+        protected override void CollidedWithTile(Tile t)
+        {
+            base.CollidedWithTile(t);
+            if (isInteracting && t.Type == Textures.TILE_PINETREE_ON_GRASS && numberOfTreesChopedThisTick < Strength)
+            {
+                ChopDownTree(t);
+            }
+        }
+
         public void CheckForInteraction()
         {
             SyncInteractCollider();
-            if (lastInteractor != null && !collisionBox.Intersects(interactRectangle))
+            if (lastInteractor != null && lastInteractor.IsAlive() && lastInteractor.GetCollisionBox().Intersects(interactRectangle))
             {
-                lastInteractor = null;
-                //IniateInteraction();
                 return;
             }
-            List<Creature> creatures = Level.GetInstance().CreatureList;
-            for (int c = 0; c < creatures.Count; c++)
+            else
             {
-                if (creatures[c] != this && creatures[c].CollitionBox.Intersects(interactRectangle))
+                if (interactIdentifier != null)
                 {
-                    lastInteractor = creatures[c];
-                    //IniateInteraction();
-                    return;
+                    MenuSystem.GetInstance().CurrentScreen.RemoveControl(interactIdentifier);
+                }
+                lastInteractor = null;
+            }
+            List<Interactable> interactables = Level.GetInstance().InteractableList;
+            for (int i = interactables.Count-1; i > -1 ; i--)
+            {
+                if (interactables[i].IsAlive())
+                {
+                    if (interactables[i] != this && interactables[i].GetCollisionBox().Intersects(interactRectangle))
+                    {
+                        lastInteractor = interactables[i];
+                        interactIdentifier = new MenuBorderedTextItem(new Vector2(IDENTIFIER_POSITION_X, IDENTIFIER_POSITION_Y), Color.PeachPuff, lastInteractor.GetIdentifier()+" Space to Interact");
+                        MenuSystem.GetInstance().CurrentScreen.AddControl(interactIdentifier);
+                        return;
+                    }
+                }
+                else
+                {
+                    Level.GetInstance().InteractableList.RemoveAt(i);
                 }
             }
         }
@@ -127,7 +160,6 @@ namespace GGJ_2014.Creatures
                 return;
             }
             lastInteractor.Interact(this);
-            Console.WriteLine(lastInteractor.Identifyer);
         }
 
         public void UseObject()
@@ -155,6 +187,8 @@ namespace GGJ_2014.Creatures
             tree.IsSolid = false;
             tree.Type = Textures.TILE_PINETREE_STUMP;
             Eggs += EGG_TREE_VALUE;
+            Strength += TREE_STRNGTH_VALUE;
+            numberOfTreesChopedThisTick++;
         }
     }
 }
