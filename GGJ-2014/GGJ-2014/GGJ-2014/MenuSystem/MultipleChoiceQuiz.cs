@@ -26,8 +26,8 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[0].Add(
                 new MenuBorderedTextItem(
                     new Vector2(10, 10),
-                    "Multiple Choice Question 1",
-                    Color.PeachPuff
+                    Color.PeachPuff,
+                    "Multiple Choice Question 1"
                 ));
             questionSets[0].Add(
                 new MenuButton(
@@ -72,8 +72,8 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[1].Add(
                 new MenuBorderedTextItem(
                     new Vector2(10, 10),
-                    "Multiple Choice Question 2",
-                    Color.PeachPuff
+                    Color.PeachPuff,
+                    "Multiple Choice Question 2"
                 ));
             questionSets[1].Add(
                 new MenuButton(
