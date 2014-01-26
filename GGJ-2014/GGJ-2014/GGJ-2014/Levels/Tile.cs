@@ -48,6 +48,10 @@ namespace GGJ_2014.Levels
             {
                 return type;
             }
+            set
+            {
+                type = value;
+            }
         }
     }
 }

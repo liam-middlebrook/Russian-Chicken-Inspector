@@ -14,7 +14,7 @@ namespace GGJ_2014.Levels
     {
         //GENERATION VALUES
         //VILLAGES & HOUSES
-        public const int MIN_NUMBER_OF_VILLAGES = 1;
+        public const int MIN_NUMBER_OF_VILLAGES = 2;
         public const int MAX_NUMBER_OF_VILLAGES = 10;
         public const int MIN_VILLAGE_SIZE = 20;
         public const int MAX_VILLAGE_SIZE = 30;
@@ -47,7 +47,7 @@ namespace GGJ_2014.Levels
         public const float SPAWN_CHICKEN = 0.001f;
 
         //SPAWN CAPS
-        public const int MAX_CHICKENS = 1000; 
+        public const int MAX_CHICKENS = 500; 
 
         private Random rand = new Random();
         private int numberChickens = 0;
@@ -397,5 +397,12 @@ namespace GGJ_2014.Levels
             get { return eggs; }
         }
 
+        public List<Creature> CreatureList
+        {
+            get
+            {
+                return creatures;
+            }
+        }
     }
 }

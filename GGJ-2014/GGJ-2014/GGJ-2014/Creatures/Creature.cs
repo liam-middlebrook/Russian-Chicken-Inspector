@@ -162,5 +162,13 @@ namespace GGJ_2014.Creatures
                 return new Vector2(Position.X , Position.Y);
             }
         }
+
+        public Rectangle CollitionBox
+        {
+            get
+            {
+                return collisionBox;
+            }
+        }
     }
 }

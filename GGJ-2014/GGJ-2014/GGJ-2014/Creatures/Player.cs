@@ -14,16 +14,24 @@ namespace GGJ_2014.Creatures
         : Person
     {
         public const int EGG_TREE_VALUE = 100;
+        public const int GOLDEN_EGG_VALUE = 1000;
+
+        public const int INTERACT_LONG_LENGTH = 32;
+        public const int INTERACT_SHORT_LENGTH = 16;
 
         public static float Strength;
         public static float Charisma;
         public static float Intelligence;
         public static int Eggs;
 
+        private Rectangle interactRectangle;
+        private Creature lastInteractor;
+
         public Player(Texture2D texture, Vector2 position)
             : base(texture, position)
         {
-
+            interactRectangle = new Rectangle(0, 0, INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH);
+            SyncInteractCollider();
         }
 
         public override void HandleInput(KeyboardState keyState)
@@ -53,7 +61,59 @@ namespace GGJ_2014.Creatures
                 }
             }
             base.Update(gameTime);
+            CheckForInteraction();
         }
+
+        public void CheckForInteraction()
+        {
+            SyncInteractCollider();
+            if (lastInteractor != null && collisionBox.Intersects(interactRectangle))
+            {
+                IniateInteraction();
+                return;
+            }
+            List<Creature> creatures = Level.GetInstance().CreatureList;
+            for (int c = 0; c < creatures.Count; c++)
+            {
+                if (creatures[c] != this && creatures[c].CollitionBox.Intersects(interactRectangle))
+                {
+                    lastInteractor = creatures[c];
+                    IniateInteraction();
+                    return;
+                }
+            }
+        }
+
+        public void SyncInteractCollider()
+        {
+            Vector2 currentPosition = MiddlePosition;
+            switch (directionFacing)
+            {
+                case Direction.NORTH :
+                    interactRectangle = new Rectangle((int)currentPosition.X - INTERACT_SHORT_LENGTH/2, (int)currentPosition.Y - INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH, INTERACT_LONG_LENGTH);
+                    break;
+                case Direction.EAST :
+                    interactRectangle = new Rectangle((int)currentPosition.X, (int)currentPosition.Y - INTERACT_SHORT_LENGTH / 2, INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH);
+                    break;
+                case Direction.SOUTH :
+                    interactRectangle = new Rectangle((int)currentPosition.X - INTERACT_SHORT_LENGTH / 2, (int)currentPosition.Y, INTERACT_SHORT_LENGTH, INTERACT_LONG_LENGTH);
+                    break;
+                case Direction.WEST :
+                    interactRectangle = new Rectangle((int)currentPosition.X - INTERACT_LONG_LENGTH, (int)currentPosition.Y - INTERACT_SHORT_LENGTH / 2, INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH);
+                    break;
+            }
+        }
+
+        public void IniateInteraction()
+        {
+            if (lastInteractor == null)
+            {
+                return;
+            }
+            lastInteractor.Interact(this);
+            Console.WriteLine(lastInteractor.Identifyer);
+        }
+
         public void UseObject()
         {
             Tile tile = GetTileInFrontOf();
@@ -63,8 +123,13 @@ namespace GGJ_2014.Creatures
                 {
                     case Textures.TILE_PINETREE_ON_GRASS :
                         ChopDownTree(tile);
-                        break;
+                        return;
                 }
+            }
+            //Interact with the thing!
+            if (lastInteractor != null)
+            {
+                IniateInteraction();
             }
         }
 
@@ -72,6 +137,7 @@ namespace GGJ_2014.Creatures
         {
             tree.Texture = TextureStorage.GetInstance().GetTexture(Textures.TILE_PINETREE_STUMP);
             tree.IsSolid = false;
+            tree.Type = Textures.TILE_PINETREE_STUMP;
             Eggs += EGG_TREE_VALUE;
         }
     }

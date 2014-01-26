@@ -112,7 +112,7 @@ namespace GGJ_2014.Creatures
 
         public override void Interact(Creature user)
         {
-
+            Console.WriteLine("I hate you");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
