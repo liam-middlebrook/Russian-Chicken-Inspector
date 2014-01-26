@@ -27,7 +27,7 @@ namespace GGJ_2014.Creatures
 
         public virtual Rectangle GetCollisionBox()
         {
-            return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width/4, (int)Texture.Height/2);
+            return new Rectangle((int)Position.X-Texture.Width/4, (int)Position.Y-Texture.Height/2, Texture.Width/2, (int)Texture.Height);
         }
 
         public virtual void Update(GameTime gameTime)

@@ -65,7 +65,7 @@ namespace GGJ_2014.Creatures
                         Random random = new Random();
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
-                        if ((random.NextDouble() + 0.2) * 50 < Player.Luck + Player.Compassion * 2)
+                        if (random.NextDouble() * 280 < Player.Luck + Player.Compassion * 2)
                         {
                             removeEgg = true;
                             Player.Eggs += Player.GOLDEN_EGG_VALUE;
@@ -73,7 +73,7 @@ namespace GGJ_2014.Creatures
                         }
                         else
                         {
-                            MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.PeachPuff, "Nothing happened.", 2.0f));
+                            MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.PeachPuff, "Nothing happened. Try Raising your compassion.", 3.0f));
                         }
                     }
             ));

@@ -46,13 +46,15 @@ namespace GGJ_2014.Levels
         //SPAWN VARIABLES
         public const float SPAWN_CHICKEN = 0.001f;
         public const float SPAWN_GOLDEN_EGG = 0.00023f;
-        public const float SPAWN_VILLAGER = 0.01f;
+        public const float SPAWN_VILLAGER = 0.008f;
 
         //SPAWN CAPS
-        public const int MAX_CHICKENS = 500; 
+        public const int MAX_CHICKENS = 500;
+        public const int MAX_VILLAGERS = 80;
 
         private Random rand = new Random();
         private int numberChickens = 0;
+        private int numberVillagers = 0;
 
         static Level instance;
 
@@ -138,6 +140,19 @@ namespace GGJ_2014.Levels
             }
 
             TraceRectangleTiles(new Rectangle(0, 0, Width, Height), Textures.TILE_BRICK_WALL, true);
+
+            for (int c = 0; c < rand.Next(4, 30); c++)
+            {
+                SpawnChicken();
+            }
+            for (int e = 0; e < rand.Next(1, 5); e++)
+            {
+                SpawnGoldenEgg();
+            }
+            for (int v = 0; v < rand.Next(5, 30); v++)
+            {
+                SpawnVillager();
+            }
         }
 
         private void FadeFillTexure(Rectangle bounds, Textures texture, bool isSolid, float density)
@@ -290,6 +305,14 @@ namespace GGJ_2014.Levels
                 }
                 else
                 {
+                    if(creatures[c] is Chicken)
+                    {
+                        numberChickens --;
+                    }
+                    else if(creatures[c] is Villager)
+                    {
+                        numberVillagers--;
+                    }
                     creatures.RemoveAt(c);
                 }
             }
@@ -301,19 +324,34 @@ namespace GGJ_2014.Levels
             double chance = rand.NextDouble();
             if (chance < SPAWN_CHICKEN/numberChickens + Player.Luck/300.0f)
             {
-                AddCreature(new Chicken(FindSpawnPlace(new Rectangle(0, 0, Width, Height))));
-                Console.WriteLine("CHICKEN Spwaned!");
+                SpawnChicken();
             }
             if (chance < SPAWN_GOLDEN_EGG + Player.Luck/1000.0f)
             {
-                AddEgg(new GoldenEgg(FindSpawnPlace(housesPositions[rand.Next(0, housesPositions.Count)]) - new Vector2(Tile.TILE_SIZE / 4, Tile.TILE_SIZE/4)));
-                Console.WriteLine("Golden Egg Spawned!");
+                SpawnGoldenEgg();
             }
             if (chance < SPAWN_VILLAGER)
             {
-                AddCreature(new Villager(FindSpawnPlace(housesPositions[rand.Next(0, housesPositions.Count)]) - new Vector2(Tile.TILE_SIZE / 4, Tile.TILE_SIZE / 4)));
-                Console.WriteLine("Spawn Villager");
+                SpawnVillager();
             }
+        }
+
+        private void SpawnChicken()
+        {
+            AddCreature(new Chicken(FindSpawnPlace(new Rectangle(0, 0, Width, Height))));
+            Console.WriteLine("CHICKEN Spwaned!");
+        }
+
+        private void SpawnGoldenEgg()
+        {
+            AddEgg(new GoldenEgg(FindSpawnPlace(housesPositions[rand.Next(0, housesPositions.Count)]) - new Vector2(Tile.TILE_SIZE / 4, Tile.TILE_SIZE / 4)));
+            Console.WriteLine("Golden Egg Spawned!");
+        }
+
+        private void SpawnVillager()
+        {
+            AddCreature(new Villager(FindSpawnPlace(housesPositions[rand.Next(0, housesPositions.Count)]) - new Vector2(Tile.TILE_SIZE / 4, Tile.TILE_SIZE / 4)));
+            Console.WriteLine("Spawn Villager");
         }
 
         private Vector2 FindSpawnPlace(Rectangle bounds)
@@ -369,6 +407,14 @@ namespace GGJ_2014.Levels
                     return;
                 }
                 numberChickens++;
+            }
+            else if (creature is Villager)
+            {
+                if(numberVillagers > MAX_VILLAGERS)
+                {
+                    return;
+                }
+                numberVillagers++;
             }
             if (creature is Interactable)
             {

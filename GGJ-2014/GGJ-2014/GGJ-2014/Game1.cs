@@ -37,10 +37,14 @@ namespace GGJ_2014
         SpriteFont myFont;
 
         Player player;
-
+        EggFallWindow eggFall;
 
         MenuBorderedTextItem eggCounter;
         MenuBorderedTextItem playerStats;
+        MenuBorderedTextItem healthBar;
+
+        int timeElaspsed;
+
         string playerEggCount;
         public Game1()
         {
@@ -72,10 +76,10 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance()
                .AddMenuScreen(
-               new MenuScreen(MenuScreenType.MAIN_MENU, Color.CornflowerBlue));
+               new MenuScreen(MenuScreenType.MAIN_MENU, Color.Black));
             MenuSystem.GetInstance()
                .AddMenuScreen(
-               new MenuScreen(MenuScreenType.QUESTIONS_MENU, Color.CornflowerBlue));
+               new MenuScreen(MenuScreenType.QUESTIONS_MENU, Color.Black));
             MenuSystem.GetInstance()
                 .AddMenuScreen(
                 new MenuScreen(MenuScreenType.GAMEPLAY, Color.CornflowerBlue));
@@ -90,10 +94,10 @@ namespace GGJ_2014
                 new MenuScreen(MenuScreenType.CREDITS_MENU, Color.CornflowerBlue));
             MenuSystem.GetInstance()
                 .AddMenuScreen(
-                new MenuScreen(MenuScreenType.WIN_MENU, Color.CornflowerBlue));
+                new MenuScreen(MenuScreenType.WIN_MENU, Color.Black));
             MenuSystem.GetInstance()
                 .AddMenuScreen(
-                new MenuScreen(MenuScreenType.LOSE_MENU, Color.CornflowerBlue));
+                new MenuScreen(MenuScreenType.LOSE_MENU, Color.Black));
 
 
             keyState = Keyboard.GetState();
@@ -125,7 +129,7 @@ namespace GGJ_2014
             #endregion
 
             player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y));
-
+            eggFall = new EggFallWindow();
 
             base.Initialize();
         }
@@ -147,15 +151,15 @@ namespace GGJ_2014
 
             Level.GetInstance().AddCreature(player);
 
-            MenuSystemNS.MenuSystem.GetInstance()
-                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.GAMEPLAY)
-                .AddControl(
-                new MenuSystemNS.MenuButton(
-                    Vector2.Zero,
-                    "Regen Map!",
-                    Color.White,
-                    () => { ResetGame(); }
-                    ));
+            //MenuSystemNS.MenuSystem.GetInstance()
+            //    .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.GAMEPLAY)
+            //    .AddControl(
+            //    new MenuSystemNS.MenuButton(
+            //        Vector2.Zero,
+            //        "Regen Map!",
+            //        Color.White,
+            //        () => { ResetGame(); }
+            //        ));
 
             eggCounter = new MenuBorderedTextItem(
                    new Vector2(
@@ -172,7 +176,7 @@ namespace GGJ_2014
 
             playerStats = new MenuBorderedTextItem(
                    new Vector2(
-                       graphics.PreferredBackBufferWidth * 0.75f,
+                       graphics.PreferredBackBufferWidth * 0.72f,
                        graphics.PreferredBackBufferHeight * 0.01f
                        ),
                        Color.PeachPuff,
@@ -182,15 +186,8 @@ namespace GGJ_2014
                 .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
                 .AddControl(playerStats);
 
-            #endregion
-
-            #region QuestionaireLoadContent
-
-            MenuSystem.GetInstance()
-                .GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU)
-                .AddControl(
-                new MultipleChoiceQuiz()
-                );
+            healthBar = new MenuBorderedTextItem(new Vector2(graphics.PreferredBackBufferWidth * 0.8f, graphics.PreferredBackBufferHeight * 0.9f), Color.PeachPuff,"Health: 100");
+            MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.GAMEPLAY).AddControl(healthBar);
 
             #endregion
 
@@ -200,17 +197,52 @@ namespace GGJ_2014
                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
                .AddControl(
                new MenuSystemNS.MenuButton(
-                   new Vector2(10, 10),
+                   new Vector2(10, 500),
                    "Let's Play!",
                    Color.White,
-                   () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); }
+                   () =>
+                   {
+                       MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); ResetGame(); MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU).AddControl(new MultipleChoiceQuiz());
+                   }
                    ));
+
+            MenuSystemNS.MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
+                .AddControl(
+                new MenuBorderedTextItem(Vector2.Zero, Color.White, "Russian Chicken Inspector"));
 
             #endregion
 
 
+            MenuSystemNS.MenuSystem.GetInstance()
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.LOSE_MENU)
+               .AddControl(
+               new MenuSystemNS.MenuButton(
+                   new Vector2(10, 500),
+                   "Return to Main Menu",
+                   Color.White,
+                   () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU);}
+                   ));
 
+            MenuSystemNS.MenuSystem.GetInstance()
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.WIN_MENU)
+               .AddControl(
+               new MenuSystemNS.MenuButton(
+                   new Vector2(10, 500),
+                   "Return to Main Menu",
+                   Color.White,
+                   () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU); }
+                   ));
 
+            MenuSystemNS.MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.LOSE_MENU)
+                .AddControl(
+                new MenuBorderedTextItem(Vector2.Zero, Color.White, "You Lose."));
+
+            MenuSystemNS.MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.WIN_MENU)
+                .AddControl(
+                new MenuBorderedTextItem(Vector2.Zero, Color.White, "You Win!"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -230,6 +262,7 @@ namespace GGJ_2014
             player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y)); 
             Level.GetInstance().AddCreature(player);
             Player.Eggs = 0;
+            timeElaspsed = 0;
         }
 
         /// <summary>
@@ -244,43 +277,52 @@ namespace GGJ_2014
                 this.Exit();
 
             // TODO: Add your update logic here
-           
+            if (eggFall != null)
+            {
+                eggFall.Update(gameTime);
+            }
             switch (MenuSystem.GetInstance().CurrentScreenType)
             {
                 case MenuScreenType.MAIN_MENU:
                     {
-
+                        eggFall.isActive = true;
                         break;
                     }
 
                 case MenuScreenType.GAMEPLAY:
                     {
+                        timeElaspsed += gameTime.ElapsedGameTime.Milliseconds;
+                        eggFall.isActive = false;
                         Level.GetInstance().Update(gameTime);
                         player.HandleInput(keyState);
                         Camera.Focus(player.MiddlePosition);
                         eggCounter.Text = string.Format("{0:000000} x Eggs Collected", Player.Eggs);
                         playerStats.Text = string.Format("Compassion: {0:F2}\nLuck: {1:F2}\nStrength: {2:F2}", Player.Compassion, Player.Luck, Player.Strength);
+                        healthBar.Text = string.Format("Health: {0}%", Player.Health);
 
                         break;
                     }
 
                 case MenuScreenType.PAUSED:
                     {
-
+                        eggFall.isActive = false;
                         break;
                     }
 
                 case MenuScreenType.PAUSE_MENU:
                     {
-
+                        eggFall.isActive = false;
                         break;
                     }
 
                 case MenuScreenType.CREDITS_MENU:
                     {
-
+                        eggFall.isActive = true;
                         break;
                     }
+                default :
+                    eggFall.isActive = true;
+                    break;
             }
 
             MenuSystem.GetInstance().Update(keyState, prevKeyState, mouseState, prevMouseState, gameTime);
@@ -290,11 +332,6 @@ namespace GGJ_2014
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
 
-            /*
-            Console.WriteLine("intelligence: " + Player.Intelligence);
-            Console.WriteLine("charisma: " + Player.Charisma);
-            Console.WriteLine("strength: " + Player.Strength);
-            //*/
             base.Update(gameTime);
         }
 
@@ -306,12 +343,19 @@ namespace GGJ_2014
         {
             MenuSystem.GetInstance().DrawUnderlay();
 
-
+            if (eggFall != null)
+            {
+                spriteBatch.Begin();
+                eggFall.Draw(spriteBatch);
+                spriteBatch.End();
+            }
             switch (MenuSystem.GetInstance().CurrentScreenType)
             {
                 case MenuScreenType.MAIN_MENU:
                     {
-
+                        spriteBatch.Begin();
+                        spriteBatch.DrawString(myFont, "[ WASD ] to move.\n[ Space Bar ] to interact with things and chop down trees.\n\nCollect eggs by doing various tasks.\nYou need 100,000 eggs to win.\nLevels are randomly generated.", new Vector2(10, 100), Color.White);
+                        spriteBatch.End();
                         break;
                     }
 
@@ -354,6 +398,13 @@ namespace GGJ_2014
 
                         break;
                     }
+                case MenuScreenType.WIN_MENU:
+                    {
+                        spriteBatch.Begin();
+                        spriteBatch.DrawString(myFont, string.Format("You beat the game in {0:F} seconds.", timeElaspsed / 1000.0f), new Vector2(20, 100), Color.White);
+                        spriteBatch.End();
+                        break;
+                    }
             }
 
 
@@ -362,7 +413,6 @@ namespace GGJ_2014
             MenuSystem.GetInstance().DrawOverlay(spriteBatch);
 
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }

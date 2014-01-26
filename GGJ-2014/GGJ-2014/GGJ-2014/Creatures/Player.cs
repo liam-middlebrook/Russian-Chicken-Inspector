@@ -21,6 +21,7 @@ namespace GGJ_2014.Creatures
         public const int INTERACT_SHORT_LENGTH = 16;
 
         public const float TREE_STRNGTH_VALUE = 0.002f;
+        public const float TREE_COMPATION_VALUE = -0.00007f;
 
         public const int IDENTIFIER_POSITION_X = 10;
         public const int IDENTIFIER_POSITION_Y = 480;
@@ -29,6 +30,7 @@ namespace GGJ_2014.Creatures
         public static float Compassion;
         public static float Luck;
         public static int Eggs;
+        public static int Health;
 
         private Rectangle interactRectangle;
         private Interactable lastInteractor;
@@ -41,6 +43,7 @@ namespace GGJ_2014.Creatures
         {
             interactRectangle = new Rectangle(0, 0, INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH);
             SyncInteractCollider();
+            Health = 100;
         }
 
         public override void HandleInput(KeyboardState keyState)
@@ -66,6 +69,7 @@ namespace GGJ_2014.Creatures
             {
                 if (Level.GetInstance().EggList[i].CanPickUpEgg && this.collisionBox.Intersects(Level.GetInstance().EggList[i].GetCollisionBox()))
                 {
+                    Health = Math.Min(Health+=1,100);
                     Eggs += Level.GetInstance().EggList[i].EggsGiven;
                     Level.GetInstance().EggList.RemoveAt(i);
                     --i;
@@ -75,17 +79,14 @@ namespace GGJ_2014.Creatures
             CheckForInteraction();
 
 
-            if (Eggs >= 1000000)
+            if (Eggs >= 100000)
             {
                 Console.WriteLine("WIN!");
                 MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.WIN_MENU);
-                MenuSystem.GetInstance()
-                    .GetMenuScreenOfType(MenuScreenType.WIN_MENU)
-                    .AddControl(new MenuBorderedTextItem(
-                        new Vector2(10, 10),
-                        Color.White,
-                        "You Win!"
-                ));
+            }
+            if (Health < 1)
+            {
+                MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.LOSE_MENU);
             }
         }
 
@@ -188,6 +189,7 @@ namespace GGJ_2014.Creatures
             tree.Type = Textures.TILE_PINETREE_STUMP;
             Eggs += EGG_TREE_VALUE;
             Strength += TREE_STRNGTH_VALUE;
+            Compassion += TREE_COMPATION_VALUE;
             numberOfTreesChopedThisTick++;
         }
     }
