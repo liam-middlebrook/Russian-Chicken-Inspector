@@ -24,6 +24,11 @@ namespace GGJ_2014.Creatures
             return new Rectangle((int)Position.X-Texture.Width/4, (int)Position.Y-Texture.Height/8,(int)Texture.Width, (int)Texture.Height);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            
+        }
+
         public void Interact(Creature user)
         {
             MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.PAUSED);
@@ -60,7 +65,7 @@ namespace GGJ_2014.Creatures
                         Random random = new Random();
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
-                        if ((random.NextDouble() + 0.5) * 50 < Player.Luck + Player.Compassion * 2)
+                        if ((random.NextDouble() + 0.2) * 50 < Player.Luck + Player.Compassion * 2)
                         {
                             removeEgg = true;
                             Player.Eggs += Player.GOLDEN_EGG_VALUE;

@@ -30,7 +30,7 @@ namespace GGJ_2014.Creatures
             return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width/4, (int)Texture.Height/2);
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             timePassed += gameTime.ElapsedGameTime.Milliseconds;
             if (timePassed >= EGG_SPAWN_CHICKEN_TIME)

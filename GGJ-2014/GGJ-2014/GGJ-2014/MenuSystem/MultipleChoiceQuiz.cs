@@ -31,35 +31,33 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "BAD answer hurts all traits",
+                    "Talking with people",
                     Color.PeachPuff,
                     () =>
                     {
-                        compassion -= 0.2f;
-                        strength -= 0.3f;
+                        compassion += 0.4f;
                         ++questionSetIndex;
                     }
                 ));
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 110),
-                    "Increase Strength, Lower Compassion",
+                    "Working out",
                     Color.PeachPuff,
                     () =>
                     {
-                        compassion -= 0.4f;
-                        strength += 0.3f;
+                        strength += 0.6f;
                         ++questionSetIndex;
                     }
                 ));
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 160),
-                    "Increase both traits!",
+                    "Killing Bunnies",
                     Color.PeachPuff,
                     () =>
                     {
-                        compassion += 0.1f;
+                        compassion -= 2.0f;
                         strength += 0.5f;
                         ++questionSetIndex;
                     }
@@ -102,6 +100,59 @@ namespace GGJ_2014.MenuSystemNS
                     {
                         compassion -= 0.5f;
                         strength += 0.5f;
+                        ++questionSetIndex;
+                    }
+                ));
+
+            questionSets.Add(new List<MenuControl>());
+            questionSets[2].Add(
+                new MenuBorderedTextItem(
+                    new Vector2(10, 10),
+                    Color.PeachPuff,
+                    "How many trees do you think you could chop down?"
+                ));
+            questionSets[2].Add(
+                new MenuButton(
+                    new Vector2(10, 60),
+                    "I don't want to chop down trees.",
+                    Color.PeachPuff,
+                    () =>
+                    {
+                        compassion += 0.7f;
+                        ++questionSetIndex;
+                    }
+                ));
+            questionSets[2].Add(
+                new MenuButton(
+                    new Vector2(10, 110),
+                    "None",
+                    Color.PeachPuff,
+                    () =>
+                    {
+                        strength -= 0.2f;
+                        ++questionSetIndex;
+                    }
+                ));
+            questionSets[2].Add(
+                new MenuButton(
+                    new Vector2(10, 160),
+                    "A few",
+                    Color.PeachPuff,
+                    () =>
+                    {
+                        strength += 0.3f;
+                        ++questionSetIndex;
+                    }
+                ));
+            questionSets[2].Add(
+                new MenuButton(
+                    new Vector2(10, 210),
+                    "The whole forest",
+                    Color.PeachPuff,
+                    () =>
+                    {
+                        compassion -= 0.3f;
+                        strength += 1.0f;
                         ++questionSetIndex;
                     }
                 ));

@@ -79,6 +79,7 @@
     <Compile Include="Creatures\Interactable.cs" />
     <Compile Include="Creatures\Person.cs" />
     <Compile Include="Creatures\Player.cs" />
+    <Compile Include="Creatures\Villager.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\TextureGenerator.cs" />

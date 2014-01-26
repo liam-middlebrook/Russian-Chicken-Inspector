@@ -22,7 +22,8 @@ namespace GGJ_2014.Graphics
         TILE_WOOD_PLANK,
         CREATURE_CHICKEN,
         CREATURE_GENERIC,
-        CHICKEN_EGG
+        CREATURE_VILLAGER,
+        CHICKEN_EGG,
     }
 
     class TextureGenerator
@@ -542,8 +543,9 @@ namespace GGJ_2014.Graphics
                                 textureData[y * texture.Width + x] = Color.Transparent;
                             }
                         }
-                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 16, new Vector2(16, 16), Color.Black);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 16, new Vector2(16, 16), Color.IndianRed);
                         textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 15, new Vector2(16, 16), baseColor);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), 5, new Vector2(12, 12), new Color(255, 180, 132));
                         break;
                     }
 
@@ -565,6 +567,28 @@ namespace GGJ_2014.Graphics
                         }
                         textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), width/2, new Vector2(width/2, height/2), baseColor);
                         textureData = AddRectangle(textureData, new Vector2(texture.Width, texture.Height), new Rectangle(width/2-2, 1, 3, height/3), Color.Black);
+                        break;
+                    }
+
+                #endregion
+
+                #region CREATURE_VILLAGER_GENERATOR
+
+                case Textures.CREATURE_VILLAGER:
+                    {
+                        Color baseColor = Color.White;
+                        Random rand = new Random();
+                        for (int y = 0; y < texture.Height; y++)
+                        {
+                            for (int x = 0; x < texture.Width; x++)
+                            {
+
+                                textureData[y * texture.Width + x] = Color.Transparent;
+                            }
+                        }
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), width / 2 , new Vector2(width / 2, height / 2), Color.DarkGray);
+                        textureData = AddCircle(textureData, new Vector2(texture.Width, texture.Height), width / 2 - 2, new Vector2(width / 2, height / 2), baseColor);
+                        textureData = AddRectangle(textureData, new Vector2(texture.Width, texture.Height), new Rectangle(width / 2 - 2, 1, 3, height / 3), Color.Black);
                         break;
                     }
 

@@ -45,7 +45,8 @@ namespace GGJ_2014.Levels
 
         //SPAWN VARIABLES
         public const float SPAWN_CHICKEN = 0.001f;
-        public const float SPAWN_GOLDEN_EGG = 0.043f;
+        public const float SPAWN_GOLDEN_EGG = 0.00023f;
+        public const float SPAWN_VILLAGER = 0.01f;
 
         //SPAWN CAPS
         public const int MAX_CHICKENS = 500; 
@@ -303,11 +304,15 @@ namespace GGJ_2014.Levels
                 AddCreature(new Chicken(FindSpawnPlace(new Rectangle(0, 0, Width, Height))));
                 Console.WriteLine("CHICKEN Spwaned!");
             }
-            if (chance < SPAWN_GOLDEN_EGG)
+            if (chance < SPAWN_GOLDEN_EGG + Player.Luck/1000.0f)
             {
-                Rectangle houseBounds =housesPositions[rand.Next(0, housesPositions.Count)];
-                AddEgg(new GoldenEgg(FindSpawnPlace(new Rectangle(houseBounds.X/ Tile.TILE_SIZE, houseBounds.Y / Tile.TILE_SIZE, houseBounds.Width/Tile.TILE_SIZE, houseBounds.Height/ Tile.TILE_SIZE))));
+                AddEgg(new GoldenEgg(FindSpawnPlace(housesPositions[rand.Next(0, housesPositions.Count)]) - new Vector2(Tile.TILE_SIZE / 4, Tile.TILE_SIZE/4)));
                 Console.WriteLine("Golden Egg Spawned!");
+            }
+            if (chance < SPAWN_VILLAGER)
+            {
+                AddCreature(new Villager(FindSpawnPlace(housesPositions[rand.Next(0, housesPositions.Count)]) - new Vector2(Tile.TILE_SIZE / 4, Tile.TILE_SIZE / 4)));
+                Console.WriteLine("Spawn Villager");
             }
         }
 
@@ -321,7 +326,7 @@ namespace GGJ_2014.Levels
             while (spawnPlace.X == -1 && spawnPlace.Y == -1 && timesTried < 10)
             {
                 x = rand.Next(bounds.X, bounds.X + bounds.Width);
-                y = rand.Next(bounds.Y, bounds.Y + Height);
+                y = rand.Next(bounds.Y, bounds.Y + bounds.Height);
                 tile = GetTile(x, y);
                 if (tile != null && !tile.IsSolid)
                 {
@@ -359,7 +364,6 @@ namespace GGJ_2014.Levels
         {
             if (creature is Chicken)
             {
-                Console.WriteLine("C " + numberChickens);
                 if (numberChickens > MAX_CHICKENS)
                 {
                     return;

@@ -118,6 +118,7 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.CREATURE_CHICKEN, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_CHICKEN, null));
             TextureStorage.GetInstance().AddTexture(Textures.CHICKEN_EGG, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CHICKEN_EGG, null));
             TextureStorage.GetInstance().AddTexture(Textures.CREATURE_GENERIC, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_GENERIC, null, 12, 12));
+            TextureStorage.GetInstance().AddTexture(Textures.CREATURE_VILLAGER, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_VILLAGER, null, 14, 14));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_BRICK_WALL, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_BRICK_WALL, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_WOOD_PLANK, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_WOOD_PLANK, null));
 
@@ -199,7 +200,7 @@ namespace GGJ_2014
                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
                .AddControl(
                new MenuSystemNS.MenuButton(
-                   new Vector2(50, 250),
+                   new Vector2(10, 10),
                    "Let's Play!",
                    Color.White,
                    () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); }
