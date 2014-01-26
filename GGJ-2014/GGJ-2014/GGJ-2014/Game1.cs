@@ -34,6 +34,7 @@ namespace GGJ_2014
 
 
         MenuBorderedTextItem eggCounter;
+        MenuBorderedTextItem playerStats;
         string playerEggCount;
         public Game1()
         {
@@ -49,8 +50,8 @@ namespace GGJ_2014
 
             IsMouseVisible = true;
 
-            
-           
+
+
         }
 
         /// <summary>
@@ -67,14 +68,26 @@ namespace GGJ_2014
                .AddMenuScreen(
                new MenuScreen(MenuScreenType.MAIN_MENU, Color.CornflowerBlue));
             MenuSystem.GetInstance()
-                .AddMenuScreen(
-                new MenuScreen(MenuScreenType.GAMEPLAY, Color.Red));
+               .AddMenuScreen(
+               new MenuScreen(MenuScreenType.QUESTIONS_MENU, Color.CornflowerBlue));
             MenuSystem.GetInstance()
                 .AddMenuScreen(
-                new MenuScreen(MenuScreenType.PAUSE_MENU, Color.ForestGreen));
+                new MenuScreen(MenuScreenType.GAMEPLAY, Color.CornflowerBlue));
             MenuSystem.GetInstance()
                 .AddMenuScreen(
-                new MenuScreen(MenuScreenType.CREDITS_MENU, Color.DarkOrchid));
+                new MenuScreen(MenuScreenType.PAUSED, Color.CornflowerBlue));
+            MenuSystem.GetInstance()
+                .AddMenuScreen(
+                new MenuScreen(MenuScreenType.PAUSE_MENU, Color.CornflowerBlue));
+            MenuSystem.GetInstance()
+                .AddMenuScreen(
+                new MenuScreen(MenuScreenType.CREDITS_MENU, Color.CornflowerBlue));
+            MenuSystem.GetInstance()
+                .AddMenuScreen(
+                new MenuScreen(MenuScreenType.WIN_MENU, Color.CornflowerBlue));
+            MenuSystem.GetInstance()
+                .AddMenuScreen(
+                new MenuScreen(MenuScreenType.LOSE_MENU, Color.CornflowerBlue));
 
 
             keyState = Keyboard.GetState();
@@ -85,8 +98,10 @@ namespace GGJ_2014
             //NEEDS TO CHANGE 
 
             //TextureStorage.GetInstance().LoadContent(Content);
+
+            #region Load_Generated_Textures
+
             TextureStorage.GetInstance().AddTexture(Textures.NONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.NONE, null));
-            
             TextureStorage.GetInstance().AddTexture(Textures.TILE_DIRT, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_DIRT, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_GRASS, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_GRASS, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_COBBLESTONE, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_COBBLESTONE, null));
@@ -99,9 +114,12 @@ namespace GGJ_2014
             TextureStorage.GetInstance().AddTexture(Textures.CREATURE_GENERIC, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.CREATURE_GENERIC, null, 12, 12));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_BRICK_WALL, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_BRICK_WALL, null));
             TextureStorage.GetInstance().AddTexture(Textures.TILE_WOOD_PLANK, TextureGenerator.GenerateTexture(GraphicsDevice, Textures.TILE_WOOD_PLANK, null));
+
+            #endregion
+
             player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(100, 100));
 
-            
+
             base.Initialize();
         }
 
@@ -118,10 +136,12 @@ namespace GGJ_2014
 
             MenuSystem.GetInstance().LoadContent(myFont, GraphicsDevice);
 
+            #region GameplayLoadContent
+
             Level.GetInstance().AddCreature(player);
 
             MenuSystemNS.MenuSystem.GetInstance()
-                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
+                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.GAMEPLAY)
                 .AddControl(
                 new MenuSystemNS.MenuButton(
                     Vector2.Zero,
@@ -130,21 +150,60 @@ namespace GGJ_2014
                     () => { Level.GetInstance().LoadLevel(); }
                     ));
 
+            eggCounter = new MenuBorderedTextItem(
+                   new Vector2(
+                       graphics.PreferredBackBufferWidth * 0.01f,
+                       graphics.PreferredBackBufferHeight * 0.9f
+                       ),
+                       Color.PeachPuff,
+                       string.Format("{0:000000} x Eggs Collected", Player.Eggs)
+                       );
             MenuSystem.GetInstance()
-                .GetMenuScreenOfType(MenuScreenType.MAIN_MENU)
+                .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
+                .AddControl(eggCounter);
+
+
+            playerStats = new MenuBorderedTextItem(
+                   new Vector2(
+                       graphics.PreferredBackBufferWidth * 0.75f,
+                       graphics.PreferredBackBufferHeight * 0.01f
+                       ),
+                       Color.PeachPuff,
+                       string.Format("Compassion: {0}\nLuck: {1}\nStrength: {2}", Player.Compassion, Player.Luck, Player.Strength)
+                       );
+            MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
+                .AddControl(playerStats);
+
+            #endregion
+
+            #region QuestionaireLoadContent
+
+            MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU)
                 .AddControl(
                 new MultipleChoiceQuiz()
                 );
 
-            eggCounter = new MenuBorderedTextItem(
-                    new Vector2(
-                        graphics.PreferredBackBufferWidth * 0.01f,
-                        graphics.PreferredBackBufferHeight * 0.9f
-                        ),
-                        Color.PeachPuff,
-                        string.Format("{0:000000} x Eggs Collected", Player.Eggs)
-                        );
-            MenuSystem.GetInstance().CurrentScreen.AddControl(eggCounter);
+            #endregion
+
+            #region MainMenuLoadContent
+
+            MenuSystemNS.MenuSystem.GetInstance()
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
+               .AddControl(
+               new MenuSystemNS.MenuButton(
+                   new Vector2(50, 250),
+                   "Let's Play!",
+                   Color.White,
+                   () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); }
+                   ));
+
+            #endregion
+
+
+
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -170,9 +229,7 @@ namespace GGJ_2014
                 this.Exit();
 
             // TODO: Add your update logic here
-            Level.GetInstance().Update(gameTime);
-            player.HandleInput(keyState);
-            Camera.Focus(player.MiddlePosition);
+           
             switch (MenuSystem.GetInstance().CurrentScreenType)
             {
                 case MenuScreenType.MAIN_MENU:
@@ -183,7 +240,18 @@ namespace GGJ_2014
 
                 case MenuScreenType.GAMEPLAY:
                     {
-                        
+                        Level.GetInstance().Update(gameTime);
+                        player.HandleInput(keyState);
+                        Camera.Focus(player.MiddlePosition);
+                        eggCounter.Text = string.Format("{0:000000} x Eggs Collected", Player.Eggs);
+                        playerStats.Text = string.Format("Compassion: {0}\nLuck: {1}\nStrength: {2}", Player.Compassion, Player.Luck, Player.Strength);
+
+                        break;
+                    }
+
+                case MenuScreenType.PAUSED:
+                    {
+
                         break;
                     }
 
@@ -212,8 +280,6 @@ namespace GGJ_2014
             Console.WriteLine("charisma: " + Player.Charisma);
             Console.WriteLine("strength: " + Player.Strength);
             //*/
-            eggCounter.Text = string.Format("{0:000000} x Eggs Collected", Player.Eggs);
-
             base.Update(gameTime);
         }
 
@@ -226,13 +292,55 @@ namespace GGJ_2014
             MenuSystem.GetInstance().DrawUnderlay();
 
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
+            switch (MenuSystem.GetInstance().CurrentScreenType)
+            {
+                case MenuScreenType.MAIN_MENU:
+                    {
 
-            //Add Game Draw code Here
-            Level.GetInstance().Draw(spriteBatch);
+                        break;
+                    }
 
-            spriteBatch.End();
+                case MenuScreenType.GAMEPLAY:
+                    {
+
+                        // TODO: Add your drawing code here
+                        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
+
+                        //Add Game Draw code Here
+                        Level.GetInstance().Draw(spriteBatch);
+
+                        spriteBatch.End();
+
+                        break;
+                    }
+
+                case MenuScreenType.PAUSED:
+                    {
+
+                        // TODO: Add your drawing code here
+                        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
+
+                        //Add Game Draw code Here
+                        Level.GetInstance().Draw(spriteBatch);
+
+                        spriteBatch.End();
+
+                        break;
+                    }
+
+                case MenuScreenType.PAUSE_MENU:
+                    {
+
+                        break;
+                    }
+
+                case MenuScreenType.CREDITS_MENU:
+                    {
+
+                        break;
+                    }
+            }
+
 
             spriteBatch.Begin();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GGJ_2014.Physics;
+using GGJ_2014.MenuSystemNS;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,7 @@ namespace GGJ_2014.Creatures
         public const int EGG_SPAWN_MAX_RAND = 30000;
         public const int EGG_SPAWN_MILISECONDS = 20000;
 
+        private Random rand = new Random();
         private int timePassed = 0;
 
         public Chicken(Vector2 position)
@@ -26,22 +28,21 @@ namespace GGJ_2014.Creatures
         {
             timePassed += gameTime.ElapsedGameTime.Milliseconds;
 
-            Random rand = new Random();
 
             double randVal = rand.NextDouble();
             switch (directionFacing)
             {
                 case Direction.NORTH:
                     {
-                        if (randVal > .975)
+                        if (randVal > .99)
                         {
                             directionFacing = Direction.EAST;
                         }
-                        else if (randVal > .95)
+                        else if (randVal > .98)
                         {
                             directionFacing = Direction.WEST;
                         }
-                        else if (randVal > .9)
+                        else if (randVal > .965)
                         {
                             directionFacing = Direction.SOUTH;
                         }
@@ -49,15 +50,15 @@ namespace GGJ_2014.Creatures
                     }
                 case Direction.EAST:
                     {
-                        if (randVal > .975)
+                        if (randVal > .99)
                         {
                             directionFacing = Direction.NORTH;
                         }
-                        else if (randVal > .95)
+                        else if (randVal > .98)
                         {
                             directionFacing = Direction.SOUTH;
                         }
-                        else if (randVal > .9)
+                        else if (randVal > .965)
                         {
                             directionFacing = Direction.WEST;
                         }
@@ -65,15 +66,15 @@ namespace GGJ_2014.Creatures
                     }
                 case Direction.SOUTH:
                     {
-                        if (randVal > .975)
+                        if (randVal > .99)
                         {
                             directionFacing = Direction.EAST;
                         }
-                        else if (randVal > .95)
+                        else if (randVal > .98)
                         {
                             directionFacing = Direction.WEST;
                         }
-                        else if (randVal > .9)
+                        else if (randVal > .965)
                         {
                             directionFacing = Direction.NORTH;
                         }
@@ -81,15 +82,15 @@ namespace GGJ_2014.Creatures
                     }
                 case Direction.WEST:
                     {
-                        if (randVal > .975)
+                        if (randVal > .99)
                         {
                             directionFacing = Direction.NORTH;
                         }
-                        else if (randVal > .95)
+                        else if (randVal > .98)
                         {
                             directionFacing = Direction.SOUTH;
                         }
-                        else if (randVal > .9)
+                        else if (randVal > .965)
                         {
                             directionFacing = Direction.EAST;
                         }
@@ -112,7 +113,45 @@ namespace GGJ_2014.Creatures
 
         public override void Interact(Creature user)
         {
-            Console.WriteLine("I hate you");
+            Console.WriteLine("I hate you" + DateTime.Now.Millisecond);
+            MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.PAUSED);
+
+            MenuSystem
+                .GetInstance()
+                .GetMenuScreenOfType(MenuScreenType.PAUSED)
+                .AddControl(
+                new MenuButton(
+                    new Vector2(10, 10),
+                    "Kill the Chicken.",
+                    Color.White,
+                    () =>
+                    {
+                        Levels.Level.GetInstance().CreatureList.Remove(this);
+                        Player.Strength += 0.01f + 0.01f * Player.Luck;
+                        Player.Compassion -= 0.2f * 1.0f / Player.Luck;
+                        Player.Eggs += (int)(2.0f * Player.Luck);
+                        MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
+                        MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
+                    }
+            ));
+
+            MenuSystem
+                .GetInstance()
+                .GetMenuScreenOfType(MenuScreenType.PAUSED)
+                .AddControl(
+                new MenuButton(
+                    new Vector2(10, 60),
+                    "Rescue the Chicken.",
+                    Color.White,
+                    () =>
+                    {
+                        Levels.Level.GetInstance().CreatureList.Remove(this);
+                        ++Player.Eggs;
+                        Player.Compassion += 0.2f * 1.0f / Player.Luck;
+                        MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
+                        MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
+                    }
+            ));
         }
 
         public override void Draw(SpriteBatch spriteBatch)

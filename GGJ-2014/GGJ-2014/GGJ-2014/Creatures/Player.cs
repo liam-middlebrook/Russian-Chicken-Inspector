@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using GGJ_2014.Levels;
 using Microsoft.Xna.Framework.Input;
 using GGJ_2014.Graphics;
+using GGJ_2014.MenuSystemNS;
 
 namespace GGJ_2014.Creatures
 {
@@ -20,8 +21,8 @@ namespace GGJ_2014.Creatures
         public const int INTERACT_SHORT_LENGTH = 16;
 
         public static float Strength;
-        public static float Charisma;
-        public static float Intelligence;
+        public static float Compassion;
+        public static float Luck;
         public static int Eggs;
 
         private Rectangle interactRectangle;
@@ -51,7 +52,7 @@ namespace GGJ_2014.Creatures
 
         public override void Update(GameTime gameTime)
         {
-            for (int i = 0; i < Level.GetInstance().EggList.Count; ++i )
+            for (int i = 0; i < Level.GetInstance().EggList.Count; ++i)
             {
                 if (this.collisionBox.Intersects(Level.GetInstance().EggList[i].CollisionBox))
                 {
@@ -62,14 +63,29 @@ namespace GGJ_2014.Creatures
             }
             base.Update(gameTime);
             CheckForInteraction();
+
+
+            if (Eggs >= 1000000)
+            {
+                Console.WriteLine("WIN!");
+                MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.WIN_MENU);
+                MenuSystem.GetInstance()
+                    .GetMenuScreenOfType(MenuScreenType.WIN_MENU)
+                    .AddControl(new MenuBorderedTextItem(
+                        new Vector2(10, 10),
+                        Color.White,
+                        "You Win!"
+                ));
+            }
         }
 
         public void CheckForInteraction()
         {
             SyncInteractCollider();
-            if (lastInteractor != null && collisionBox.Intersects(interactRectangle))
+            if (lastInteractor != null && !collisionBox.Intersects(interactRectangle))
             {
-                IniateInteraction();
+                lastInteractor = null;
+                //IniateInteraction();
                 return;
             }
             List<Creature> creatures = Level.GetInstance().CreatureList;
@@ -78,7 +94,7 @@ namespace GGJ_2014.Creatures
                 if (creatures[c] != this && creatures[c].CollitionBox.Intersects(interactRectangle))
                 {
                     lastInteractor = creatures[c];
-                    IniateInteraction();
+                    //IniateInteraction();
                     return;
                 }
             }
@@ -89,16 +105,16 @@ namespace GGJ_2014.Creatures
             Vector2 currentPosition = MiddlePosition;
             switch (directionFacing)
             {
-                case Direction.NORTH :
-                    interactRectangle = new Rectangle((int)currentPosition.X - INTERACT_SHORT_LENGTH/2, (int)currentPosition.Y - INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH, INTERACT_LONG_LENGTH);
+                case Direction.NORTH:
+                    interactRectangle = new Rectangle((int)currentPosition.X - INTERACT_SHORT_LENGTH / 2, (int)currentPosition.Y - INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH, INTERACT_LONG_LENGTH);
                     break;
-                case Direction.EAST :
+                case Direction.EAST:
                     interactRectangle = new Rectangle((int)currentPosition.X, (int)currentPosition.Y - INTERACT_SHORT_LENGTH / 2, INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH);
                     break;
-                case Direction.SOUTH :
+                case Direction.SOUTH:
                     interactRectangle = new Rectangle((int)currentPosition.X - INTERACT_SHORT_LENGTH / 2, (int)currentPosition.Y, INTERACT_SHORT_LENGTH, INTERACT_LONG_LENGTH);
                     break;
-                case Direction.WEST :
+                case Direction.WEST:
                     interactRectangle = new Rectangle((int)currentPosition.X - INTERACT_LONG_LENGTH, (int)currentPosition.Y - INTERACT_SHORT_LENGTH / 2, INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH);
                     break;
             }
@@ -121,7 +137,7 @@ namespace GGJ_2014.Creatures
             {
                 switch (tile.Type)
                 {
-                    case Textures.TILE_PINETREE_ON_GRASS :
+                    case Textures.TILE_PINETREE_ON_GRASS:
                         ChopDownTree(tile);
                         return;
                 }

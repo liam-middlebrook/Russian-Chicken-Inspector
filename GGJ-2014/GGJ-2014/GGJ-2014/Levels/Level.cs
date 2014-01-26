@@ -285,7 +285,7 @@ namespace GGJ_2014.Levels
             if (chance < SPAWN_CHICKEN/numberChickens)
             {
                 AddCreature(new Chicken(FindSpawnPlace()));
-                Console.WriteLine("CHICKEN!");
+                Console.WriteLine("CHICKEN Spwaned!");
             }
         }
 

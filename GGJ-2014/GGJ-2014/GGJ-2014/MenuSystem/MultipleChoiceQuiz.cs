@@ -13,8 +13,7 @@ namespace GGJ_2014.MenuSystemNS
         private List<List<MenuControl>> questionSets;
 
         float strength;
-        float charisma;
-        float intelligence;
+        float compassion;
 
         int questionSetIndex;
         
@@ -32,12 +31,11 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Multiple Choice 1 Answer 1",
+                    "BAD answer hurts all traits",
                     Color.PeachPuff,
                     () =>
                     {
-                        intelligence -= 0.2f;
-                        charisma += 0.5f;
+                        compassion -= 0.2f;
                         strength -= 0.3f;
                         ++questionSetIndex;
                     }
@@ -45,12 +43,11 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 110),
-                    "Multiple Choice 1 Answer 2",
+                    "Increase Strength, Lower Compassion",
                     Color.PeachPuff,
                     () =>
                     {
-                        intelligence -= 0.4f;
-                        charisma -= 0.1f;
+                        compassion -= 0.4f;
                         strength += 0.3f;
                         ++questionSetIndex;
                     }
@@ -58,12 +55,11 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 160),
-                    "Multiple Choice 1 Answer 3",
+                    "Increase both traits!",
                     Color.PeachPuff,
                     () =>
                     {
-                        intelligence += 0.1f;
-                        charisma -= 0.2f;
+                        compassion += 0.1f;
                         strength += 0.5f;
                         ++questionSetIndex;
                     }
@@ -78,12 +74,11 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Multiple Choice 2 Answer 1",
+                    "Bad answer lower both traits",
                     Color.PeachPuff,
                     () =>
                     {
-                        intelligence -= 0.2f;
-                        charisma += 0.5f;
+                        compassion -= 0.2f;
                         strength -= 0.3f;
                         ++questionSetIndex;
                     }
@@ -91,25 +86,23 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 110),
-                    "Multiple Choice 2 Answer 2",
+                    "Increase compassion, lower strength",
                     Color.PeachPuff,
                     () =>
                     {
-                        intelligence -= 0.4f;
-                        charisma -= 0.1f;
-                        strength += 0.3f;
+                        compassion += 0.4f;
+                        strength -= 0.3f;
                         ++questionSetIndex;
                     }
                 ));
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 160),
-                    "Multiple Choice 2 Answer 3",
+                    "Good answer, raise both traits!",
                     Color.PeachPuff,
                     () =>
                     {
-                        intelligence += 0.1f;
-                        charisma -= 0.2f;
+                        compassion += 0.1f;
                         strength += 0.5f;
                         ++questionSetIndex;
                     }
@@ -127,10 +120,12 @@ namespace GGJ_2014.MenuSystemNS
             }
             else
             {
-                GGJ_2014.Creatures.Player.Intelligence = intelligence;
-                GGJ_2014.Creatures.Player.Charisma = charisma;
+                Random rand = new Random();
+                GGJ_2014.Creatures.Player.Compassion = compassion;
+                GGJ_2014.Creatures.Player.Luck = (float)rand.NextDouble()*2 - 1.0f;
                 GGJ_2014.Creatures.Player.Strength = strength;
                 MenuSystem.GetInstance().CurrentScreen.menuControls.Remove(this);
+                MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
             }
         }
 

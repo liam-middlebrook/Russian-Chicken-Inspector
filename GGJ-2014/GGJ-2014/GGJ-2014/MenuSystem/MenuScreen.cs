@@ -12,8 +12,12 @@ namespace GGJ_2014.MenuSystemNS
     {
         MAIN_MENU,
         GAMEPLAY,
+        PAUSED,
         PAUSE_MENU,
-        CREDITS_MENU
+        QUESTIONS_MENU,
+        CREDITS_MENU,
+        WIN_MENU,
+        LOSE_MENU
     }
 
     class MenuScreen
