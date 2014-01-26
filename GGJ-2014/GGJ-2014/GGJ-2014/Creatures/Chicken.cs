@@ -11,6 +11,10 @@ namespace GGJ_2014.Creatures
 {
     class Chicken : Creature
     {
+        public const int EGG_SPAWN_MAX_RAND = 30000;
+        public const int EGG_SPAWN_MILISECONDS = 20000;
+
+        private int timePassed = 0;
 
         public Chicken(Vector2 position)
             : base(Graphics.TextureStorage.GetInstance().GetTexture(Graphics.Textures.CREATURE_CHICKEN), position, "chicken")
@@ -20,6 +24,8 @@ namespace GGJ_2014.Creatures
 
         public override void Update(GameTime gameTime)
         {
+            timePassed += gameTime.ElapsedGameTime.Milliseconds;
+
             Random rand = new Random();
 
             double randVal = rand.NextDouble();
@@ -91,7 +97,11 @@ namespace GGJ_2014.Creatures
                     }
             }
             Walk(directionFacing);
-            Levels.Level.GetInstance().EggList.Add(new Egg(Center));
+            if (timePassed >= EGG_SPAWN_MILISECONDS + rand.Next(0, EGG_SPAWN_MAX_RAND))
+            {
+                Levels.Level.GetInstance().EggList.Add(new Egg(MiddlePosition));
+                timePassed -= EGG_SPAWN_MILISECONDS;
+            }
             base.Update(gameTime);
         }
 

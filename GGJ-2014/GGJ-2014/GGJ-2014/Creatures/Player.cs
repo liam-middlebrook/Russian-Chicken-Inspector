@@ -13,7 +13,7 @@ namespace GGJ_2014.Creatures
     class Player
         : Person
     {
-        public const int EGG_TREE_VALUE = 10;
+        public const int EGG_TREE_VALUE = 100;
 
         public static float Strength;
         public static float Charisma;

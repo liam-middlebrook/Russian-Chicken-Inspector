@@ -44,7 +44,10 @@ namespace GGJ_2014.Levels
         public const int MAX_ROCK_SIZE = 30;
 
         //SPAWN VARIABLES
-        public const float SPAWN_CHICKEN = 0.004f;
+        public const float SPAWN_CHICKEN = 0.001f;
+
+        //SPAWN CAPS
+        public const int MAX_CHICKENS = 1000; 
 
         private Random rand = new Random();
         private int numberChickens = 0;
@@ -258,6 +261,17 @@ namespace GGJ_2014.Levels
 
         public void Update(GameTime gameTime)
         {
+            for (int e = eggs.Count - 1; e > 0; e--)
+            {
+                if (eggs[e].RemoveEgg)
+                {
+                    eggs.RemoveAt(e);
+                }
+                else
+                {
+                    eggs[e].Update(gameTime);
+                }
+            }
             for (int c = 0; c < creatures.Count; c++)
             {
                 creatures[c].Update(gameTime);
@@ -268,7 +282,7 @@ namespace GGJ_2014.Levels
         private void HandleSpawns(GameTime gameTime)
         {
             double chance = rand.NextDouble();
-            if (chance < SPAWN_CHICKEN)
+            if (chance < SPAWN_CHICKEN/numberChickens)
             {
                 AddCreature(new Chicken(FindSpawnPlace()));
                 Console.WriteLine("CHICKEN!");
@@ -321,11 +335,16 @@ namespace GGJ_2014.Levels
 
         public void AddCreature(Creature creature)
         {
-            creatures.Add(creature);
             if (creature is Chicken)
             {
+                Console.WriteLine("C " + numberChickens);
+                if (numberChickens > MAX_CHICKENS)
+                {
+                    return;
+                }
                 numberChickens++;
             }
+            creatures.Add(creature);
         }
 
         public void RemoveCreature(Creature creature)
