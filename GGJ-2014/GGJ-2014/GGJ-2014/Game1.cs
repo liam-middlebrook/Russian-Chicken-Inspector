@@ -355,6 +355,7 @@ namespace GGJ_2014
                     {
                         spriteBatch.Begin();
                         spriteBatch.DrawString(myFont, "[ WASD ] to move.\n[ Space Bar ] to interact with things and chop down trees.\n\nCollect eggs by doing various tasks.\nYou need 100,000 eggs to win.\nLevels are randomly generated.", new Vector2(10, 100), Color.White);
+                        spriteBatch.DrawString(myFont, "Liam MiddleBrook, Alec Linder", new Vector2(476, 570), Color.White);
                         spriteBatch.End();
                         break;
                     }
