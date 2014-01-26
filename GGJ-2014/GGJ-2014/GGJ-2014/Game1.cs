@@ -32,7 +32,9 @@ namespace GGJ_2014
 
         Player player;
 
-        
+
+        MenuBorderedTextItem eggCounter;
+        string playerEggCount;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -46,6 +48,9 @@ namespace GGJ_2014
             Content.RootDirectory = "Content";
 
             IsMouseVisible = true;
+
+            
+           
         }
 
         /// <summary>
@@ -115,14 +120,31 @@ namespace GGJ_2014
 
             Level.GetInstance().AddCreature(player);
 
-            MenuSystemNS.MenuSystem.GetInstance().GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU).AddControl(new MenuSystemNS.MenuButton(Vector2.Zero, "Regen Map!", Color.White, () => { Level.GetInstance().LoadLevel(); }));
+            MenuSystemNS.MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
+                .AddControl(
+                new MenuSystemNS.MenuButton(
+                    Vector2.Zero,
+                    "Regen Map!",
+                    Color.White,
+                    () => { Level.GetInstance().LoadLevel(); }
+                    ));
+
             MenuSystem.GetInstance()
                 .GetMenuScreenOfType(MenuScreenType.MAIN_MENU)
                 .AddControl(
                 new MultipleChoiceQuiz()
                 );
 
-            MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(graphics.PreferredBackBufferWidth * 0.01f, graphics.PreferredBackBufferHeight * 0.9f), "0000000 x Eggs", Color.PeachPuff));
+            eggCounter = new MenuBorderedTextItem(
+                    new Vector2(
+                        graphics.PreferredBackBufferWidth * 0.01f,
+                        graphics.PreferredBackBufferHeight * 0.9f
+                        ),
+                        Color.PeachPuff,
+                        string.Format("{0:000000} x Eggs Collected", Player.Eggs)
+                        );
+            MenuSystem.GetInstance().CurrentScreen.AddControl(eggCounter);
 
             // TODO: use this.Content to load your game content here
         }
@@ -190,7 +212,7 @@ namespace GGJ_2014
             Console.WriteLine("charisma: " + Player.Charisma);
             Console.WriteLine("strength: " + Player.Strength);
             //*/
-
+            eggCounter.Text = string.Format("{0:000000} x Eggs Collected", Player.Eggs);
 
             base.Update(gameTime);
         }

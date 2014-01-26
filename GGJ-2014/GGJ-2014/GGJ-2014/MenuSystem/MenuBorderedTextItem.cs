@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GGJ_2014.MenuSystemNS
 {
+    delegate void UpdateDelegate();
     class MenuBorderedTextItem : MenuControl
     {
         private Rectangle buttonRect;
@@ -20,7 +21,24 @@ namespace GGJ_2014.MenuSystemNS
 
         private SpriteFont font;
 
-        public MenuBorderedTextItem(Vector2 position, string text, Color buttonTint)
+        private UpdateDelegate delegatePrm;
+
+        public string Text
+        {
+            get { return text; }
+            set
+            {
+                text = value;
+                Vector2 textSize = font.MeasureString(text);
+
+                this.buttonRect = new Rectangle((int)position.X, (int)position.Y, (int)textSize.X + 20, (int)textSize.Y + 20);
+                
+                this.buttonTexture = GGJ_2014.Graphics.TextureGenerator.GenerateTexture(MenuSystem.GetInstance().GraphicsDevice, Graphics.Textures.BORDERED, null, buttonRect.Width, buttonRect.Height);
+
+            }
+        }
+
+        public MenuBorderedTextItem(Vector2 position, Color buttonTint, string text)
             : base(position)
         {
             this.text = text;
@@ -49,6 +67,10 @@ namespace GGJ_2014.MenuSystemNS
 
         public override void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState)
         {
+            if (delegatePrm != null)
+            {
+                delegatePrm();
+            }
             return;
         }
 

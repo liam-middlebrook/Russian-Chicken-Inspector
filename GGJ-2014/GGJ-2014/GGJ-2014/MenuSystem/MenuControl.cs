@@ -12,6 +12,7 @@ namespace GGJ_2014.MenuSystemNS
     {
         protected Vector2 position;
 
+        public int ID;
         protected MenuControl(Vector2 position)
         {
             this.position = position;
