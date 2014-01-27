@@ -402,14 +402,14 @@ namespace GGJ_2014
                 case MenuScreenType.WIN_MENU:
                     {
                         spriteBatch.Begin();
-                        spriteBatch.DrawString(myFont, string.Format("You beat the game in {0:F} seconds!", timeElaspsed / 1000.0f), new Vector2(20, 100), Color.White);
+                        spriteBatch.DrawString(myFont, string.Format("You beat the game in {0:mms} seconds!", TimeInMillisecondsToString(timeElaspsed)), new Vector2(20, 100), Color.White);
                         spriteBatch.End();
                         break;
                     }
                 case MenuScreenType.LOSE_MENU:
                     {
                         spriteBatch.Begin();
-                        spriteBatch.DrawString(myFont, string.Format("You lost the game in {0:F} seconds!", timeElaspsed / 1000.0f), new Vector2(20, 100), Color.White);
+                        spriteBatch.DrawString(myFont, string.Format("You lost the game in {0:mms} seconds!", TimeInMillisecondsToString(timeElaspsed)), new Vector2(20, 100), Color.White);
                         spriteBatch.End();
                         break;
                     }
@@ -423,6 +423,17 @@ namespace GGJ_2014
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public static string TimeInMillisecondsToString(double time)
+        {
+            double seconds = time / 1000.0;
+            time /= 1000.0;
+
+            double minutes = seconds / 60.0;
+            seconds /= 60.0;
+
+            return string.Format("{0:0}:{1:00}", minutes, seconds);
         }
     }
 }
