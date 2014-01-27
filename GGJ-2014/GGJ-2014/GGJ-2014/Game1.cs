@@ -198,12 +198,13 @@ namespace GGJ_2014
                .AddControl(
                new MenuSystemNS.MenuButton(
                    new Vector2(10, 500),
-                   "Let's Play!",
+                   "[Space] Let's Play!",
                    Color.White,
                    () =>
                    {
                        MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); ResetGame(); MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU).AddControl(new MultipleChoiceQuiz());
-                   }
+                   },
+                   Keys.Space
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()

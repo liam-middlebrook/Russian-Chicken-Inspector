@@ -31,36 +31,39 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Talking with people",
+                    "[1] Talking with people",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion += 0.4f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D1
                 ));
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 110),
-                    "Working out",
+                    "[2] Working out",
                     Color.PeachPuff,
                     () =>
                     {
                         strength += 0.6f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D2
                 ));
             questionSets[0].Add(
                 new MenuButton(
                     new Vector2(10, 160),
-                    "Killing Bunnies",
+                    "[3] Killing Bunnies",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion -= 2.0f;
                         strength += 0.5f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D3
                 ));
             questionSets.Add(new List<MenuControl>());
             questionSets[1].Add(
@@ -72,36 +75,39 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Ignore them",
+                    "[1] Ignore them",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion -= 0.2f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D1
                 ));
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 110),
-                    "Help Them",
+                    "[2] Help Them",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion += 0.4f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D2
                 ));
             questionSets[1].Add(
                 new MenuButton(
                     new Vector2(10, 160),
-                    "Kick them",
+                    "[3] Kick them",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion -= 0.5f;
                         strength += 0.5f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D3
                 ));
 
             questionSets.Add(new List<MenuControl>());
@@ -114,47 +120,71 @@ namespace GGJ_2014.MenuSystemNS
             questionSets[2].Add(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "I don't want to chop down trees.",
+                    "[1] I don't want to chop down trees.",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion += 0.7f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D1
                 ));
             questionSets[2].Add(
                 new MenuButton(
                     new Vector2(10, 110),
-                    "None",
+                    "[2] None",
                     Color.PeachPuff,
                     () =>
                     {
                         strength -= 0.2f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D2
                 ));
             questionSets[2].Add(
                 new MenuButton(
                     new Vector2(10, 160),
-                    "A few",
+                    "[3] A few",
                     Color.PeachPuff,
                     () =>
                     {
                         strength += 0.3f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D3
                 ));
             questionSets[2].Add(
                 new MenuButton(
                     new Vector2(10, 210),
-                    "The whole forest",
+                    "[4] The whole forest",
                     Color.PeachPuff,
                     () =>
                     {
                         compassion -= 0.3f;
                         strength += 1.0f;
                         ++questionSetIndex;
-                    }
+                    },
+                    Keys.D4
+                ));
+
+
+            questionSets.Add(new List<MenuControl>());
+            questionSets[3].Add(
+                new MenuBorderedTextItem(
+                    new Vector2(10, 10),
+                    Color.PeachPuff,
+                    "Are you Ready to Play?"
+                ));
+            questionSets[3].Add(
+                new MenuButton(
+                    new Vector2(10, 60),
+                    "[1] Yes",
+                    Color.PeachPuff,
+                    () =>
+                    {
+                        ++questionSetIndex;
+                    },
+                    Keys.D1
                 ));
         }
 
