@@ -14,8 +14,8 @@ namespace GGJ_2014.Creatures
     class Player
         : Person
     {
-        public const int EGG_TREE_VALUE = 100;
-        public const int GOLDEN_EGG_VALUE = 1000;
+        public const int EGG_TREE_VALUE = 10;
+        public const int GOLDEN_EGG_VALUE = 10000;
 
         public const int INTERACT_LONG_LENGTH = 32;
         public const int INTERACT_SHORT_LENGTH = 16;
@@ -191,6 +191,24 @@ namespace GGJ_2014.Creatures
             Strength += TREE_STRNGTH_VALUE;
             Compassion += TREE_COMPATION_VALUE;
             numberOfTreesChopedThisTick++;
+            --Level.GetInstance().NumberOfTrees;
+            if (Level.GetInstance().NumberOfTrees == 0)
+            {
+                //DEFORESTATION BONUS
+
+                Eggs += 10000;
+                Compassion -= 10.0f / Luck;
+
+                MenuSystem.GetInstance()
+                            .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
+                            .AddControl(
+                            new MenuBorderedTextItem(
+                                new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y),
+                                Color.SpringGreen,
+                                string.Format("Deforestation Bonus!\nYou Gained 10000 Eggs and lost {0:00} Compassion", 10.0f / Luck),
+                                5.0f));
+
+            }
         }
     }
 }
