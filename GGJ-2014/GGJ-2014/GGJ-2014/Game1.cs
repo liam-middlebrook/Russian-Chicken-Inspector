@@ -88,7 +88,7 @@ namespace GGJ_2014
                 new MenuScreen(MenuScreenType.PAUSED, Color.CornflowerBlue));
             MenuSystem.GetInstance()
                 .AddMenuScreen(
-                new MenuScreen(MenuScreenType.PAUSE_MENU, Color.CornflowerBlue));
+                new MenuScreen(MenuScreenType.PAUSE_MENU, Color.Black));
             MenuSystem.GetInstance()
                 .AddMenuScreen(
                 new MenuScreen(MenuScreenType.CREDITS_MENU, Color.CornflowerBlue));
@@ -186,6 +186,14 @@ namespace GGJ_2014
                 .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
                 .AddControl(playerStats);
 
+            MenuSystemNS.MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
+                .AddControl(
+                new MenuHiddenButton(
+                    Keys.Escape,
+                    () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.PAUSE_MENU); }
+            ));
+
             healthBar = new MenuBorderedTextItem(new Vector2(graphics.PreferredBackBufferWidth * 0.8f, graphics.PreferredBackBufferHeight * 0.9f), Color.PeachPuff,"Health: 100");
             MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.GAMEPLAY).AddControl(healthBar);
 
@@ -202,7 +210,9 @@ namespace GGJ_2014
                    Color.White,
                    () =>
                    {
-                       MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); ResetGame(); MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU).AddControl(new MultipleChoiceQuiz());
+                       MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); 
+                       ResetGame();
+                       MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU).AddControl(new MultipleChoiceQuiz());
                    },
                    Keys.Space
                    ));
@@ -212,11 +222,13 @@ namespace GGJ_2014
                 .AddControl(
                 new MenuBorderedTextItem(Vector2.Zero, Color.White, "Russian Chicken Inspector"));
 
+
             #endregion
 
+            #region WIN_MENU
 
             MenuSystemNS.MenuSystem.GetInstance()
-               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.LOSE_MENU)
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.WIN_MENU)
                .AddControl(
                new MenuSystemNS.MenuButton(
                    new Vector2(10, 500),
@@ -227,7 +239,16 @@ namespace GGJ_2014
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()
-               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.WIN_MENU)
+                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.WIN_MENU)
+                .AddControl(
+                new MenuBorderedTextItem(Vector2.Zero, Color.White, "You Win!"));
+
+            #endregion
+
+            #region LOSE_MENU
+
+            MenuSystemNS.MenuSystem.GetInstance()
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.LOSE_MENU)
                .AddControl(
                new MenuSystemNS.MenuButton(
                    new Vector2(10, 500),
@@ -242,10 +263,40 @@ namespace GGJ_2014
                 .AddControl(
                 new MenuBorderedTextItem(Vector2.Zero, Color.White, "You Lose."));
 
+            #endregion
+
+            #region PAUSE_MENU
+
+
             MenuSystemNS.MenuSystem.GetInstance()
-                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.WIN_MENU)
-                .AddControl(
-                new MenuBorderedTextItem(Vector2.Zero, Color.White, "You Win!"));
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.PAUSE_MENU)
+               .AddControl(
+               new MenuSystemNS.MenuButton(
+                   new Vector2(10, 500),
+                   "[Space] Continue Playing!",
+                   Color.White,
+                   () =>
+                   {
+                       MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
+                   },
+                   Keys.Space
+                   ));
+
+            MenuSystemNS.MenuSystem.GetInstance()
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.PAUSE_MENU)
+               .AddControl(
+               new MenuSystemNS.MenuButton(
+                   new Vector2(10, 450),
+                   "[Esc] Return to the Main Menu (Resets Game)!",
+                   Color.White,
+                   () =>
+                   {
+                       MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU);
+                   },
+                   Keys.Escape
+                   ));
+
+            #endregion
 
             // TODO: use this.Content to load your game content here
         }
@@ -314,7 +365,7 @@ namespace GGJ_2014
 
                 case MenuScreenType.PAUSE_MENU:
                     {
-                        eggFall.isActive = false;
+                        eggFall.isActive = true;
                         break;
                     }
 
