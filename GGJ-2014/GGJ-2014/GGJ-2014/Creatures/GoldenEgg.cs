@@ -39,17 +39,18 @@ namespace GGJ_2014.Creatures
                 .AddControl(
                 new MenuButton(
                     new Vector2(10, 10),
-                    "Steal the Golden Egg.",
+                    "[1] Steal the Golden Egg.",
                     Color.White,
                     () =>
                     {
                         removeEgg = true;
-                        Player.Eggs += Player.GOLDEN_EGG_VALUE;
+                        Player.Eggs += (int)(Player.GOLDEN_EGG_VALUE*1.5);
                         Player.Compassion -= 1;
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
                         MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.Tomato, string.Format("You stole {0} eggs and lost 1 compassion", Player.GOLDEN_EGG_VALUE), 5.0f));
-                    }
+                    },
+                    Microsoft.Xna.Framework.Input.Keys.D1
             ));
 
             MenuSystem
@@ -58,7 +59,7 @@ namespace GGJ_2014.Creatures
                 .AddControl(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Admire the Golden Egg.",
+                    "[2] Admire the Golden Egg.",
                     Color.White,
                     () =>
                     {
@@ -75,7 +76,8 @@ namespace GGJ_2014.Creatures
                         {
                             MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.PeachPuff, "Nothing happened. Try Raising your compassion.", 3.0f));
                         }
-                    }
+                    },
+                    Microsoft.Xna.Framework.Input.Keys.D2
             ));
         }
 

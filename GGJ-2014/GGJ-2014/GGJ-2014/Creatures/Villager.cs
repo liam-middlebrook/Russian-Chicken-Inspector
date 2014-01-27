@@ -26,7 +26,7 @@ namespace GGJ_2014.Creatures
             TintColor = villagerColors[rand.Next(0, villagerColors.Length)];
             walkSpeed = 0.1f;
 
-            eggsToGive = (int)(rand.NextDouble() * 4000);
+            eggsToGive = (int)(rand.NextDouble() * 250);
         }
 
         public override void Update(GameTime gameTime)
@@ -94,10 +94,11 @@ namespace GGJ_2014.Creatures
                 .AddControl(
                 new MenuButton(
                     new Vector2(10, 10),
-                    "Rob the person.",
+                    "[1] Rob the person.",
                     Color.White,
                     () =>
                     {
+                        eggsToGive = (int)(eggsToGive * 1.5 * Player.Luck * Math.Max(Player.Strength, 1));
                         int damage = (int)Math.Max(random.Next(1, 30) - Player.Strength/10, 0);
                         float compassonLost = 2.4f * 1.0f / Player.Luck;
                         isAlive = false;
@@ -108,7 +109,8 @@ namespace GGJ_2014.Creatures
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
                         MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.Tomato, string.Format("You Gained {0} Egg and lost {1} Health", eggsToGive*2, damage), 5.0f));
-                    }
+                    },
+                    Microsoft.Xna.Framework.Input.Keys.D1
             ));
 
             MenuSystem
@@ -117,7 +119,7 @@ namespace GGJ_2014.Creatures
                 .AddControl(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Ask for Eggs.",
+                    "[2] Ask for Eggs.",
                     Color.White,
                     () =>
                     {
@@ -141,7 +143,8 @@ namespace GGJ_2014.Creatures
                         {
                             MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.PeachPuff, "Out of eggs to give.", 5.0f));
                         }
-                    }
+                    },
+                    Microsoft.Xna.Framework.Input.Keys.D2
             ));
         }
     }
