@@ -161,7 +161,7 @@ namespace GGJ_2014.Levels
                     if (tiles[x, y].Type == Textures.TILE_PINETREE_ON_GRASS)
                     {
                         ++NumberOfTrees;
-                        Console.WriteLine(NumberOfTrees " + Trees Generated");
+                        Console.WriteLine(NumberOfTrees + " Trees Generated");
                     }
                 }
             }
