@@ -38,6 +38,8 @@ namespace GGJ_2014.Creatures
         private float numberOfTreesChopedThisTick = 0;
         private MenuBorderedTextItem interactIdentifier;
 
+        public static bool PureEvil;
+
         public Player(Texture2D texture, Vector2 position)
             : base(texture, position)
         {
@@ -64,12 +66,12 @@ namespace GGJ_2014.Creatures
 
         public override void Update(GameTime gameTime)
         {
-            numberOfTreesChopedThisTick = Math.Max(numberOfTreesChopedThisTick-Strength/8, 0);
+            numberOfTreesChopedThisTick = Math.Max(numberOfTreesChopedThisTick - Strength / 8, 0);
             for (int i = 0; i < Level.GetInstance().EggList.Count; ++i)
             {
                 if (Level.GetInstance().EggList[i].CanPickUpEgg && this.collisionBox.Intersects(Level.GetInstance().EggList[i].GetCollisionBox()))
                 {
-                    Health = Math.Min(Health+=1,100);
+                    Health = Math.Min(Health += 1, 100);
                     Eggs += Level.GetInstance().EggList[i].EggsGiven;
                     Level.GetInstance().EggList.RemoveAt(i);
                     --i;
@@ -88,6 +90,14 @@ namespace GGJ_2014.Creatures
             {
                 MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.LOSE_MENU);
             }
+
+            if (!PureEvil)
+            {
+                PureEvil = Compassion < -25.0f;
+
+
+            }
+
         }
 
         protected override void CollidedWithTile(Tile t)
