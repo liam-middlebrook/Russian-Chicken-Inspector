@@ -71,7 +71,7 @@ namespace GGJ_2014.Creatures
             {
                 if (Level.GetInstance().EggList[i].CanPickUpEgg && this.collisionBox.Intersects(Level.GetInstance().EggList[i].GetCollisionBox()))
                 {
-                    Health = Math.Min(Health += 1, 100);
+                    Health = Math.Min(Health += 1, PureEvil ? 250 : 100);
                     Eggs += Level.GetInstance().EggList[i].EggsGiven;
                     Level.GetInstance().EggList.RemoveAt(i);
                     --i;
@@ -93,11 +93,11 @@ namespace GGJ_2014.Creatures
 
             if (!PureEvil)
             {
-                PureEvil = Compassion < -25.0f;
+                PureEvil = Compassion < -35.0f;
 
                 if (PureEvil)
                 {
-                    Eggs += 25000;
+                    Eggs += 20000;
                     Health +=(int)(Health*2.5);
                      MenuSystem.GetInstance()
                             .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
@@ -105,7 +105,7 @@ namespace GGJ_2014.Creatures
                             new MenuBorderedTextItem(
                                 new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y),
                                 Color.SpringGreen,
-                                string.Format("You have a Compassion of {0:00}! You are pure evil!\n25000 Eggs Gained!\n250% Health Regenerated", Compassion),
+                                string.Format("You have a Compassion of {0:00}! You are pure evil!\n20000 Eggs Gained!\nHealth Regenerated to 250%", Compassion),
                                 5.0f));
                     
                 }

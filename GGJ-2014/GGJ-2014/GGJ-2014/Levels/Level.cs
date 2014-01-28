@@ -154,6 +154,7 @@ namespace GGJ_2014.Levels
             {
                 SpawnVillager();
             }
+            NumberOfTrees = 0;
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
