@@ -95,6 +95,20 @@ namespace GGJ_2014.Creatures
             {
                 PureEvil = Compassion < -25.0f;
 
+                if (PureEvil)
+                {
+                    Eggs += 25000;
+                    Health +=(int)(Health*2.5);
+                     MenuSystem.GetInstance()
+                            .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
+                            .AddControl(
+                            new MenuBorderedTextItem(
+                                new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y),
+                                Color.SpringGreen,
+                                string.Format("You have a Compassion of {0:00}! You are pure evil!\n25000 Eggs Gained!\n250% Health Regenerated", Compassion),
+                                5.0f));
+                    
+                }
 
             }
 

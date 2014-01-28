@@ -158,13 +158,13 @@ namespace GGJ_2014.Levels
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    if (tiles[x, y].Type == Textures.TILE_PINETREE_ON_GRASS)
+                    if (tiles[x,y] != null && tiles[x, y].Type == Textures.TILE_PINETREE_ON_GRASS)
                     {
                         ++NumberOfTrees;
-                        Console.WriteLine(NumberOfTrees + " Trees Generated");
                     }
                 }
             }
+                        Console.WriteLine(NumberOfTrees + " Trees Generated");
         }
 
         private void FadeFillTexure(Rectangle bounds, Textures texture, bool isSolid, float density)
