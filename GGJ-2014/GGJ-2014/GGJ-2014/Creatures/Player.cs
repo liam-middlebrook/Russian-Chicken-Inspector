@@ -14,7 +14,7 @@ namespace GGJ_2014.Creatures
     class Player
         : Person
     {
-        public const int EGG_TREE_VALUE = 10;
+        public const int EGG_TREE_VALUE = 5;
         public const int GOLDEN_EGG_VALUE = 10000;
 
         public const int INTERACT_LONG_LENGTH = 32;
