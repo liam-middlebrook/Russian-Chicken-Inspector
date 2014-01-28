@@ -193,7 +193,6 @@ namespace GGJ_2014
                     Keys.Escape,
                     () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.PAUSE_MENU); }
             ));
-
             healthBar = new MenuBorderedTextItem(new Vector2(graphics.PreferredBackBufferWidth * 0.8f, graphics.PreferredBackBufferHeight * 0.9f), Color.PeachPuff,"Health: 100");
             MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.GAMEPLAY).AddControl(healthBar);
 
@@ -488,10 +487,10 @@ namespace GGJ_2014
         public static string TimeInMillisecondsToString(double time)
         {
             double seconds = time / 1000.0;
-            time /= 1000.0;
+            time %= 1000.0;
 
             double minutes = seconds / 60.0;
-            seconds /= 60.0;
+            seconds %= 60.0;
 
             return string.Format("{0:0}:{1:00}", minutes, seconds);
         }

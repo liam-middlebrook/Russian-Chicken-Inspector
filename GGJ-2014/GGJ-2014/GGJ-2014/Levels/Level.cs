@@ -74,6 +74,7 @@ namespace GGJ_2014.Levels
         private List<Rectangle> villagePositions;
         private List<Interactable> interactables;
 
+        public int NumberOfTrees = 0;
         public Level()
         {
             LoadLevel();
@@ -152,6 +153,17 @@ namespace GGJ_2014.Levels
             for (int v = 0; v < rand.Next(5, 30); v++)
             {
                 SpawnVillager();
+            }
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (tiles[x, y].Type == Textures.TILE_PINETREE_ON_GRASS)
+                    {
+                        ++NumberOfTrees;
+                        Console.WriteLine(NumberOfTrees + " Trees Generated");
+                    }
+                }
             }
         }
 

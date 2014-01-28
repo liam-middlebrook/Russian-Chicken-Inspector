@@ -121,7 +121,7 @@ namespace GGJ_2014.Creatures
                 .AddControl(
                 new MenuButton(
                     new Vector2(10, 10),
-                    "Kill the Chicken.",
+                    "[1] Kill the Chicken.",
                     Color.White,
                     () =>
                     {
@@ -134,8 +134,16 @@ namespace GGJ_2014.Creatures
                         Player.Eggs += eggsGained;
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
-                        MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.Tomato, string.Format("You Gained {0} Egg and lost {1:F2} Compassion", eggsGained, compassonLost), 5.0f));
-                    }
+                        MenuSystem.GetInstance()
+                            .CurrentScreen.AddControl(
+                            new MenuBorderedTextItem(
+                                new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y),
+                                Color.Tomato,
+                                string.Format("You Gained {0} Egg and lost {1:F2} Compassion", eggsGained, compassonLost),
+                                5.0f
+                                ));
+                    },
+                    Keys.D1
             ));
 
             MenuSystem
@@ -144,7 +152,7 @@ namespace GGJ_2014.Creatures
                 .AddControl(
                 new MenuButton(
                     new Vector2(10, 60),
-                    "Rescue the Chicken.",
+                    "[2] Rescue the Chicken.",
                     Color.White,
                     () =>
                     {
@@ -154,8 +162,16 @@ namespace GGJ_2014.Creatures
                         Player.Compassion += compassonGoten;
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
-                        MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.SpringGreen, string.Format("You Gained 1 Egg and {0:F2} Compassion", compassonGoten), 5.0f));
-                    }
+                        MenuSystem.GetInstance()
+                            .CurrentScreen
+                            .AddControl(
+                            new MenuBorderedTextItem(
+                                new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y),
+                                Color.SpringGreen,
+                                string.Format("You Gained 1 Egg and {0:F2} Compassion", compassonGoten),
+                                5.0f));
+                    },
+                    Keys.D2
             ));
         }
 
