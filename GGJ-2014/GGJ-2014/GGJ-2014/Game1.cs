@@ -407,7 +407,7 @@ namespace GGJ_2014
                 case MenuScreenType.MAIN_MENU:
                     {
                         spriteBatch.Begin();
-                        spriteBatch.DrawString(myFont, "[ WASD ] to move.\n"
+                        spriteBatch.DrawString(myFont, "[ WASD ] or Arrow Keys to move.\n"
                                                         + "[ Space Bar ] to interact with things and chop down trees.\n\n"
                                                         + "Collect eggs by doing various tasks.\n"
                                                          + "\tInteract with Villagers!\n"
