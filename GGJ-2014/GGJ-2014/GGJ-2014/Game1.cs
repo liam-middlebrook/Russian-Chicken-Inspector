@@ -209,11 +209,24 @@ namespace GGJ_2014
                    Color.White,
                    () =>
                    {
-                       MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU); 
+                       MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.QUESTIONS_MENU);
                        ResetGame();
                        MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU).AddControl(new MultipleChoiceQuiz());
                    },
                    Keys.Space
+                   ));
+            MenuSystemNS.MenuSystem.GetInstance()
+               .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
+               .AddControl(
+               new MenuSystemNS.MenuButton(
+                   new Vector2(10, 550),
+                   "[Escape] Exit Game",
+                   Color.White,
+                   () =>
+                   {
+                       Exit();
+                   },
+                   Keys.Escape
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()
@@ -407,13 +420,14 @@ namespace GGJ_2014
                 case MenuScreenType.MAIN_MENU:
                     {
                         spriteBatch.Begin();
-                        spriteBatch.DrawString(myFont, "[ WASD ] or Arrow Keys to move.\n"
-                                                        + "[ Space Bar ] to interact with things and chop down trees.\n\n"
+                        spriteBatch.DrawString(myFont, "[WASD] or Arrow Keys to move.\n"
+                                                        + "[Space Bar] to interact with things and chop down trees.\n\n"
                                                         + "Collect eggs by doing various tasks.\n"
                                                          + "\tInteract with Villagers!\n"
                                                          + "\tChop Down Trees!\n"
                                                          + "\tDiscover Golden Eggs!\n"
-                                                        + "You need 100,000 eggs to win.\nLevels are randomly generated.", new Vector2(10, 100), Color.White);
+                                                        + "You need 1,000,000 eggs to win.\nLevels are randomly generated.\n"
+                                                        + "Press [Escape] to pause the game during gameplay.", new Vector2(10, 100), Color.White);
                         spriteBatch.DrawString(myFont, "Liam Middlebrook, Alec Linder", new Vector2(476, 570), Color.White);
                         spriteBatch.End();
                         break;
