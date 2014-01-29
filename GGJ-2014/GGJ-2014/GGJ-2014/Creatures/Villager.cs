@@ -13,7 +13,7 @@ namespace GGJ_2014.Creatures
         public static Color[] villagerColors = {Color.Khaki, Color.LightGreen, Color.Peru, Color.PaleVioletRed, Color.SkyBlue, Color.SeaGreen};
 
         public const int VILLAGER_DESPAWN_TIME = 600000;
-
+        public const int VILLAGER_EGGS_TO_GIVE_THRESHOLD = 250;
         private Random random = new Random();
         private float idleCounter = 0;
         private int timeElapsed = 0;
@@ -26,7 +26,7 @@ namespace GGJ_2014.Creatures
             TintColor = villagerColors[rand.Next(0, villagerColors.Length)];
             walkSpeed = 0.1f;
 
-            eggsToGive = (int)(rand.NextDouble() * 250);
+            eggsToGive = (int)(rand.NextDouble() * VILLAGER_EGGS_TO_GIVE_THRESHOLD);
         }
 
         public override void Update(GameTime gameTime)
@@ -127,7 +127,7 @@ namespace GGJ_2014.Creatures
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
                         if (eggsToGive > 0)
                         {
-                            int eggsGiven = random.Next(0, (int)(Math.Max(Player.Compassion,0.0f) * eggsToGive + Player.Luck * 2));
+                            int eggsGiven = random.Next(0, (int)(Math.Max(Player.Compassion,0.0f) * eggsToGive + Player.Luck * 4));
                             eggsToGive -= eggsGiven;
                             Player.Eggs += eggsGiven;
                             if (eggsGiven > 0)
