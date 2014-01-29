@@ -81,7 +81,7 @@ namespace GGJ_2014.Creatures
             CheckForInteraction();
 
 
-            if (Eggs >= 100000)
+            if (Eggs >= 1000000)
             {
                 Console.WriteLine("WIN!");
                 MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.WIN_MENU);
@@ -93,11 +93,11 @@ namespace GGJ_2014.Creatures
 
             if (!PureEvil)
             {
-                PureEvil = Compassion < -35.0f;
+                PureEvil = Compassion < -100.0f;
 
                 if (PureEvil)
                 {
-                    Eggs += 20000;
+                    Eggs += 250000;
                     Health +=(int)(Health*2.5);
                      MenuSystem.GetInstance()
                             .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
