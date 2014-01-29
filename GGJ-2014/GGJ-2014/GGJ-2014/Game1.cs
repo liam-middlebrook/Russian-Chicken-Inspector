@@ -423,11 +423,12 @@ namespace GGJ_2014
                         spriteBatch.DrawString(myFont, "[WASD] or Arrow Keys to move.\n"
                                                         + "[Space Bar] to interact with things and chop down trees.\n\n"
                                                         + "Collect eggs by doing various tasks.\n"
+                                                        + "Collect more eggs by completing secret acheivments!\n"
                                                          + "\tInteract with Villagers!\n"
                                                          + "\tChop Down Trees!\n"
                                                          + "\tDiscover Golden Eggs!\n"
                                                         + "You need 1,000,000 eggs to win.\nLevels are randomly generated.\n"
-                                                        + "Press [Escape] to pause the game during gameplay.", new Vector2(10, 100), Color.White);
+                                                        + "Press [Escape] to pause and view the instructions during gameplay.", new Vector2(10, 100), Color.White);
                         spriteBatch.DrawString(myFont, "Liam Middlebrook, Alec Linder", new Vector2(476, 570), Color.White);
                         spriteBatch.End();
                         break;
@@ -464,6 +465,18 @@ namespace GGJ_2014
                 case MenuScreenType.PAUSE_MENU:
                     {
 
+                        spriteBatch.Begin();
+                        spriteBatch.DrawString(myFont, "[WASD] or Arrow Keys to move.\n"
+                                                        + "[Space Bar] to interact with things and chop down trees.\n\n"
+                                                        + "Collect eggs by doing various tasks.\n"
+                                                        + "Collect more eggs by completing secret acheivments!\n"
+                                                         + "\tInteract with Villagers!\n"
+                                                         + "\tChop Down Trees!\n"
+                                                         + "\tDiscover Golden Eggs!\n"
+                                                        + "You need 1,000,000 eggs to win.\nLevels are randomly generated.\n"
+                                                        + "Press [Escape] to pause the game during gameplay.", new Vector2(10, 100), Color.White);
+                        spriteBatch.DrawString(myFont, "Liam Middlebrook, Alec Linder", new Vector2(476, 570), Color.White);
+                        spriteBatch.End();
                         break;
                     }
 
