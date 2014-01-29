@@ -201,7 +201,7 @@ namespace GGJ_2014.MenuSystemNS
             {
                 Random rand = new Random();
                 GGJ_2014.Creatures.Player.Compassion = compassion;
-                GGJ_2014.Creatures.Player.Luck = Math.Abs((float)rand.NextDouble()*2 - 1.0f)+0.01f;
+                GGJ_2014.Creatures.Player.Luck = rand.Next(25,110)/100.0f;
                 GGJ_2014.Creatures.Player.Strength = strength;
                 MenuSystem.GetInstance().CurrentScreen.menuControls.Remove(this);
                 MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);

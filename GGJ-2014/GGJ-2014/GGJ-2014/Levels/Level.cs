@@ -23,9 +23,9 @@ namespace GGJ_2014.Levels
         public const int VILLAGE_BUFFER_SIZE = 10;
         //FORESTS
         public const int MIN_NUMBER_OF_FORESTS = 8;
-        public const int MAX_NUMBER_OF_FORESTS = 25;
+        public const int MAX_NUMBER_OF_FORESTS = 20;
         public const int MIN_FOREST_DENSITY = 10;
-        public const int MAX_FOREST_DENSITY = 90;
+        public const int MAX_FOREST_DENSITY = 80;
         public const int MIN_FOREST_SIZE = 6;
         public const int MAX_FOREST_SIZE = 30;
         public const float FOREST_GRASS_DENSITY = 0.8f;
@@ -44,13 +44,13 @@ namespace GGJ_2014.Levels
         public const int MAX_ROCK_SIZE = 30;
 
         //SPAWN VARIABLES
-        public const float SPAWN_CHICKEN = 0.001f;
-        public const float SPAWN_GOLDEN_EGG = 0.00023f;
+        public const float SPAWN_CHICKEN = 0.0005f;
+        public const float SPAWN_GOLDEN_EGG = 0.000023f;
         public const float SPAWN_VILLAGER = 0.008f;
 
         //SPAWN CAPS
-        public const int MAX_CHICKENS = 500;
-        public const int MAX_VILLAGERS = 80;
+        public const int MAX_CHICKENS = 1000;
+        public const int MAX_VILLAGERS = 100;
 
         private Random rand = new Random();
         private int numberChickens = 0;
