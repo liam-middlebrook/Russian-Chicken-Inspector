@@ -45,7 +45,6 @@ namespace GGJ_2014
 
         int timeElaspsed;
 
-        string playerEggCount;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -213,7 +212,10 @@ namespace GGJ_2014
                        ResetGame();
                        MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU).AddControl(new MultipleChoiceQuiz());
                    },
-                   new List<Keys>(new []{Keys.Space})
+                   new List<Keys>(
+                       new []{
+                           Keys.Space
+                       })
                    ));
             MenuSystemNS.MenuSystem.GetInstance()
                .GetMenuScreenOfType(MenuSystemNS.MenuScreenType.MAIN_MENU)
@@ -226,7 +228,10 @@ namespace GGJ_2014
                    {
                        Exit();
                    },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.Escape})
+                   new List<Keys>(
+                       new []{
+                           Keys.Escape
+                       })
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()
@@ -247,7 +252,10 @@ namespace GGJ_2014
                    "[Enter] Return to Main Menu",
                    Color.White,
                    () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU); },
-                   new List<Keys>(new[] { Keys.Enter })
+                   new List<Keys>(
+                       new[] {
+                           Keys.Enter
+                       })
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()
@@ -267,7 +275,10 @@ namespace GGJ_2014
                    "[Enter] Return to Main Menu",
                    Color.White,
                    () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU); },
-                   new List<Keys>(new[] { Keys.Enter })
+                   new List<Keys>(
+                       new[] {
+                           Keys.Enter
+                       })
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()
@@ -291,7 +302,10 @@ namespace GGJ_2014
                    {
                        MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                    },
-                   new List<Keys>(new[] { Keys.Space })
+                   new List<Keys>(
+                       new[] {
+                           Keys.Space
+                       })
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()
@@ -305,8 +319,12 @@ namespace GGJ_2014
                    {
                        MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU);
                    },
-                   new List<Keys>(new[] { Keys.Escape })
+                   new List<Keys>(
+                       new[] {
+                           Keys.Escape
+                       })
                    ));
+
 
             #endregion
 

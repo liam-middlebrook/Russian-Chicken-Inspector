@@ -143,7 +143,11 @@ namespace GGJ_2014.Creatures
                                 5.0f
                                 ));
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D1, Microsoft.Xna.Framework.Input.Keys.NumPad1})
+                   new List<Keys>(
+                       new []{
+                           Keys.D1,
+                           Keys.NumPad1
+                       })
             ));
 
             MenuSystem
@@ -171,7 +175,11 @@ namespace GGJ_2014.Creatures
                                 string.Format("You Gained 1 Egg and {0:F2} Compassion", compassonGoten),
                                 5.0f));
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D2, Microsoft.Xna.Framework.Input.Keys.NumPad2})
+                   new List<Keys>(
+                       new []{
+                           Keys.D2,
+                           Keys.NumPad2
+                       })
             ));
         }
 
