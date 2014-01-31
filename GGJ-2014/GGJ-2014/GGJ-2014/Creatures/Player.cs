@@ -98,7 +98,7 @@ namespace GGJ_2014.Creatures
                 if (PureEvil)
                 {
                     Eggs += 250000;
-                    Health +=(int)(Health*2.5);
+                    Health +=(int)(Math.Min(Health*2.5, 250));
                      MenuSystem.GetInstance()
                             .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
                             .AddControl(
