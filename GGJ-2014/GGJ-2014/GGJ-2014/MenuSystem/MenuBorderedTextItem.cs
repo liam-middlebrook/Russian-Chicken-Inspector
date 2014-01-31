@@ -23,8 +23,6 @@ namespace GGJ_2014.MenuSystemNS
 
         private SpriteFont font;
 
-        private UpdateDelegate delegatePrm;
-
         private int timeExistFor;
         private long currentTime;
 
@@ -80,10 +78,6 @@ namespace GGJ_2014.MenuSystemNS
                 //Console.WriteLine("Go " + DateTime.Now.Second);
                 MenuSystem.GetInstance().CurrentScreen.RemoveControl(this);
                 currentTime = DateTime.Now.Ticks;
-            }
-            if (delegatePrm != null)
-            {
-                delegatePrm();
             }
             return;
         }
