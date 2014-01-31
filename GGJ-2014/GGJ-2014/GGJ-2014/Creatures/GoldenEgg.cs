@@ -45,13 +45,12 @@ namespace GGJ_2014.Creatures
                     {
                         removeEgg = true;
                         Player.Eggs += (int)Math.Abs(Player.GOLDEN_EGG_VALUE*1.5);
-                        Player.Compassion -= (int)(MathHelper.Clamp(10 * -Player.Compassion,-20, 20));
+                        Player.Compassion -= (int)MathHelper.Clamp(10 * Math.Abs(Player.Compassion),0, 20);
                         MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.GAMEPLAY);
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
                         MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.Tomato, string.Format("You stole {0} eggs and lost {1} compassion", Player.GOLDEN_EGG_VALUE, (int)(MathHelper.Clamp(10 * -Player.Compassion,-20, 20))), 5.0f));
                     },
-                    Microsoft.Xna.Framework.Input.Keys.D1,
-                    Microsoft.Xna.Framework.Input.Keys.NumPad1
+                   new List<Microsoft.Xna.Framework.Input.Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D1, Microsoft.Xna.Framework.Input.Keys.NumPad1})
             ));
 
             MenuSystem
@@ -78,8 +77,7 @@ namespace GGJ_2014.Creatures
                             MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.PeachPuff, "Nothing happened. Try Raising your compassion.", 3.0f));
                         }
                     },
-                    Microsoft.Xna.Framework.Input.Keys.D2,
-                    Microsoft.Xna.Framework.Input.Keys.NumPad2
+                   new List<Microsoft.Xna.Framework.Input.Keys>(new[] { Microsoft.Xna.Framework.Input.Keys.D2, Microsoft.Xna.Framework.Input.Keys.NumPad2 })
             ));
         }
 

@@ -14,24 +14,26 @@ namespace GGJ_2014.MenuSystemNS
     {
         private event ButtonDelegate OnTriggered;
 
-        private Keys keyForTrigger;
-        private Keys keyForTrigger2;
+        private List<Keys> keysForTrigger;
 
-        public MenuHiddenButton(Keys keyForTrigger, ButtonDelegate buttonDelegate, Keys keyForTrigger2 = 0)
+        public MenuHiddenButton(List<Keys> keysForTrigger, ButtonDelegate buttonDelegate)
             : base(Vector2.Zero)
         {
-            this.keyForTrigger = keyForTrigger;
-            this.keyForTrigger2 = keyForTrigger2;
+            this.keysForTrigger = keysForTrigger;
             this.OnTriggered += buttonDelegate;
         }
 
         public override void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState)
         {
-            if ((keyState.IsKeyUp(keyForTrigger) && prevKeyState.IsKeyDown(keyForTrigger)) || (keyState.IsKeyUp(keyForTrigger2) && prevKeyState.IsKeyDown(keyForTrigger2)))
+            foreach (Keys key in keysForTrigger)
             {
-                if (OnTriggered != null)
+                if (keyState.IsKeyUp(key) && prevKeyState.IsKeyDown(key))
                 {
-                    OnTriggered();
+                    if (OnTriggered != null)
+                    {
+                        OnTriggered();
+                    }
+                    break;
                 }
             }
         }
