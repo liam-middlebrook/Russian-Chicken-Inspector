@@ -38,7 +38,11 @@ namespace GGJ_2014.MenuSystemNS
                         compassion += 0.4f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D1, Microsoft.Xna.Framework.Input.Keys.NumPad1})
+                   new List<Keys>(
+                       new []{
+                           Keys.D1,
+                           Keys.NumPad1
+                       })
                 ));
             questionSets[0].Add(
                 new MenuButton(
@@ -50,7 +54,11 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.6f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D2, Microsoft.Xna.Framework.Input.Keys.NumPad2})
+                   new List<Keys>(
+                       new []{
+                           Keys.D2,
+                           Keys.NumPad2
+                       })
                 ));
             questionSets[0].Add(
                 new MenuButton(
@@ -63,7 +71,11 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.5f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D3, Microsoft.Xna.Framework.Input.Keys.NumPad3})
+                   new List<Keys>(
+                       new []{
+                           Keys.D3,
+                           Keys.NumPad3
+                       })
                 ));
             questionSets.Add(new List<MenuControl>());
             questionSets[1].Add(
@@ -82,7 +94,11 @@ namespace GGJ_2014.MenuSystemNS
                         compassion -= 0.2f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D1, Microsoft.Xna.Framework.Input.Keys.NumPad1})
+                   new List<Keys>(
+                       new []{
+                           Keys.D1,
+                           Keys.NumPad1
+                       })
                 ));
             questionSets[1].Add(
                 new MenuButton(
@@ -94,7 +110,11 @@ namespace GGJ_2014.MenuSystemNS
                         compassion += 0.4f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D2, Microsoft.Xna.Framework.Input.Keys.NumPad2})
+                   new List<Keys>(
+                       new []{
+                           Keys.D2,
+                           Keys.NumPad2
+                       })
                 ));
             questionSets[1].Add(
                 new MenuButton(
@@ -107,7 +127,11 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.5f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D3, Microsoft.Xna.Framework.Input.Keys.NumPad3})
+                   new List<Keys>(
+                       new []{
+                           Keys.D3,
+                           Keys.NumPad3
+                       })
                 ));
 
             questionSets.Add(new List<MenuControl>());
@@ -127,7 +151,11 @@ namespace GGJ_2014.MenuSystemNS
                         compassion += 0.7f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D1, Microsoft.Xna.Framework.Input.Keys.NumPad1})
+                   new List<Keys>(
+                       new []{
+                           Keys.D1,
+                           Keys.NumPad1
+                       })
                 ));
             questionSets[2].Add(
                 new MenuButton(
@@ -139,7 +167,11 @@ namespace GGJ_2014.MenuSystemNS
                         strength -= 0.2f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D2, Microsoft.Xna.Framework.Input.Keys.NumPad2})
+                   new List<Keys>(
+                       new []{
+                           Keys.D2,
+                           Keys.NumPad2
+                       })
                 ));
             questionSets[2].Add(
                 new MenuButton(
@@ -151,7 +183,11 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.3f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D3, Microsoft.Xna.Framework.Input.Keys.NumPad3})
+                   new List<Keys>(
+                       new []{
+                           Keys.D3,
+                           Keys.NumPad3
+                       })
                 ));
             questionSets[2].Add(
                 new MenuButton(
@@ -164,7 +200,11 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 1.0f;
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D4, Microsoft.Xna.Framework.Input.Keys.NumPad4})
+                   new List<Keys>(
+                       new []{
+                           Keys.D4,
+                           Keys.NumPad4
+                       })
                 ));
 
 
@@ -184,7 +224,11 @@ namespace GGJ_2014.MenuSystemNS
                     {
                         ++questionSetIndex;
                     },
-                   new List<Keys>(new []{Microsoft.Xna.Framework.Input.Keys.D1, Microsoft.Xna.Framework.Input.Keys.NumPad1})
+                   new List<Keys>(
+                       new []{
+                           Keys.D1,
+                           Keys.NumPad1
+                       })
                 ));
         }
 
