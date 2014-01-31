@@ -244,10 +244,10 @@ namespace GGJ_2014
                .AddControl(
                new MenuSystemNS.MenuButton(
                    new Vector2(10, 500),
-                   "[Space] Return to Main Menu",
+                   "[Enter] Return to Main Menu",
                    Color.White,
                    () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU); },
-                   Keys.Space
+                   Keys.Enter
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()
@@ -264,10 +264,10 @@ namespace GGJ_2014
                .AddControl(
                new MenuSystemNS.MenuButton(
                    new Vector2(10, 500),
-                   "[Space] Return to Main Menu",
+                   "[Enter] Return to Main Menu",
                    Color.White,
                    () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.MAIN_MENU); },
-                   Keys.Space
+                   Keys.Enter
                    ));
 
             MenuSystemNS.MenuSystem.GetInstance()

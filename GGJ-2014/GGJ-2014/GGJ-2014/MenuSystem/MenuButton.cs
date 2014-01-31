@@ -19,13 +19,15 @@ namespace GGJ_2014.MenuSystemNS
         private event ButtonDelegate OnTriggered;
 
         private Keys keyForTrigger;
+        private Keys keyForTrigger2;
 
         public MenuButton(
             Vector2 position,
             string text,
             Color color,
             ButtonDelegate buttonDelegate,
-            Keys triggerKey = 0)
+            Keys triggerKey = 0,
+            Keys triggerKey2 = 0)
             : base(position)
         {
             this.spriteFont = MenuSystem.GetInstance().MenuFont;
@@ -37,6 +39,7 @@ namespace GGJ_2014.MenuSystemNS
             this.buttonColor = color;
             this.buttonTint = new Color(230, 230, 230, 128);
             keyForTrigger = triggerKey;
+            keyForTrigger2 = triggerKey2;
         }
 
         public override void Update(KeyboardState keyState, KeyboardState prevKeyState, MouseState mouseState, MouseState prevMouseState)
@@ -58,7 +61,7 @@ namespace GGJ_2014.MenuSystemNS
             {
                 buttonTint = new Color(230, 230, 230, 128);
             }
-            if (keyState.IsKeyUp(keyForTrigger) && prevKeyState.IsKeyDown(keyForTrigger))
+            if ((keyState.IsKeyUp(keyForTrigger) && prevKeyState.IsKeyDown(keyForTrigger)) || (keyState.IsKeyUp(keyForTrigger2) && prevKeyState.IsKeyDown(keyForTrigger2)))
             {
                 if (OnTriggered != null)
                 {

@@ -110,7 +110,8 @@ namespace GGJ_2014.Creatures
                         MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.PAUSED).menuControls.Clear();
                         MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.Tomato, string.Format("You Gained {0} Egg and lost {1} Health", eggsToGive*2, damage), 5.0f));
                     },
-                    Microsoft.Xna.Framework.Input.Keys.D1
+                    Microsoft.Xna.Framework.Input.Keys.D1,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad1
             ));
 
             MenuSystem
@@ -144,7 +145,8 @@ namespace GGJ_2014.Creatures
                             MenuSystem.GetInstance().CurrentScreen.AddControl(new MenuBorderedTextItem(new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y), Color.PeachPuff, "Out of eggs to give.", 5.0f));
                         }
                     },
-                    Microsoft.Xna.Framework.Input.Keys.D2
+                    Microsoft.Xna.Framework.Input.Keys.D2,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad2
             ));
         }
     }

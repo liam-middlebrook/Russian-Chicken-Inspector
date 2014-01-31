@@ -38,7 +38,8 @@ namespace GGJ_2014.MenuSystemNS
                         compassion += 0.4f;
                         ++questionSetIndex;
                     },
-                    Keys.D1
+                    Microsoft.Xna.Framework.Input.Keys.D1,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad1
                 ));
             questionSets[0].Add(
                 new MenuButton(
@@ -50,7 +51,8 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.6f;
                         ++questionSetIndex;
                     },
-                    Keys.D2
+                    Keys.D2,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad2
                 ));
             questionSets[0].Add(
                 new MenuButton(
@@ -63,7 +65,8 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.5f;
                         ++questionSetIndex;
                     },
-                    Keys.D3
+                    Keys.D3,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad3
                 ));
             questionSets.Add(new List<MenuControl>());
             questionSets[1].Add(
@@ -82,7 +85,8 @@ namespace GGJ_2014.MenuSystemNS
                         compassion -= 0.2f;
                         ++questionSetIndex;
                     },
-                    Keys.D1
+                    Keys.D1,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad1
                 ));
             questionSets[1].Add(
                 new MenuButton(
@@ -94,7 +98,8 @@ namespace GGJ_2014.MenuSystemNS
                         compassion += 0.4f;
                         ++questionSetIndex;
                     },
-                    Keys.D2
+                    Keys.D2,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad2
                 ));
             questionSets[1].Add(
                 new MenuButton(
@@ -107,7 +112,8 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.5f;
                         ++questionSetIndex;
                     },
-                    Keys.D3
+                    Keys.D3,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad3
                 ));
 
             questionSets.Add(new List<MenuControl>());
@@ -127,7 +133,8 @@ namespace GGJ_2014.MenuSystemNS
                         compassion += 0.7f;
                         ++questionSetIndex;
                     },
-                    Keys.D1
+                    Keys.D1,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad1
                 ));
             questionSets[2].Add(
                 new MenuButton(
@@ -139,7 +146,8 @@ namespace GGJ_2014.MenuSystemNS
                         strength -= 0.2f;
                         ++questionSetIndex;
                     },
-                    Keys.D2
+                    Keys.D2,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad2
                 ));
             questionSets[2].Add(
                 new MenuButton(
@@ -151,7 +159,8 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 0.3f;
                         ++questionSetIndex;
                     },
-                    Keys.D3
+                    Keys.D3,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad3
                 ));
             questionSets[2].Add(
                 new MenuButton(
@@ -164,7 +173,8 @@ namespace GGJ_2014.MenuSystemNS
                         strength += 1.0f;
                         ++questionSetIndex;
                     },
-                    Keys.D4
+                    Keys.D4,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad4
                 ));
 
 
@@ -184,7 +194,8 @@ namespace GGJ_2014.MenuSystemNS
                     {
                         ++questionSetIndex;
                     },
-                    Keys.D1
+                    Keys.D1,
+                    Microsoft.Xna.Framework.Input.Keys.NumPad1
                 ));
         }
 
