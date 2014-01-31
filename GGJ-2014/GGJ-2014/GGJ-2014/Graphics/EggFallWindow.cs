@@ -11,6 +11,7 @@ namespace GGJ_2014.Graphics
     class EggFallWindow
     {
         private List<Vector2> eggs = new List<Vector2>();
+        private List<Color> eggColors = new List<Color>();
         private Random random = new Random();
         public bool isActive = false;
 
@@ -19,6 +20,7 @@ namespace GGJ_2014.Graphics
             for (int e = 0; e < 10; e++)
             {
                 eggs.Add(new Vector2(random.Next(0, 800), random.Next(0, 600)));
+                eggColors.Add(random.NextDouble() < 0.85 ? Color.White : Color.Yellow);
             }
         }
 
@@ -43,7 +45,7 @@ namespace GGJ_2014.Graphics
             {
                 for (int e = 0; e < eggs.Count; e++)
                 {
-                    spriteBatch.Draw(TextureStorage.GetInstance().GetTexture(Textures.CHICKEN_EGG), new Rectangle((int)eggs[e].X, (int)eggs[e].Y, 16, 32), Color.White);
+                    spriteBatch.Draw(TextureStorage.GetInstance().GetTexture(Textures.CHICKEN_EGG), new Rectangle((int)eggs[e].X, (int)eggs[e].Y, 16, 32), eggColors[e]);
                 }
             }
         }
