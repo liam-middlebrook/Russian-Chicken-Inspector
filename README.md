@@ -7,7 +7,7 @@ Since the end of the Game Jam this game has been updated. To view the source of 
 
 This game was created by Alec Linder and Liam Middlebrook.
 
-![A Screenshot of Russian Chicken Inspector](https://raw.github.com/liam-middlebrook/Russian-Chicken-Inspector/tree/master/screenshot_gameplay.jpg)
+![A Screenshot of Russian Chicken Inspector](https://raw.github.com/liam-middlebrook/Russian-Chicken-Inspector/blob/master/screenshot_gameplay.jpg)
 
 
 Running The Game
