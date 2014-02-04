@@ -1,4 +1,4 @@
-Global-Game-Jam-2014
+Russian Chicken Inspector
 ====================
 
 The Game created for the 2014 Global Game Jam
