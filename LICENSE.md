@@ -1,4 +1,4 @@
-Copyright (c) 2014, Liam Middlebrook
+Copyright (c) 2014, Alec Linder, Liam Middlebrook
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
