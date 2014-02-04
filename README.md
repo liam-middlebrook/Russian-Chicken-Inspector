@@ -7,7 +7,8 @@ Since the end of the Game Jam this game has been updated. To view the source of 
 
 This game was created by Alec Linder and Liam Middlebrook.
 
-* Running The Game *
+Running The Game
+================
 
 To Run Russian Chicken Inspector you need to have the Microsoft XNA 4.0 installed as well as Visual Studio 2010.
 
