@@ -12,15 +12,19 @@ namespace GGJ_2014.Creatures
 {
     public enum Direction
     {
-        INVALID,
-        NORTH,
-        EAST,
-        SOUTH,
-        WEST
+        INVALID = 0,
+        NORTH = 2,
+        EAST = 4,
+        SOUTH = 8,
+        WEST = 16,
+        NORTH_EAST = NORTH + EAST,
+        SOUTH_EAST = SOUTH + EAST,
+        NORTH_WEST = NORTH + WEST,
+        SOUTH_WEST = SOUTH + WEST,
     }
 
     public abstract class Creature
-        : PhysicsBody , Interactable
+        : PhysicsBody, Interactable
     {
         private string identifier = "FILL THIS OUT";
         protected Direction directionFacing = Direction.NORTH;
@@ -31,7 +35,7 @@ namespace GGJ_2014.Creatures
         public Creature(Texture2D texture, Vector2 position, string identifier)
             : base(texture, position)
         {
-            this.RotationOrigin = new Vector2(texture.Width/2, texture.Height/2);
+            this.RotationOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             this.identifier = identifier;
             collisionBox = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
         }
@@ -45,8 +49,8 @@ namespace GGJ_2014.Creatures
 
         protected void SyncCollitionBox()
         {
-            collisionBox.X = (int)Position.X - collisionBox.Width/2;
-            collisionBox.Y = (int)Position.Y - collisionBox.Height/2;
+            collisionBox.X = (int)Position.X - collisionBox.Width / 2;
+            collisionBox.Y = (int)Position.Y - collisionBox.Height / 2;
         }
 
         public void CheckLevelCollisions()
@@ -54,7 +58,7 @@ namespace GGJ_2014.Creatures
             int minX = Level.GetInstance().GetTileIndexInBoundsX(collisionBox.X / Tile.TILE_SIZE);
             int maxX = Level.GetInstance().GetTileIndexInBoundsX((collisionBox.X + collisionBox.Width) / Tile.TILE_SIZE + 1);
             int minY = Level.GetInstance().GetTileIndexInBoundsY(collisionBox.Y / Tile.TILE_SIZE);
-            int maxY = Level.GetInstance().GetTileIndexInBoundsY((collisionBox.Y +collisionBox.Height) / Tile.TILE_SIZE + 1);
+            int maxY = Level.GetInstance().GetTileIndexInBoundsY((collisionBox.Y + collisionBox.Height) / Tile.TILE_SIZE + 1);
             for (int x = minX; x < maxX; x++)
             {
                 for (int y = minY; y < maxY; y++)
@@ -120,20 +124,48 @@ namespace GGJ_2014.Creatures
             {
                 case Direction.NORTH:
                     Rotation = 0;
-                    ApplyVelocityY(-walkSpeed);
+                    //ApplyVelocityY(-walkSpeed);
                     break;
                 case Direction.EAST:
-                    Rotation = (float)Math.PI/2;
-                    ApplyVelocityX(walkSpeed);
+                    Rotation = (float)Math.PI / 2;
+                    //ApplyVelocityX(walkSpeed);
                     break;
                 case Direction.SOUTH:
                     Rotation = (float)Math.PI;
-                    ApplyVelocityY(walkSpeed);
+                    //ApplyVelocityY(walkSpeed);
                     break;
                 case Direction.WEST:
                     Rotation = (float)(3 * Math.PI / 2);
-                    ApplyVelocityX(-walkSpeed);
+                    //ApplyVelocityX(-walkSpeed);
                     break;
+                case Direction.NORTH_EAST:
+                    Rotation = (float)Math.PI / 4;
+                    break;
+                case Direction.NORTH_WEST:
+                    Rotation = (float)(7 * Math.PI / 4);
+                    break;
+                case Direction.SOUTH_EAST:
+                    Rotation = (float)(3 * Math.PI / 4);
+                    break;
+                case Direction.SOUTH_WEST:
+                    Rotation = (float)(5 * Math.PI / 4);
+                    break;
+            }
+            if ((walkDirection & Direction.NORTH) == Direction.NORTH)
+            {
+                ApplyVelocityY(-walkSpeed);
+            }
+            else if ((walkDirection & Direction.SOUTH) == Direction.SOUTH)
+            {
+                ApplyVelocityY(walkSpeed);
+            }
+            if ((walkDirection & Direction.WEST) == Direction.WEST)
+            {
+                ApplyVelocityX(-walkSpeed);
+            }
+            else if ((walkDirection & Direction.EAST) == Direction.EAST)
+            {
+                ApplyVelocityX(walkSpeed);
             }
         }
 
@@ -164,7 +196,7 @@ namespace GGJ_2014.Creatures
         {
             get
             {
-                return new Vector2(Position.X , Position.Y);
+                return new Vector2(Position.X, Position.Y);
             }
         }
 

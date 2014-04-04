@@ -56,12 +56,12 @@ namespace GGJ_2014.Creatures
 
         public override void HandleInput(KeyboardState keyState)
         {
-            Direction direction = 0;
-            direction = (keyState.IsKeyDown(Keys.W) || keyState.IsKeyDown(Keys.Up)) ? Direction.NORTH : direction;
-            direction = (keyState.IsKeyDown(Keys.S) || keyState.IsKeyDown(Keys.Down)) ? Direction.SOUTH : direction;
-            direction = (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left)) ? Direction.WEST : direction;
-            direction = (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right)) ? Direction.EAST : direction;
-            Walk(direction);
+            int direction = 0;
+            direction += (keyState.IsKeyDown(Keys.W) || keyState.IsKeyDown(Keys.Up)) ? (int)Direction.NORTH : 0;
+            direction += (keyState.IsKeyDown(Keys.S) || keyState.IsKeyDown(Keys.Down)) ? (int)Direction.SOUTH : 0;
+            direction += (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left)) ? (int)Direction.WEST : 0;
+            direction += (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right)) ? (int)Direction.EAST : 0;
+            Walk((Direction)direction);
 
             isInteracting = keyState.IsKeyDown(Keys.Space);
             if (isInteracting)
