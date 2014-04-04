@@ -40,6 +40,7 @@ namespace GGJ_2014
         EggFallWindow eggFall;
 
         MenuBorderedTextItem eggCounter;
+        MenuBorderedTextItem eggTimer;
         MenuBorderedTextItem playerStats;
         MenuBorderedTextItem healthBar;
 
@@ -127,7 +128,7 @@ namespace GGJ_2014
 
             #endregion
 
-            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y));
+            //player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y));
             eggFall = new EggFallWindow();
 
             base.Initialize();
@@ -166,12 +167,23 @@ namespace GGJ_2014
                        graphics.PreferredBackBufferHeight * 0.9f
                        ),
                        Color.PeachPuff,
-                       string.Format("{0:000000} x Eggs Collected", Player.Eggs)
+                       string.Empty
                        );
             MenuSystem.GetInstance()
                 .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
                 .AddControl(eggCounter);
 
+            eggTimer = new MenuBorderedTextItem(
+                    new Vector2(
+                        graphics.PreferredBackBufferWidth * .65f,
+                        graphics.PreferredBackBufferHeight * .9f
+                        ),
+                        Color.PeachPuff,
+                        string.Empty
+                        );
+            MenuSystem.GetInstance()
+                .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
+                .AddControl(eggTimer);
 
             playerStats = new MenuBorderedTextItem(
                    new Vector2(
@@ -179,7 +191,7 @@ namespace GGJ_2014
                        graphics.PreferredBackBufferHeight * 0.01f
                        ),
                        Color.PeachPuff,
-                       string.Format("Compassion: {0:F2}\nLuck: {1:F2}\nStrength: {2:F2}", Player.Compassion, Player.Luck, Player.Strength)
+                       string.Empty
                        );
             MenuSystem.GetInstance()
                 .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
@@ -189,10 +201,17 @@ namespace GGJ_2014
                 .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
                 .AddControl(
                 new MenuHiddenButton(
-                   new List<Keys>(new []{Keys.Escape}),
+                   new List<Keys>(new[] { Keys.Escape }),
                     () => { MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.PAUSE_MENU); }
             ));
-            healthBar = new MenuBorderedTextItem(new Vector2(graphics.PreferredBackBufferWidth * 0.8f, graphics.PreferredBackBufferHeight * 0.9f), Color.PeachPuff,"Health: 100");
+            healthBar = new MenuBorderedTextItem(
+                new Vector2(
+                    graphics.PreferredBackBufferWidth * 0.8f,
+                    graphics.PreferredBackBufferHeight * 0.8f
+                    ),
+                    Color.PeachPuff,
+                    "Health: 100"
+                    );
             MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.GAMEPLAY).AddControl(healthBar);
 
             #endregion
@@ -213,7 +232,7 @@ namespace GGJ_2014
                        MenuSystem.GetInstance().GetMenuScreenOfType(MenuScreenType.QUESTIONS_MENU).AddControl(new MultipleChoiceQuiz());
                    },
                    new List<Keys>(
-                       new []{
+                       new[]{
                            Keys.Space
                        })
                    ));
@@ -229,7 +248,7 @@ namespace GGJ_2014
                        Exit();
                    },
                    new List<Keys>(
-                       new []{
+                       new[]{
                            Keys.Escape
                        })
                    ));
@@ -342,8 +361,8 @@ namespace GGJ_2014
 
         private void ResetGame()
         {
-            Level.GetInstance().LoadLevel(); 
-            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y)); 
+            Level.GetInstance().LoadLevel();
+            player = new Player(TextureStorage.GetInstance().GetTexture(Textures.CREATURE_GENERIC), new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y));
             Level.GetInstance().AddCreature(player);
             Player.Eggs = 0;
             timeElaspsed = 0;
@@ -381,6 +400,7 @@ namespace GGJ_2014
                         player.HandleInput(keyState);
                         Camera.Focus(player.MiddlePosition);
                         eggCounter.Text = string.Format("{0:000000} x Eggs Collected", Player.Eggs);
+                        eggTimer.Text = string.Format("{0:000.0} Seconds Remaining", Player.TimeRemaining);
                         playerStats.Text = string.Format("Compassion: {0:F2}\nLuck: {1:F2}\nStrength: {2:F2}", Player.Compassion, Player.Luck, Player.Strength);
                         healthBar.Text = string.Format("Health: {0}%", Player.Health);
 
@@ -404,7 +424,7 @@ namespace GGJ_2014
                         eggFall.isActive = true;
                         break;
                     }
-                default :
+                default:
                     eggFall.isActive = true;
                     break;
             }
@@ -445,7 +465,7 @@ namespace GGJ_2014
                                                          + "\tInteract with Villagers!\n"
                                                          + "\tChop Down Trees!\n"
                                                          + "\tDiscover Golden Eggs!\n"
-                                                        + "You need 1,000,000 eggs to win.\nLevels are randomly generated.\n"
+                                                        + "You need " + Player.PLAYER_EGG_GOAL + " eggs to win.\nLevels are randomly generated.\n"
                                                         + "Press [Escape] to pause and view the instructions during gameplay.", new Vector2(10, 100), Color.White);
                         spriteBatch.DrawString(myFont, "Liam Middlebrook, Alec Linder", new Vector2(476, 570), Color.White);
                         spriteBatch.End();
@@ -453,19 +473,6 @@ namespace GGJ_2014
                     }
 
                 case MenuScreenType.GAMEPLAY:
-                    {
-
-                        // TODO: Add your drawing code here
-                        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.CameraMatrix);
-
-                        //Add Game Draw code Here
-                        Level.GetInstance().Draw(spriteBatch);
-
-                        spriteBatch.End();
-
-                        break;
-                    }
-
                 case MenuScreenType.PAUSED:
                     {
 
@@ -479,7 +486,6 @@ namespace GGJ_2014
 
                         break;
                     }
-
                 case MenuScreenType.PAUSE_MENU:
                     {
 
@@ -491,7 +497,7 @@ namespace GGJ_2014
                                                          + "\tInteract with Villagers!\n"
                                                          + "\tChop Down Trees!\n"
                                                          + "\tDiscover Golden Eggs!\n"
-                                                        + "You need 1,000,000 eggs to win.\nLevels are randomly generated.\n"
+                                                        + "You need " + Player.PLAYER_EGG_GOAL + " eggs to win.\nLevels are randomly generated.\n"
                                                         + "Press [Escape] to pause the game during gameplay.", new Vector2(10, 100), Color.White);
                         spriteBatch.DrawString(myFont, "Liam Middlebrook, Alec Linder", new Vector2(476, 570), Color.White);
                         spriteBatch.End();
@@ -513,7 +519,17 @@ namespace GGJ_2014
                 case MenuScreenType.LOSE_MENU:
                     {
                         spriteBatch.Begin();
-                        spriteBatch.DrawString(myFont, string.Format("You lost the game in {0:mms}!", TimeInMillisecondsToString(timeElaspsed)), new Vector2(20, 100), Color.White);
+                        bool outOfTime = timeElaspsed == (int)Player.PLAYER_ROUND_TIME;
+                        string loseString = string.Empty;
+                        if (outOfTime)
+                        {
+                            loseString += string.Format("You took {0:mms}!\nAnd died due to being attacked!", TimeInMillisecondsToString(timeElaspsed));
+                        }
+                        else
+                        {
+                            loseString += string.Format("You ran out of time!\nYou had {0} health remaining!", Player.Health);
+                        }
+                        spriteBatch.DrawString(myFont, loseString, new Vector2(20, 100), Color.White);
                         spriteBatch.End();
                         break;
                     }

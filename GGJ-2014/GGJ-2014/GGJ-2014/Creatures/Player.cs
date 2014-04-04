@@ -26,6 +26,9 @@ namespace GGJ_2014.Creatures
         public const int IDENTIFIER_POSITION_X = 10;
         public const int IDENTIFIER_POSITION_Y = 480;
 
+        public const double PLAYER_ROUND_TIME = 300;
+        public const double PLAYER_EGG_GOAL = 25000;
+
         public static float Strength;
         public static float Compassion;
         public static float Luck;
@@ -40,12 +43,15 @@ namespace GGJ_2014.Creatures
 
         public static bool PureEvil;
 
+        public static double TimeRemaining { get; set; }
+
         public Player(Texture2D texture, Vector2 position)
             : base(texture, position)
         {
             interactRectangle = new Rectangle(0, 0, INTERACT_LONG_LENGTH, INTERACT_SHORT_LENGTH);
             SyncInteractCollider();
             Health = 100;
+            TimeRemaining = PLAYER_ROUND_TIME; // five minutes
         }
 
         public override void HandleInput(KeyboardState keyState)
@@ -66,6 +72,7 @@ namespace GGJ_2014.Creatures
 
         public override void Update(GameTime gameTime)
         {
+            TimeRemaining -= gameTime.ElapsedGameTime.TotalSeconds;
             numberOfTreesChopedThisTick = Math.Max(numberOfTreesChopedThisTick - Strength / 8, 0);
             for (int i = 0; i < Level.GetInstance().EggList.Count; ++i)
             {
@@ -81,12 +88,12 @@ namespace GGJ_2014.Creatures
             CheckForInteraction();
 
 
-            if (Eggs >= 1000000)
+            if (Eggs >= PLAYER_EGG_GOAL)
             {
                 Console.WriteLine("WIN!");
                 MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.WIN_MENU);
             }
-            if (Health < 1)
+            if (Health < 1 || TimeRemaining <= 0)
             {
                 MenuSystem.GetInstance().SwitchToMenuScreenOfType(MenuScreenType.LOSE_MENU);
             }
@@ -98,16 +105,16 @@ namespace GGJ_2014.Creatures
                 if (PureEvil)
                 {
                     Eggs += 250000;
-                    Health +=(int)(Math.Min(Health*2.5, 250));
-                     MenuSystem.GetInstance()
-                            .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
-                            .AddControl(
-                            new MenuBorderedTextItem(
-                                new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y),
-                                Color.SpringGreen,
-                                string.Format("You have a Compassion of {0:00}! You are pure evil!\n20000 Eggs Gained!\nHealth Regenerated to 250%", Compassion),
-                                5.0f));
-                    
+                    Health += (int)(Math.Min(Health * 2.5, 250));
+                    MenuSystem.GetInstance()
+                           .GetMenuScreenOfType(MenuScreenType.GAMEPLAY)
+                           .AddControl(
+                           new MenuBorderedTextItem(
+                               new Vector2(Game1.POPUP_DISPLAY_POSITION_X, Game1.POPUP_DISPLAY_POSITION_Y),
+                               Color.SpringGreen,
+                               string.Format("You have a Compassion of {0:00}! You are pure evil!\n20000 Eggs Gained!\nHealth Regenerated to 250%", Compassion),
+                               5.0f));
+
                 }
 
             }
@@ -139,14 +146,14 @@ namespace GGJ_2014.Creatures
                 lastInteractor = null;
             }
             List<Interactable> interactables = Level.GetInstance().InteractableList;
-            for (int i = interactables.Count-1; i > -1 ; i--)
+            for (int i = interactables.Count - 1; i > -1; i--)
             {
                 if (interactables[i].IsAlive())
                 {
                     if (interactables[i] != this && interactables[i].GetCollisionBox().Intersects(interactRectangle))
                     {
                         lastInteractor = interactables[i];
-                        interactIdentifier = new MenuBorderedTextItem(new Vector2(IDENTIFIER_POSITION_X, IDENTIFIER_POSITION_Y), Color.PeachPuff, lastInteractor.GetIdentifier()+" Space to Interact");
+                        interactIdentifier = new MenuBorderedTextItem(new Vector2(IDENTIFIER_POSITION_X, IDENTIFIER_POSITION_Y), Color.PeachPuff, lastInteractor.GetIdentifier() + " Space to Interact");
                         MenuSystem.GetInstance().CurrentScreen.AddControl(interactIdentifier);
                         return;
                     }
